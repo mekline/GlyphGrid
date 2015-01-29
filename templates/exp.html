@@ -1,0 +1,346 @@
+<!doctype html>
+<html>
+
+    <head>
+        <title>Alien Communication Study</title>
+        <!-- must-haves -->
+        <script src="/static/lib/jquery-min.js" type="text/javascript"></script>
+        <script src="/static/lib/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="static/lib/underscore-min.js" type="text/javascript"> </script>
+        <script src="static/lib/backbone-min.js" type="text/javascript"> </script>
+        <script src="static/lib/d3.v3.min.js" type="text/javascript"> </script>
+
+        <script type="text/javascript">
+        // Subject info, including condition and counterbalance codes.
+            var uniqueId = "{{ uniqueId }}";
+            var condition = "{{ condition }}";
+            var counterbalance = "{{ counterbalance }}";
+            var adServerLoc = "{{ adServerLoc }}"
+        </script>
+
+        <script src="static/js/psiturk.js" type="text/javascript"> </script>
+        <!-- jsPsych -->
+        <script src="/static/js/jsPsych/jspsych.js" type="text/javascript"></script>
+        <script src="/static/js/jsPsych/plugins/jspsych-free-sort.js" type="text/javascript"></script>
+        <script src="/static/js/jsPsych/plugins/jspsych-text.js" type="text/javascript"></script>
+        <script src="/static/js/jsPsych/plugins/jspsych-survey-text.js" type="text/javascript"></script>
+        <script src="/static/js/jsPsych/plugins/jspsych-call-function.js" type="text/javascript"></script>
+        <script src="/static/js/jsPsych/plugins/jspsych-categorize.js" type="text/javascript"></script>
+        <!-- other stuff -->
+        <script src="/static/js/utils.js" type="text/javascript"></script>
+        <!-- style -->
+        <link href="/static/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+        <style>
+            img {
+                border: 1px solid #ccc;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="jspsych_target"></div>
+    </body>
+    <script type="text/javascript">
+
+        /* Useful fns*/
+        function shuffle(array) {
+            var currentIndex = array.length, temporaryValue, randomIndex ;
+
+            // While there remain elements to shuffle...
+            while (0 !== currentIndex) {
+
+                // Pick a remaining element...
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex -= 1;
+
+                // And swap it with the current element.
+                temporaryValue = array[currentIndex];
+                array[currentIndex] = array[randomIndex];
+                array[randomIndex] = temporaryValue;
+            }
+
+            return array;
+        }
+
+        /**/
+        /* PRELIMINARIES */
+        /**/
+        /* SETTING UP CONDITION/STIMULI OBJECTS */
+        /**/
+
+        /* Assign a random word to each glyph */
+        /* declare an array to hold the words */
+        var words = ["oldlady", "girl", "boy", "fireman", "ball", 
+                       "heart", "car", "tumble", "push", "move", "kiss",
+                       "lift", "kick", "throw", "rub", "elbow"];
+        words = shuffle(words);
+
+        /* declare an array to hold the glyphs */
+        var glyphs = [];
+        for (var i = 1; i <= 16; i++) {
+            glyphs.push("g" + i);
+        }
+        //glyphs = shuffle(glyphs);
+
+        /* declare an array to hold the events */
+        var Pevents = ["car-tumbles-none", "girl-pushes-ball"]; 
+        var Tevents = ["girl-tumbles-none", "boy-moves-none", "car-moves-none", 
+                       "ball-rolls-none", "fireman-pushes-boy", "fireman-lifts-car", 
+                       "fireman-kicks-girl", "fireman-throws-ball", "girl-elbows-oldlady", 
+                       "girl-kisses-boy", "boy-kicks-ball", "girl-pushes-car", 
+                       "girl-rubs-heart", "girl-throws-oldlady", "oldlady-elbows-ball", 
+                       "boy-lifts-girl", "oldlady-kisses-ball", "oldlady-rubs-fireman"];
+        var istransitive = [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+
+        var instrucHTML = "<p>Meet our friend Upwilaah!</p>" +
+                "<div class='center-content'><img height=150 width=150 src='/static/images/upwilaah.jpeg' /></div>" +
+                "<p>Upwilaah is a very friendly alien and likes stories very much. Upwilaah's favorite story-spot " +
+                "is inside his box because it helps him avoid distractions. Unfortunately for us, Upwilaah does not " + 
+                "have any ears and can only communicate by reading and writing in his alien language which uses symbols like these:</p>" +
+                "<div class='center-content'><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /></div>" +
+                "<p>Your task is to communicate with Upwilaah in his language, and tell him what happened " + 
+                "in a series of very short stories.</p>" + 
+                "<p>Press the spacebar to continue.</p>";
+
+        var tableHTML = '<table align="center" border="0" cellpadding="10" cellspacing="0">' +
+                        '<tbody><tr align="center">ROW</tr><tr align="center">ROW</tr><tr align="center">ROW</tr><tr align="center">ROW</tr></tbody></table>';
+        var cell = '<td><img height=100 width=100 src="/static/images/XXYX.png" /><p>MEANING</p></td><td>  </td>';
+        for (var j = 0; j < 4; j++) {
+            tableHTML = tableHTML.replace('ROW', '<td></td>CELLCELLCELLCELL');
+            for (var i = 0; i < 4; i++) {
+                tableHTML = tableHTML.replace('CELL', cell);
+            };    
+        };
+ 
+
+        var TestInfo = [];
+        TestInfo.glyphass = [];
+        for(var i=0;i<glyphs.length;i++) {
+            TestInfo.glyphass[glyphs[i]]=words[i];
+        }
+        
+        var tglyphs = [];
+        for(var i=0;i<Tevents.length;i++) {
+            tglyphs.push([]);
+            shuffle(glyphs);
+            for(var j=0;j<glyphs.length;j++) {
+                tglyphs[i].push(glyphs[j]);
+            }
+        }
+        
+        TestInfo.ptrials = [];
+        TestInfo.trials = [];
+        for (i=0;i<Tevents.length;i++){
+            if (i<2) {
+                var ptrial = [];
+                ptrial.isTestTrial=0;
+                ptrial.stimName=Pevents[i];
+                ptrial.glyphorder=tglyphs[i+3];
+                TestInfo.ptrials.push(ptrial);
+            };
+            var trial = [];
+            trial.isTestTrial=1;
+            trial.stimName=Tevents[i];
+            trial.transitive=istransitive[i];
+            trial.glyphorder=tglyphs[i];
+            TestInfo.trials.push(trial);
+        }
+
+        for (var i=0;i<TestInfo.trials.length;i++) {
+            for (var j = 0; j < 16; j++) {
+                text = '/static/images/XXYX.png';
+                text = text.replace('XXYX', TestInfo.trials[i].glyphorder[j]);
+                TestInfo.trials[i].glyphorder[j] = text;
+            }    
+        }
+
+        var glyphtrials = [];
+        for (var i = 0; i < TestInfo.trials.length; i++) {
+            glyphtrials.push(TestInfo.trials[i].glyphorder);
+        };
+
+        shuffle(glyphs);
+        var categorized = [];
+        for(var j=0;j<glyphs.length;j++) {
+            text = '/static/images/XXYX.png';
+            text = text.replace('XXYX', glyphs[j]);
+            categorized.push(text);
+            }
+
+        shuffle(Tevents);
+        var eventclippy = [];
+        for(var j=0;j<Tevents.length;j++) {
+            text = '/static/images/XXYX.png';
+            text = text.replace('XXYX', Tevents[j]);
+            eventclippy.push(text);
+            }
+
+
+        /*var text_answers = [];
+        for (var i = 0; i < glyphs.length; i++) {
+            text_answers.push(TestInfo.glyphass[glyphs[i]]);
+        };
+
+        var choices = []
+        for (var i = 0; i < glyphs.length; i++) {
+            choices.push([glyphs[i]]);
+        };
+
+        for (var i = 0; i < choices.length; i++) {
+            shuffle(glyphs);
+            var j = 0;
+            while (choices[i].length < 3) {
+                if (glyphs[j]==choices[i][0]) {
+                    j++;
+                }
+                else {
+                    choices[i].push(glyphs[j]);
+                    j++;
+                }
+            }
+            for (var k = 0; k < choices[i].length; k++) {
+                choices[i][k] = TestInfo.glyphass[choices[i][k]];
+            };
+        };
+
+        var prompt = "<p>Testes123</p>";
+
+        var keyans = [];
+        for (var i = 0; i < categorized.length; i++) {
+            keyans.push(80);
+        };
+
+        var choices = [80, 81];*/
+
+
+
+        
+
+        /**/
+        /* DONE SETTING CONDTIONS/STIM */
+        /**/
+
+        /* SET UP INSTRUCTION BLOCKS */
+
+        /* load psiturk */
+        //var psiturk = new PsiTurk(uniqueId, adServerLoc, mode);
+
+        /* text blocks */
+
+        var welcome_block = {
+            type: "text",
+            text: "Welcome to the Alien Communication experiment. Press the spacebar to continue.",
+            data:{
+                isTestTrial:0
+            }
+        };
+
+        var instructions_block = {
+            type: "text",
+            text: function () {
+                shuffle(glyphs);
+                for (var j = 0; j < 4; j++) {
+                    instrucHTML = instrucHTML.replace('GGG', glyphs[j]);
+                }    
+                return instrucHTML;
+                },
+            timing_post_trial: 500,
+            data:{
+                isTestTrial:0
+            }
+        };
+
+        shuffle(glyphs);
+        for (var j = 0; j < 16; j++) {
+            tableHTML = tableHTML.replace('XXYX', glyphs[j]);
+            tableHTML = tableHTML.replace('MEANING', TestInfo.glyphass[glyphs[j]]);
+        }
+        
+        var learning_block = {
+            type: "text",
+            text: function () {
+                return "<p>Learn these symbols so that you can communicate with Upwilaah! Take as long as you need, and really " +
+                       "try to memorize the symbols. Press the letter </p>" +
+                       "<div class='center-content'>" + tableHTML + "</div>";
+                },
+            timing_post_trial: 500,
+            choices: [80],
+            data:{
+                isTestTrial:0
+            }
+        };
+
+        var categorization_block = {
+            type: 'categorize',
+            stimuli: ['/static/images/g1.png'],
+            key_answer: [80],
+            choices: [80, 81],
+            text_answer: ['cookie', 'cow'],
+            timing_stim: -1,
+            is_html: false,
+            prompt: "<p class='prompt'>Press P for letter. Press Q for number.</p>"
+        };     
+
+        /*create free-sort block for jspsych*/
+        var sort_block = {
+            type: 'free-sort',
+            stimuli: glyphtrials,
+            prompt: "<p>Drag and drop the symbols that you need to tell Upwilaah what happened</p>",
+            eventclips: eventclippy,
+            alien: '/static/images/upwilaah.jpeg'
+        };
+
+
+        var debrief_block = {
+            type: "text",
+            text: function() {
+                return "<p>Thank you for participating in the experiment!</p>" +
+                "<p> To submit this HIT, press any key on your keyboard to return to the Mechanical Turk interface, and then press the 'submit' button. </p>";
+            },
+            data:{
+                isTestTrial:0
+            }
+        };
+
+        var experiment_blocks = [];
+
+        experiment_blocks.push(welcome_block);
+
+        experiment_blocks.push(instructions_block);
+
+        experiment_blocks.push(learning_block);
+
+        //experiment_blocks.push(categorization_block);
+
+        experiment_blocks.push(sort_block);
+
+        //experiment_blocks.push(feedback_block);
+
+        //experiment_blocks.push(debrief_block);
+
+
+        /* launch jspsych experiment */
+        /*jsPsych.init({
+            display_element: $('#jspsych-target'),
+            experiment_structure: experiment_blocks,
+            on_finish: function() {
+                psiturk.saveData({
+                    success: function() { psiturk.completeHIT(); }
+                });
+            },
+            on_data_update: function(data) {
+                psiturk.recordTrialData(data);
+                psiturk.saveData();
+            }
+        });*/
+
+        jsPsych.init({
+            display_element: $('#jspsych_target'),
+            experiment_structure: experiment_blocks,
+            on_finish: function(data) {
+                jsPsych.dataAPI.displayData();
+            }
+        });
+    </script>
+
+</html>
