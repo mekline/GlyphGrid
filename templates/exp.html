@@ -176,12 +176,12 @@
             }
 
 
-        /*var text_answers = [];
+        var text_answers = [];
         for (var i = 0; i < glyphs.length; i++) {
             text_answers.push(TestInfo.glyphass[glyphs[i]]);
         };
 
-        var choices = []
+        var choices = [];
         for (var i = 0; i < glyphs.length; i++) {
             choices.push([glyphs[i]]);
         };
@@ -201,16 +201,28 @@
             for (var k = 0; k < choices[i].length; k++) {
                 choices[i][k] = TestInfo.glyphass[choices[i][k]];
             };
+        shuffle(choices[i]);
         };
 
-        var prompt = "<p>Testes123</p>";
+        var prompt = [];
+        for (var i = 0; i < choices.length; i++) {
+            prompt_text = 'Choices:  XXX, press "P"   XXX, Press "T"   XXX, Press"Q"';
+            for (var j = 0; j < choices[i].length; j++) {
+                prompt_text = prompt_text.replace('XXX', choices[i][j]);
+            }
+            prompt.push(prompt_text);
+        }
+
+        var user_choices = [81, 84, 80];
 
         var keyans = [];
-        for (var i = 0; i < categorized.length; i++) {
-            keyans.push(80);
+        for (var i = 0; i < choices.length; i++) {
+            for (var j=0; j<choices[i].length; j++) {
+                if (text_answers[i] == choices[i][j]) {
+                    keyans.push(user_choices[j]);
+                }
+            }
         };
-
-        var choices = [80, 81];*/
 
 
 
@@ -275,7 +287,7 @@
             stimuli: ['/static/images/g1.png'],
             key_answer: [80],
             choices: [80, 81],
-            text_answer: ['cookie', 'cow'],
+            text_answer: ['cookie'],
             timing_stim: -1,
             is_html: false,
             prompt: "<p class='prompt'>Press P for letter. Press Q for number.</p>"
@@ -310,7 +322,7 @@
 
         experiment_blocks.push(learning_block);
 
-        //experiment_blocks.push(categorization_block);
+        experiment_blocks.push(categorization_block);
 
         experiment_blocks.push(sort_block);
 

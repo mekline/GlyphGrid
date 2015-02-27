@@ -1,8 +1,8 @@
-/** 
+/**
  * jspsych plugin for categorization trials with feedback
  * Josh de Leeuw
  *
- * documentation: https://github.com/jodeleeuw/jsPsych/wiki/jspsych-categorize
+ * documentation: docs.jspsych.org
  **/
 
 (function($) {
@@ -30,7 +30,7 @@
 				trials[i].show_stim_with_feedback = (typeof params.show_stim_with_feedback === 'undefined') ? true : params.show_stim_with_feedback;
 				trials[i].is_html = (typeof params.is_html === 'undefined') ? false : params.is_html;
 				trials[i].force_correct_button_press = (typeof params.force_correct_button_press === 'undefined') ? false : params.force_correct_button_press;
-				trials[i].prompt = (typeof params.prompt === 'undefined') ? '' : params.prompt;
+				trials[i].prompt = (typeof params.prompt === 'undefined') ? '' : params.prompt[i];
 			}
 			return trials;
 		};
@@ -98,14 +98,14 @@
 
 				display_element.html('');
 
-				doFeedback();
+				doFeedback(correct);
 			}
 
 			jsPsych.pluginAPI.getKeyboardResponse(after_response, trial.choices, 'date', false);
 
 
 
-			function doFeedback() {
+			function doFeedback(correct) {
 				// show image during feedback if flag is set
 				if (trial.show_stim_with_feedback) {
 					if (!trial.is_html) {
@@ -126,7 +126,7 @@
 
 				// substitute answer in feedback string.
 				var atext = "";
-				if (block.data[block.trial_idx].correct) {
+				if (correct) {
 					atext = trial.correct_text.replace("%ANS%", trial.text_answer);
 				} else {
 					atext = trial.incorrect_text.replace("%ANS%", trial.text_answer);
@@ -136,7 +136,7 @@
 				display_element.append(atext);
 
 				// check if force correct button press is set
-				if (trial.force_correct_button_press && block.data[block.trial_idx].correct === false) {
+				if (trial.force_correct_button_press && correct === false) {
 
 					var after_forced_response = function(info) {
 						endTrial();
