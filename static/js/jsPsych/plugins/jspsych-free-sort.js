@@ -97,13 +97,17 @@
                 });
             }
 
-            $("#jspsych-free-sort-arena").append($('<img>', {
+            $("#jspsych-free-sort-arena").append($('<video>', {
                 "src": trial.eventclips,
                 "class": "",
                 "css": {
                     "position": "absolute",
                     "top": 0,
-                    "left": 0
+                    "left": 0,
+                    "width": 388,
+                    "height": 291,
+                    "preload": "auto",
+                    "autoplay": "autoplay"
                 }
             }));
 
