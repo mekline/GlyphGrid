@@ -97,7 +97,11 @@
                 });
             }
 
-            $("#jspsych-free-sort-arena").append($('<video>', {
+            new_clippy = '<video id="Event" width="388" height="291" position="absolute" top="0" left="0" preload autoplay>'+
+                '<source id="src_mpg" src="XXYYXX"  type=\'video/mp4; codecs="avc1.42E01E, mp4a.40.2"\'>';
+            new_clippy = new_clippy.replace('XXYYXX', trial.eventclips);
+
+            /*$("#jspsych-free-sort-arena").append($('<video>', {
                 "src": trial.eventclips,
                 "class": "",
                 "css": {
@@ -109,7 +113,9 @@
                     "preload": "auto",
                     "autoplay": "autoplay"
                 }
-            }));
+            }));*/
+
+            $("#jspsych-free-sort-arena").append(new_clippy)            
 
             $("#jspsych-free-sort-arena").append($('<img>', {
                 "src": trial.alien,
