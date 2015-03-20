@@ -17,11 +17,7 @@ table_name = turkdemo
 
 [Server Parameters]
 host = 0.0.0.0
-<<<<<<< Updated upstream
-port = 2236
-=======
 port = 22362
->>>>>>> Stashed changes
 cutoff_time = 30
 logfile = server.log
 loglevel = 2
