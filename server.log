@@ -7335,3 +7335,44 @@ TemplateNotFound: g
 2015-03-18 22:45:06,768 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
 2015-03-18 22:45:06,768 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
 2015-03-18 22:45:06,772 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-18 23:54:03,675 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-18 23:54:03,675 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-18 23:54:03,695 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-18 23:54:03,722 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-18 23:54:03,728 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-19 11:41:39,269 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-19 11:41:39,284 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-19 11:41:39,366 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-19 11:41:39,371 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-19 11:41:39,372 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+[2015-03-19 11:55:25 -0400] [498] [CRITICAL] WORKER TIMEOUT (pid:504)
+[2015-03-19 13:00:14 -0400] [498] [CRITICAL] WORKER TIMEOUT (pid:505)
+[2015-03-19 13:00:14 -0400] [498] [CRITICAL] WORKER TIMEOUT (pid:506)
+[2015-03-19 13:00:14 -0400] [498] [CRITICAL] WORKER TIMEOUT (pid:502)
+[2015-03-19 13:00:14 -0400] [498] [CRITICAL] WORKER TIMEOUT (pid:503)
+2015-03-19 13:00:17,515 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-19 13:00:17,542 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-19 13:00:17,644 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-19 13:00:17,666 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-19 13:00:17,680 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-20 15:00:20,624 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-20 15:00:20,624 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-20 15:00:20,672 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-20 15:00:20,706 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-20 15:00:20,718 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-20 15:17:06,226 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-20 15:17:06,363 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-20 15:17:06,378 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-20 15:17:06,404 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-20 15:17:06,414 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-20 15:23:53,347 Exception on /exp [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1379, in handle_user_exception
+    return handler(e)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 103, in handle_exp_error
+    "%s (%s) %s", e.value, e.errornum, str(dict(request.args)))
+NameError: global name 'e' is not defined
