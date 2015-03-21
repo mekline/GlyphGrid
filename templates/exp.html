@@ -6,9 +6,9 @@
         <!-- must-haves -->
         <script src="/static/lib/jquery-min.js" type="text/javascript"></script>
         <script src="/static/lib/jquery-ui.min.js" type="text/javascript"></script>
-        <script src="static/lib/underscore-min.js" type="text/javascript"> </script>
+        <script src="static/lib/underscore/underscore-min.js" type="text/javascript"> </script>
         <script src="static/lib/backbone-min.js" type="text/javascript"> </script>
-        <script src="static/lib/d3.v3.min.js" type="text/javascript"> </script>
+        <script src="static/lib/d3-3.0.0/d3.min.js" type="text/javascript"> </script>
 
         <script type="text/javascript">
         // Subject info, including condition and counterbalance codes.
@@ -81,10 +81,9 @@
         for (var i = 1; i <= 16; i++) {
             glyphs.push("g" + i);
         }
-        //glyphs = shuffle(glyphs);
 
         /* declare an array to hold the events */
-        var Pevents = ["car-tumbles-none", "girl-pushes-ball"]; 
+        var Pevents = ["oldlady", "car"]; 
         var Tevents = ["girl-tumbles-none", "boy-moves-none", "car-moves-none", 
                        "ball-rolls-none", "fireman-pushes-boy", "fireman-lifts-car", 
                        "fireman-kicks-girl", "fireman-throws-ball", "girl-elbows-oldlady", 
@@ -101,7 +100,18 @@
                 "<div class='center-content'><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /></div>" +
                 "<p>Your task is to communicate with Upwilaah in his language, and tell him what happened " + 
                 "in a series of very short stories.</p>" + 
-                "<p>Press the spacebar to continue.</p>";
+                "<p><b>Press the spacebar to continue.</b></p>";
+
+        var prepHTML = "<h3>This Study has 2 Parts</h3>" +
+                "<p></br>In Part 1, you will memorize a set of symbols so that you can communicate with Upwilaah. This part also includes a quiz to see how familiar you are with the symbols. </br><b>Part 1 should take about 15 minutes.</b></p>" + 
+                "<p></br>In Part 2, you will be giving the symbols to Upwilaah so that he can guess what is happening. </br><b>Part 2 should take about 20 minutes.</b></p>" +
+                "<p></br>Press the letter <b>P</b> to continue to the next page."
+
+        var prepHTML2 = "<h3><center>PART 2</center></h3>" +
+                "<p></br>In this part, you will will be giving symbols to Upwilaah so that he can guess what is happening." + 
+                "<p></br>First you will practice. </br>During practice you will see a picture. Give Upwilaah the symbol that best describes the picture." +
+                "<p></br>Press the letter <b>P</b> to continue to the practice pages."
+
 
         var tableHTML = '<table align="center" border="0" cellpadding="10" cellspacing="0">' +
                         '<tbody><tr align="center">ROW</tr><tr align="center">ROW</tr><tr align="center">ROW</tr><tr align="center">ROW</tr></tbody></table>';
@@ -160,7 +170,11 @@
             glyphtrials.push(TestInfo.trials[i].glyphorder);
         };
 
-        shuffle(glyphs);
+        var prac_trials = [];
+        for (var i = 0; i < TestInfo.ptrials.length; i++) {
+            prac_trials.push(TestInfo.ptrials[i].glyphorder);
+        };
+
         var categorized = [];
         for(var j=0;j<glyphs.length;j++) {
             text = '/static/images/XXYX.png';
@@ -207,14 +221,14 @@
 
         var prompt = [];
         for (var i = 0; i < choices.length; i++) {
-            prompt_text = '<br>Choices:  <br>XXX - press "Q"   <br>XXX - Press "T"   <br>XXX - Press"P"';
+            prompt_text = '<br>Choices:  <br>XXX - press "1"   <br>XXX - Press "2"   <br>XXX - Press"3"';
             for (var j = 0; j < choices[i].length; j++) {
                 prompt_text = prompt_text.replace('XXX', choices[i][j]);
             }
             prompt.push(prompt_text);
         }
 
-        var user_choices = [81, 84, 80];
+        var user_choices = [49, 50, 51];
 
         var keyans = [];
         for (var i = 0; i < choices.length; i++) {
@@ -250,7 +264,7 @@
 
         var instructions_block = {
             type: "text",
-            text: function () {
+            text: function() {
                 shuffle(glyphs);
                 for (var j = 0; j < 4; j++) {
                     instrucHTML = instrucHTML.replace('GGG', glyphs[j]);
@@ -263,6 +277,12 @@
             }
         };
 
+        var prep_screen = {
+            type: "text",
+            text: prepHTML,
+            cont_key : [80]
+        }
+
         shuffle(glyphs);
         for (var j = 0; j < 16; j++) {
             tableHTML = tableHTML.replace('XXYX', glyphs[j]);
@@ -273,17 +293,17 @@
             type: "text",
             text: function () {
                 if (num_of_retakes == 0) {
-                        return "<p>Learn these symbols so that you can communicate with Upwilaah! Take as long as you need, and really " +
+                        what_it_says = "<p>Learn these symbols so that you can communicate with Upwilaah! <b>Take as long as you need</b>, and really " +
                        "try to memorize the symbols. There will be a quiz after this page. You will have to pass " + 
-                       "the quiz in order to continue to the rest of the experiment. Press the letter T to take the quiz.</p>" +
+                       "the quiz in order to continue to the rest of the experiment. </br><b>Press the letter T to take the quiz.</b></p>" +
                        "<div class='center-content'>" + tableHTML + "</div>";
                    } else {
-                        return "<p>You did not get enough correct answers on the quiz to continue. " + 
+                        what_it_says = "<p>You did not get enough correct answers on the quiz to continue. " + 
                             "Take some time to look at the symbols once more. You will take the quiz again after " +
-                            "this page. Press the letter T to take the quiz.</p>" +
+                            "this page. </br><b>Press the letter T to take the quiz.</b></p>" +
                             "<div class='center-content'>" + tableHTML + "</div>";
                    }
-
+                   return "<h3>PART 1</h3>" + what_it_says
                 },
             timing_post_trial: 500,
             cont_key: [84],
@@ -294,12 +314,13 @@
 
         var categorization_block = {
             type: 'categorize',
-            stimuli: categorized,
+            stimuli: function () {return shuffle(categorized)},
             key_answer: keyans,
             choices: user_choices,
             text_answer: text_answers,
             timing_stim: -1,
             is_html: false,
+            incorrect_text: "Incorrect. The correct answer is %ANS%.",
             prompt: prompt
         };     
 
@@ -321,28 +342,50 @@
                     // end the loop
                     return false;
                 } else {
-                    // keep going until they perform better on the quiz
-                     /*= function () {
-                        return "<p>You did not get enough correct answers on the quiz to continue. " + 
-                        "Take some time to look at the symbols again. You will take the quiz again after " +
-                        "this page. Press the letter T to take the quiz.</p>" +
-                        "<div class='center-content'>" + tableHTML + "</div>";
-                    }*/
-                    shuffle(categorized);
                     num_of_retakes += 1;
                     return true;
                 }
             }
         }
 
+        var part2_prep = {
+            type: 'text',
+            text: prepHTML2,
+            cont_key: [80]
+        }
+
+        var pract_block1 = {
+            type: 'free-sort',
+            stimuli: [prac_trials[0]],
+            prompt: "<p>What is this?</p>",
+            eventpics: ['/static/images/car.png'],
+            eventpicside: 225,
+            moreinstr: 'static/images/more_instructions_pract.png',
+            alien: '/static/images/upwilaah.jpeg'
+        };
+
+        var pract_block2 = {
+            type: 'free-sort',
+            stimuli: [prac_trials[1]],
+            prompt: "<p>Who is this?</p>",
+            eventpics: ['/static/images/oldlady.png'],
+            eventpicside: 225,
+            moreinstr: 'static/images/more_instructions_pract.png',
+            alien: '/static/images/upwilaah.jpeg'
+        };
+
+        var pract_chunk = {
+            chunk_type: 'linear',
+            timeline: shuffle([pract_block2, pract_block1])
+        };
 
 
-        /*create free-sort block for jspsych*/
         var sort_block = {
             type: 'free-sort',
             stimuli: glyphtrials,
-            prompt: "<p>Drag and drop the symbols that you need to tell Upwilaah what happened.</p>",
+            prompt: "<p>Watch this movie!</p>",
             eventclips: eventclippy,
+            moreinstr: 'static/images/more_instructions_movie.png',
             alien: '/static/images/upwilaah.jpeg'
         };
 
@@ -364,18 +407,21 @@
 
         experiment_blocks.push(instructions_block);
 
-        experiment_blocks.push(quiz_chunk);
+        experiment_blocks.push(prep_screen);
+
+        //experiment_blocks.push(quiz_chunk);
+
+        experiment_blocks.push(part2_prep);
+
+        experiment_blocks.push(pract_chunk);
 
         experiment_blocks.push(sort_block);
-
-        //experiment_blocks.push(feedback_block);
 
         experiment_blocks.push(debrief_block);
 
 
-        /* launch jspsych experiment */
-        /*jsPsych.init({
-            display_element: $('#jspsych-target'),
+        jsPsych.init({
+            display_element: $('#jspsych_target'),
             experiment_structure: experiment_blocks,
             on_finish: function() {
                 psiturk.saveData({
@@ -385,16 +431,6 @@
             on_data_update: function(data) {
                 psiturk.recordTrialData(data);
                 psiturk.saveData();
-            }
-        });*/
-
-        jsPsych.init({
-            display_element: $('#jspsych_target'),
-            experiment_structure: experiment_blocks,
-            on_finish: function() {
-                psiturk.saveData({
-                    success: function() { psiturk.completeHIT(); }
-                });
             }
         });
     </script>

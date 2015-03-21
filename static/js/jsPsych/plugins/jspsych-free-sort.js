@@ -26,8 +26,11 @@
                     "prompt_location": params.prompt_location || "above",
                     "sort_area_width": params.sort_area_width || 800,
                     "sort_area_height": params.sort_area_height || 600,
-                    "eventclips": params.eventclips[i],
-                    "alien": params.alien
+                    "eventclips": (typeof params.eventclips === 'undefined') ? '' : params.eventclips[i],
+                    "alien": params.alien,
+                    "moreinstr": params.moreinstr,
+                    "eventpics": (typeof params.eventpics === 'undefined') ? 'blank.gif' : params.eventpics[i],
+                    "eventpicside": params.eventpicside || 0
                 };
             }
             return trials;
@@ -97,23 +100,21 @@
                 });
             }
 
-            new_clippy = '<video id="Event" width="388" height="291" position="absolute" top="0" left="0" preload autoplay>'+
-                '<source id="src_mpg" src="XXYYXX"  type=\'video/mp4; codecs="avc1.42E01E, mp4a.40.2"\'>';
-            new_clippy = new_clippy.replace('XXYYXX', trial.eventclips);
-
-            /*$("#jspsych-free-sort-arena").append($('<video>', {
-                "src": trial.eventclips,
+            $("#jspsych-free-sort-arena").append($('<img>', {
+                "src": trial.eventpics,
                 "class": "",
                 "css": {
                     "position": "absolute",
                     "top": 0,
                     "left": 0,
-                    "width": 388,
-                    "height": 291,
-                    "preload": "auto",
-                    "autoplay": "autoplay"
+                    "width": trial.eventpicside,
+                    "height": trial.eventpicside
                 }
-            }));*/
+            }));
+
+            new_clippy = '<video id="Event" width="388" height="291" z-index=1 border=0 position="absolute" top="0" left="0" preload autoplay>'+
+                '<source id="src_mpg" src="XXYYXX"  type=\'video/mp4; codecs="avc1.42E01E, mp4a.40.2"\'>';
+            new_clippy = new_clippy.replace('XXYYXX', trial.eventclips);
 
             $("#jspsych-free-sort-arena").append(new_clippy)            
 
@@ -126,6 +127,18 @@
                     "left": 600,
                     "height": 200,
                     "width": 200
+                }
+            }));
+
+            $("#jspsych-free-sort-arena").append($('<img>', {
+                "src": trial.moreinstr,
+                "class": "",
+                "css": {
+                    "position": "absolute",
+                    "top": 320,
+                    "left": 0,
+                    "width": 800,
+                    "border": 0
                 }
             }));
 
