@@ -69,20 +69,13 @@
         /* SETTING UP CONDITION/STIMULI OBJECTS */
         /**/
 
-        /* Assign a random word to each glyph */
-        /* declare an array to hold the words */
+        /* Declare an array to hold the words e.g. people, objects, and actions from stimuli*/
         var words = ["oldlady", "girl", "boy", "fireman", "ball", 
                        "heart", "car", "tumbling", "pushing", "rolling", "kissing",
                        "lifting", "kicking", "throwing", "rubbing", "elbowing"];
         words = shuffle(words);
 
-        /* declare an array to hold the glyphs */
-        var glyphs = [];
-        for (var i = 1; i <= 16; i++) {
-            glyphs.push("g" + i);
-        }
-
-        /* declare an array to hold the events */
+        /* Declare an array to hold the events and block texts, tables, objects, HTML, etc.*/
         var Pevents = ["oldlady", "car"]; 
         var Tevents = ["girl-tumbles-none", "boy-moves-none", "car-moves-none", 
                        "ball-rolls-none", "fireman-pushes-boy", "fireman-lifts-car", 
@@ -92,7 +85,7 @@
                        "boy-lifts-girl", "oldlady-kisses-ball", "oldlady-rubs-fireman"];
         var istransitive = [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
-        var instrucHTML = "<p>Meet our friend Upwilaah!</p>" +
+        var instrucHTML = "<h3><center>Meet our friend Upwilaah!</center></h3>" +
                 "<div class='center-content'><img height=150 width=150 src='/static/images/upwilaah.jpeg' /></div>" +
                 "<p>Upwilaah is a very friendly alien and likes stories very much. Upwilaah's favorite story-spot " +
                 "is inside his box because it helps him avoid distractions. Unfortunately for us, Upwilaah does not " + 
@@ -102,17 +95,23 @@
                 "in a series of very short stories.</p>" + 
                 "<p><b>Press the spacebar to continue.</b></p>";
 
-        var prepHTML = "<h3>This Study has 2 Parts</h3>" +
+        var prepHTML = "<h3></br></br>This Study has 2 Parts</h3>" +
                 "<p></br>In Part 1, you will memorize a set of symbols so that you can communicate with Upwilaah. This part also includes a quiz to see how familiar you are with the symbols. </br><b>Part 1 should take about 15 minutes.</b></p>" + 
                 "<p></br>In Part 2, you will be giving the symbols to Upwilaah so that he can guess what is happening. </br><b>Part 2 should take about 20 minutes.</b></p>" +
-                "<p></br>Press the letter <b>P</b> to continue to the next page."
+                "<p></br>Press the letter <b>P</b> to continue to the next page.";
 
         var prepHTML2 = "<h3><center>PART 2</center></h3>" +
                 "<p></br>In this part, you will will be giving symbols to Upwilaah so that he can guess what is happening." + 
                 "<p></br>First you will practice. </br>During practice you will see a picture. Give Upwilaah the symbol that best describes the picture." +
-                "<p></br>Press the letter <b>P</b> to continue to the practice pages."
+                "<p></br>Press the letter <b>P</b> to continue to the practice pages.";
+
+        var prepHTML3 = "<h3><center>PART 2</center></h3>" +
+                "<p></br>In this part, you will be watching short movies." + 
+                "<p></br>First watch the movie. </br></br>After the movie is over, give Upwilaah the symbols that best <b>describe what happened in the movie</b>. You will need to <u>drag more than one symbol</u> per movie." +
+                "<p></br>Press the letter <b>T</b> to continue to the movies.";
 
 
+        /*This is a table for the learning block*/
         var tableHTML = '<table align="center" border="0" cellpadding="10" cellspacing="0">' +
                         '<tbody><tr align="center">ROW</tr><tr align="center">ROW</tr><tr align="center">ROW</tr><tr align="center">ROW</tr></tbody></table>';
         var cell = '<td><img height=100 width=100 src="/static/images/XXYX.png" /><p>MEANING</p></td><td>  </td>';
@@ -122,8 +121,15 @@
                 tableHTML = tableHTML.replace('CELL', cell);
             };    
         };
+
+        /* Declare an array to hold the glyphs */
+        var glyphs = [];
+        for (var i = 1; i <= 16; i++) {
+            glyphs.push("g" + i);
+        };
  
 
+        /*DEFINE TESTING CONDITIONS AND TESTIN IFORMATION*/
         var TestInfo = [];
         TestInfo.glyphass = [];
         for(var i=0;i<glyphs.length;i++) {
@@ -175,6 +181,15 @@
             prac_trials.push(TestInfo.ptrials[i].glyphorder);
         };
 
+        /*Match a word to the assigned glyph for the learning table*/
+        shuffle(glyphs);
+        for (var j = 0; j < 16; j++) {
+            tableHTML = tableHTML.replace('XXYX', glyphs[j]);
+            tableHTML = tableHTML.replace('MEANING', TestInfo.glyphass[glyphs[j]]);
+        }
+
+        
+        /*DEFINE OBJECTS FOR THE LEARNING AND SORTING BLOCKS*/
         var categorized = [];
         for(var j=0;j<glyphs.length;j++) {
             text = '/static/images/XXYX.png';
@@ -240,23 +255,20 @@
         };
 
 
-
-        
-
         /**/
         /* DONE SETTING CONDTIONS/STIM */
         /**/
 
-        /* SET UP INSTRUCTION BLOCKS */
+        /* SET UP EXPERIMENT BLOCKS AND CHUNKS*/
 
-        /* load psiturk */
+        /* Load Psiturk */
         var psiturk = new PsiTurk(uniqueId, adServerLoc, mode);
 
-        /* text blocks */
-
+        /* Text blocks */
         var welcome_block = {
             type: "text",
-            text: "Welcome to the Alien Communication experiment. Press the spacebar to continue.",
+            text: "<h3><center></br></br>Welcome to the Alien Communication Experiment!</center></h3>" +
+                        "<p></br></br><b><center>Press the spacebar to continue.</b></center></p>",
             data:{
                 isTestTrial:0
             }
@@ -282,12 +294,6 @@
             text: prepHTML,
             cont_key : [80]
         }
-
-        shuffle(glyphs);
-        for (var j = 0; j < 16; j++) {
-            tableHTML = tableHTML.replace('XXYX', glyphs[j]);
-            tableHTML = tableHTML.replace('MEANING', TestInfo.glyphass[glyphs[j]]);
-        }
         
         var learning_block = {
             type: "text",
@@ -303,7 +309,7 @@
                             "this page. </br><b>Press the letter T to take the quiz.</b></p>" +
                             "<div class='center-content'>" + tableHTML + "</div>";
                    }
-                   return "<h3>PART 1</h3>" + what_it_says
+                   return "<h3>PART 1</h3>" + what_it_says;
                 },
             timing_post_trial: 500,
             cont_key: [84],
@@ -312,6 +318,31 @@
             }
         };
 
+        var part2_prep = {
+            type: 'text',
+            text: prepHTML2,
+            cont_key: [80]
+        }   
+
+        var part2_prep2 = {
+            type: 'text',
+            text: prepHTML3,
+            cont_key: [84]
+        }
+
+        var debrief_block = {
+            type: "text",
+            text: function() {
+                return "<p>Thank you for participating in the experiment!</p>" +
+                "<p> To submit this HIT, press any key on your keyboard to return to the Mechanical Turk interface, and then press the 'submit' button. </p>";
+            },
+            data:{
+                isTestTrial:0
+            }
+        };     
+
+        
+        /*All other blocks and chunks defined here*/
         var categorization_block = {
             type: 'categorize',
             stimuli: function () {return shuffle(categorized)},
@@ -348,12 +379,6 @@
             }
         }
 
-        var part2_prep = {
-            type: 'text',
-            text: prepHTML2,
-            cont_key: [80]
-        }
-
         var pract_block1 = {
             type: 'free-sort',
             stimuli: [prac_trials[0]],
@@ -379,7 +404,6 @@
             timeline: shuffle([pract_block2, pract_block1])
         };
 
-
         var sort_block = {
             type: 'free-sort',
             stimuli: glyphtrials,
@@ -389,18 +413,26 @@
             alien: '/static/images/upwilaah.jpeg'
         };
 
+        var sort_chunk = {
+            chunk_type: 'linear',
+            timeline: shuffle([part2_prep2, sort_block])            
+        };
 
-        var debrief_block = {
-            type: "text",
-            text: function() {
-                return "<p>Thank you for participating in the experiment!</p>" +
-                "<p> To submit this HIT, press any key on your keyboard to return to the Mechanical Turk interface, and then press the 'submit' button. </p>";
-            },
+        var feedback_block = {
+            type: 'survey-text',
+            questions: [["<p><b>NOTE: Please answer the following questions honestly.</b> Your <u>payment will NOT be affected</u> by how you answer these questions.</p><p></br>In this study, we are interested in how people describe different types of events, given a new way of describing them. This will help us to understand how we use language.</p> <p>Do you have any feedback about the task, or comments on how you thought about the answers you gave? Enter your comments below.</p>", "<p>Did you copy down the symbols on a sheet of paper?</p>", "Did you take a screen shot or take a picture of the screen to help you during the task?</p>", "<p>Did you memorize the glyphs?</p>"]],
             data:{
                 isTestTrial:0
             }
         };
 
+        var ending_chunk = {
+            chunk_type: 'linear',
+            timeline: shuffle([feedback_block, debrief_block]) 
+        }
+
+
+        /*Define the experiment's timeline*/
         var experiment_blocks = [];
 
         experiment_blocks.push(welcome_block);
@@ -415,9 +447,9 @@
 
         experiment_blocks.push(pract_chunk);
 
-        experiment_blocks.push(sort_block);
+        experiment_blocks.push(sort_chunk);
 
-        experiment_blocks.push(debrief_block);
+        experiment_blocks.push(ending_chunk);
 
 
         jsPsych.init({
