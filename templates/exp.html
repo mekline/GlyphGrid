@@ -77,12 +77,12 @@
 
         /* Declare an array to hold the events and block texts, tables, objects, HTML, etc.*/
         var Pevents = ["oldlady", "car"]; 
-        var Tevents = ["girl-tumbles-none", "boy-moves-none", "car-moves-none", 
-                       "ball-rolls-none", "fireman-pushes-boy", "fireman-lifts-car", 
-                       "fireman-kicks-girl", "fireman-throws-ball", "girl-elbows-oldlady", 
-                       "girl-kisses-boy", "boy-kicks-ball", "girl-pushes-car", 
-                       "girl-rubs-heart", "girl-throws-oldlady", "oldlady-elbows-heart", 
-                       "boy-lifts-girl", "oldlady-kisses-ball", "oldlady-rubs-fireman"];
+        var Tevents = ["girl-tumbling-none", "boy-rolling-none", "car-rolling-none", 
+                       "ball-rolling-none", "fireman-pushing-boy", "fireman-lifting-car", 
+                       "fireman-kicking-girl", "fireman-throwing-ball", "girl-elbowing-oldlady", 
+                       "girl-kissing-boy", "boy-kicking-ball", "girl-pushing-car", 
+                       "girl-rubbing-heart", "girl-throwing-oldlady", "oldlady-elbowing-heart", 
+                       "boy-lifting-girl", "oldlady-kissing-ball", "oldlady-rubbing-fireman"];
         var istransitive = [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
         var instrucHTML = "<h3><center>Meet our friend Upwilaah!</center></h3>" +
@@ -129,7 +129,7 @@
         };
  
 
-        /*DEFINE TESTING CONDITIONS AND TESTIN IFORMATION*/
+        /*DEFINE TESTING CONDITIONS AND TESTING IFORMATION*/
         var TestInfo = [];
         TestInfo.glyphass = [];
         for(var i=0;i<glyphs.length;i++) {
@@ -145,40 +145,63 @@
             }
         }
         
-        TestInfo.ptrials = [];
-        TestInfo.trials = [];
+        TestInfo.ptrialInfo = [];
+        TestInfo.trialInfo = [];
         for (i=0;i<Tevents.length;i++){
             if (i<2) {
                 var ptrial = [];
                 ptrial.isTestTrial=0;
                 ptrial.stimName=Pevents[i];
                 ptrial.glyphorder=tglyphs[i+3];
-                TestInfo.ptrials.push(ptrial);
+                TestInfo.ptrialInfo.push(ptrial);
             };
             var trial = [];
             trial.isTestTrial=1;
             trial.stimName=Tevents[i];
             trial.transitive=istransitive[i];
             trial.glyphorder=tglyphs[i];
-            TestInfo.trials.push(trial);
+            TestInfo.trialInfo.push(trial);
         }
 
-        for (var i=0;i<TestInfo.trials.length;i++) {
+        ptrial_words = [];
+        trial_words = [];
+        for (var i=0;i<TestInfo.trialInfo.length;i++) {
+            if (i<2) {
+                ptrial_words.push(TestInfo.ptrialInfo[i].stimName.split("-"));
+            }
+            trial_words.push(TestInfo.trialInfo[i].stimName.split("-"));
+        }
+
+        PoS = ['Sub', 'Vrb', 'Obj']
+        for (var i=0;i<trial_words.length;i++) {
+            if(i<2) {
+                TestInfo.ptrialInfo[i].Rel_glyph = 'g' + String(words.indexOf(ptrial_words[i][0]) + 1);
+            }
+            TestInfo.trialInfo[i].Rel_glyph = [];
+            for (var j=0;j<PoS.length;j++) {
+                TestInfo.trialInfo[i].Rel_glyph[PoS[j]] = 'g' + String(words.indexOf(trial_words[i][j]) + 1);
+            }
+            if (TestInfo.trialInfo[i].transitive == 0) {
+                TestInfo.trialInfo[i].Rel_glyph.Obj = 'none';
+            }
+        }
+
+        for (var i=0;i<TestInfo.trialInfo.length;i++) {
             for (var j = 0; j < 16; j++) {
                 text = '/static/images/XXYX.png';
-                text = text.replace('XXYX', TestInfo.trials[i].glyphorder[j]);
-                TestInfo.trials[i].glyphorder[j] = text;
+                text = text.replace('XXYX', TestInfo.trialInfo[i].glyphorder[j]);
+                TestInfo.trialInfo[i].glyphorder[j] = text;
             }    
         }
 
         var glyphtrials = [];
-        for (var i = 0; i < TestInfo.trials.length; i++) {
-            glyphtrials.push(TestInfo.trials[i].glyphorder);
+        for (var i = 0; i < TestInfo.trialInfo.length; i++) {
+            glyphtrials.push(TestInfo.trialInfo[i].glyphorder);
         };
 
         var prac_trials = [];
-        for (var i = 0; i < TestInfo.ptrials.length; i++) {
-            prac_trials.push(TestInfo.ptrials[i].glyphorder);
+        for (var i = 0; i < TestInfo.ptrialInfo.length; i++) {
+            prac_trials.push(TestInfo.ptrialInfo[i].glyphorder);
         };
 
         /*Match a word to the assigned glyph for the learning table*/
@@ -205,7 +228,12 @@
             text = text.replace('XXYX', Tevents[j]);
             eventclippy.push(text);
             }
-
+        
+        /*Add more information to TestInfo*/
+        TestInfo.trialOrder = Tevents;
+        for (var i=0;i<TestInfo.trialInfo.length;i++) {
+            TestInfo.trialInfo[i].TrialNum = (Tevents.indexOf(TestInfo.trialInfo[i].stimName))+1;
+        }
 
         var text_answers = [];
         for (var i = 0; i < glyphs.length; i++) {
@@ -256,6 +284,59 @@
         };
 
 
+        /* REDO TEST INFO DICTIONARY */
+        var glyphs = [];
+        for (var i = 1; i <= 16; i++) {
+            glyphs.push("g" + i);
+        };
+
+        NTestInfo = {};
+        NTestInfo.glyphass = {};
+
+        for (var i=0;i<glyphs.length;i++) {
+            NTestInfo.glyphass[glyphs[i]] = TestInfo.glyphass[glyphs[i]];
+        }
+
+        NTestInfo.ptrialInfo = {};
+        NTestInfo.trialInfo = {};
+        for (i=0;i<TestInfo.trialInfo.length;i++){
+            if (i<2) {
+                var ptrial = {};
+                ptrial.isTestTrial=0;
+                ptrial.stimName=Pevents[i];
+                ptrial.glyphorder=tglyphs[i+3];
+                NTestInfo.ptrialInfo[i] = ptrial;
+            };
+            var trial = {};
+            trial.isTestTrial=1;
+            trial.stimName=TestInfo.trialInfo[i].stimName;
+            trial.transitive=istransitive[i];
+            trial.glyphorder=TestInfo.trialInfo[i].glyphorder;
+            NTestInfo.trialInfo[i] = trial;
+        }
+
+        NTestInfo.trialOrder = TestInfo.trialOrder;
+
+        for (var i=0;i<trial_words.length;i++) {
+            if(i<2) {
+                NTestInfo.ptrialInfo[i].Rel_glyph = 'g' + String(words.indexOf(ptrial_words[i][0]) + 1);
+            }
+            NTestInfo.trialInfo[i].Rel_glyph = {};
+            for (var j=0;j<PoS.length;j++) {
+                NTestInfo.trialInfo[i].Rel_glyph[PoS[j]] = 'g' + String(words.indexOf(trial_words[i][j]) + 1);
+            }
+            if (NTestInfo.trialInfo[i].transitive === 0) {
+                NTestInfo.trialInfo[i].Rel_glyph.Obj = 'none';
+            }
+        }
+
+        NTestInfo.trialOrder = Tevents;
+        for (var i=0;i<TestInfo.trialInfo.length;i++) {
+            NTestInfo.trialInfo[i].TrialNum = (Tevents.indexOf(TestInfo.trialInfo[i].stimName))+1;
+        }
+
+
+
         /**/
         /* DONE SETTING CONDTIONS/STIM */
         /**/
@@ -270,8 +351,12 @@
             type: "text",
             text: "<h3><center></br></br>Welcome to the Alien Communication Experiment!</center></h3>" +
                         "<p></br></br><b><center>Press the spacebar to continue.</b></center></p>",
-            data:{
-                isTestTrial:0
+            on_finish: function () {
+                stuff = {};
+                stuff.isTestTrial = 0;
+                stuff.glyph_assignment = NTestInfo.glyphass;
+
+                jsPsych.data.write(stuff);
             }
         };
 
@@ -386,7 +471,11 @@
             eventpics: ['/static/images/car.png'],
             eventpicside: 225,
             moreinstr: 'static/images/more_instructions_pract.png',
-            alien: '/static/images/upwilaah.jpeg'
+            alien: '/static/images/upwilaah.jpeg',
+            on_finish: function () {
+                info = {};
+                info.glyph = NTestInfo.ptrialInfo[1].Rel_glyph;
+            }
         };
 
         var pract_block2 = {
@@ -396,7 +485,11 @@
             eventpics: ['/static/images/oldlady.png'],
             eventpicside: 225,
             moreinstr: 'static/images/more_instructions_pract.png',
-            alien: '/static/images/upwilaah.jpeg'
+            alien: '/static/images/upwilaah.jpeg',
+            on_finish: function () {
+                info = {};
+                info.glyph = NTestInfo.ptrialInfo[0].Rel_glyph;
+            }
         };
 
         var pract_chunk = {
@@ -410,12 +503,29 @@
             prompt: "<p>Watch this movie!</p>",
             eventclips: eventclippy,
             moreinstr: 'static/images/more_instructions_movie.png',
-            alien: '/static/images/upwilaah.jpeg'
-        };
+            alien: '/static/images/upwilaah.jpeg',
+            on_finish: function() { 
+                info = {};
+                clip_name = jsPsych.currentTrial().eventclips;
+                clip_name = clip_name.split("/")[3];
+                info.moviefile = clip_name;
+                stim = info.moviefile.split(".")[0];
+                trial_num = TestInfo.trialOrder.indexOf(stim);
+                for (var i=0;i<TestInfo.trialInfo.length;i++) {
+                        if (NTestInfo.trialInfo[i].stimName == stim) {
+                            for (var j=0;j<PoS.length;j++) {
+                               info[PoS[j]] = NTestInfo.trialInfo[i].Rel_glyph[PoS[j]]; 
+                            }
+                            
+                        }
+                }
+                jsPsych.data.write(info);
+            }};
+
 
         var sort_chunk = {
             chunk_type: 'linear',
-            timeline: shuffle([part2_prep2, sort_block])            
+            timeline: [part2_prep2, sort_block]            
         };
 
         var feedback_block = {
@@ -428,7 +538,7 @@
 
         var ending_chunk = {
             chunk_type: 'linear',
-            timeline: shuffle([feedback_block, debrief_block]) 
+            timeline: [feedback_block, debrief_block]
         }
 
 

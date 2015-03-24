@@ -9615,3 +9615,2019 @@ TemplateNotFound: blank.gif
 2015-03-23 22:01:55,391 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
 2015-03-23 22:01:55,403 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
 2015-03-23 22:01:55,411 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 22:24:09,746 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-23 22:24:22,552 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-23 22:24:30,051 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+[2015-03-23 22:25:25 -0400] [3473] [CRITICAL] WORKER TIMEOUT (pid:3480)
+[2015-03-23 22:25:25 -0400] [3473] [CRITICAL] WORKER TIMEOUT (pid:3478)
+[2015-03-23 22:32:14 -0400] [3473] [CRITICAL] WORKER TIMEOUT (pid:3477)
+[2015-03-23 22:32:14 -0400] [3473] [CRITICAL] WORKER TIMEOUT (pid:3479)
+[2015-03-23 22:32:14 -0400] [3473] [CRITICAL] WORKER TIMEOUT (pid:3481)
+2015-03-23 22:32:30,591 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 22:32:30,604 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 22:32:30,649 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 22:32:30,651 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 22:32:30,658 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-24 05:59:25,156 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-24 05:59:25,156 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-24 05:59:25,160 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-24 05:59:25,160 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-24 05:59:25,164 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-24 06:39:36,571 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:39:47,937 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:39:49,587 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:39:51,194 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:39:52,770 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:39:54,365 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:39:55,997 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:39:57,624 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:39:59,322 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:40:00,965 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:40:02,651 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:40:04,278 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:40:05,983 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:40:07,783 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:40:09,657 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:40:11,413 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:40:13,072 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:40:14,764 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:44:02,921 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:54:23,558 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 06:54:25,504 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 07:28:54,894 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 07:29:16,371 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 07:38:04,575 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 07:42:52,163 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 07:42:55,006 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:22:59,887 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:23:06,658 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:33:35,176 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:33:39,473 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:04,677 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:06,265 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:07,760 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:09,314 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:11,055 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:12,677 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:14,296 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:16,170 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:17,803 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:19,427 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:21,133 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:22,917 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:24,634 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:26,316 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:28,029 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:35:29,773 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 08:47:08,734 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-24 08:47:08,773 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-24 08:47:08,792 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-24 08:47:08,807 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-24 08:47:08,819 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-24 09:10:21,004 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:10:44,933 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:11:18,724 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:11:43,503 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:07,137 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:08,782 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:10,366 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:12,008 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:13,688 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:15,576 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:15,657 Exception on /sync/debug2BK9AG:debugN6B44F [PUT]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 522, in update
+    db_session.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/scoping.py", line 150, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 776, in commit
+    self.transaction.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 381, in commit
+    t[1].commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1333, in commit
+    self._do_commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1364, in _do_commit
+    self.connection._commit_impl()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 527, in _commit_impl
+    self._handle_dbapi_exception(e, None, None, None, None)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1159, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 525, in _commit_impl
+    self.engine.dialect.do_commit(self.connection)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 409, in do_commit
+    dbapi_connection.commit()
+OperationalError: (OperationalError) disk I/O error None None
+2015-03-24 09:12:15,793 Exception during reset or similar
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/sqlalchemy/pool.py", line 567, in _finalize_fairy
+    fairy._reset(pool)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/pool.py", line 701, in _reset
+    pool._dialect.do_rollback(self)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 406, in do_rollback
+    dbapi_connection.rollback()
+OperationalError: cannot rollback - no transaction is active
+2015-03-24 09:12:17,614 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:19,578 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:19,714 Exception on /sync/debug2BK9AG:debugN6B44F [PUT]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 522, in update
+    db_session.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/scoping.py", line 150, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 776, in commit
+    self.transaction.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 381, in commit
+    t[1].commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1333, in commit
+    self._do_commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1364, in _do_commit
+    self.connection._commit_impl()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 527, in _commit_impl
+    self._handle_dbapi_exception(e, None, None, None, None)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1159, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 525, in _commit_impl
+    self.engine.dialect.do_commit(self.connection)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 409, in do_commit
+    dbapi_connection.commit()
+OperationalError: (OperationalError) disk I/O error None None
+2015-03-24 09:12:19,727 Exception during reset or similar
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/sqlalchemy/pool.py", line 567, in _finalize_fairy
+    fairy._reset(pool)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/pool.py", line 701, in _reset
+    pool._dialect.do_rollback(self)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 406, in do_rollback
+    dbapi_connection.rollback()
+OperationalError: cannot rollback - no transaction is active
+2015-03-24 09:12:22,037 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:23,782 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:23,877 Exception on /sync/debug2BK9AG:debugN6B44F [PUT]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 522, in update
+    db_session.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/scoping.py", line 150, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 776, in commit
+    self.transaction.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 381, in commit
+    t[1].commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1333, in commit
+    self._do_commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1364, in _do_commit
+    self.connection._commit_impl()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 527, in _commit_impl
+    self._handle_dbapi_exception(e, None, None, None, None)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1159, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 525, in _commit_impl
+    self.engine.dialect.do_commit(self.connection)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 409, in do_commit
+    dbapi_connection.commit()
+OperationalError: (OperationalError) disk I/O error None None
+2015-03-24 09:12:23,883 Exception during reset or similar
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/sqlalchemy/pool.py", line 567, in _finalize_fairy
+    fairy._reset(pool)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/pool.py", line 701, in _reset
+    pool._dialect.do_rollback(self)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 406, in do_rollback
+    dbapi_connection.rollback()
+OperationalError: cannot rollback - no transaction is active
+2015-03-24 09:12:26,369 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:26,473 Exception on /sync/debug2BK9AG:debugN6B44F [PUT]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 522, in update
+    db_session.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/scoping.py", line 150, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 776, in commit
+    self.transaction.commit()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 377, in commit
+    self._prepare_impl()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 357, in _prepare_impl
+    self.session.flush()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 1919, in flush
+    self._flush(objects)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2037, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/langhelpers.py", line 60, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/session.py", line 2001, in _flush
+    flush_context.execute()
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 372, in execute
+    rec.execute(self)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/unitofwork.py", line 526, in execute
+    uow
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 60, in save_obj
+    mapper, table, update)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/orm/persistence.py", line 518, in _emit_update_statements
+    execute(statement, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 729, in execute
+    return meth(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/sql/elements.py", line 322, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 826, in _execute_clauseelement
+    compiled_sql, distilled_params
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 958, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 1159, in _handle_dbapi_exception
+    exc_info
+  File "/Library/Python/2.7/site-packages/sqlalchemy/util/compat.py", line 199, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/base.py", line 951, in _execute_context
+    context)
+  File "/Library/Python/2.7/site-packages/sqlalchemy/engine/default.py", line 436, in do_execute
+    cursor.execute(statement, parameters)
+OperationalError: (OperationalError) disk I/O error u'UPDATE turkdemo SET datastring=? WHERE turkdemo.uniqueid = ?' ('{"condition":0,"counterbalance":0,"assignmentId":"debugN6B44F","workerId":"debug2BK9AG","hitId":"debugTFJ1SO","currenttrial":69,"bonus":0,"data":[{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":0,"dateTime":1427202406318,"trialdata":{"isTestTrial":0,"glyph_assignment":{"g1":"heart","g2":"kicking","g3":"oldlady","g4":"fireman","g5":"lifting","g6":"car","g7":"boy","g8":"kissing","g9":"pushing","g10":"rubbing","g11":"girl","g12":"tumbling","g13":"ball","g14":"throwing","g15":"elbowing","g16":"rolling"},"trial_type":"text","trial_index":0,"trial_index_global":0,"time_elapsed":2,"internal_chunk_id":"0-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":1,"dateTime":1427202407614,"trialdata":{"rt":1195,"key_press":32,"trial_type":"text","trial_index":0,"trial_index_global":0,"time_elapsed":1298,"internal_chunk_id":"0-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":2,"dateTime":1427202408618,"trialdata":{"isTestTrial":0,"glyph_assignment":{"g1":"heart","g2":"kicking","g3":"oldlady","g4":"fireman","g5":"lifting","g6":"car","g7":"boy","g8":"kissing","g9":"pushing","g10":"rubbing","g11":"girl","g12":"tumbling","g13":"ball","g14":"throwing","g15":"elbowing","g16":"rolling"},"trial_type":"text","trial_index":0,"trial_index_global":0,"time_elapsed":2303,"internal_chunk_id":"0-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":3,"dateTime":1427202410043,"trialdata":{"rt":1278,"key_press":32,"isTestTrial":0,"trial_type":"text","trial_index":0,"trial_index_global":1,"time_elapsed":3728,"internal_chunk_id":"0-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":4,"dateTime":1427202412626,"trialdata":{"rt":1927,"key_press":80,"trial_type":"text","trial_index":0,"trial_index_global":2,"time_elapsed":6311,"internal_chunk_id":"0-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":5,"dateTime":1427202460220,"trialdata":{"rt":46403,"key_press":84,"isTestTrial":0,"trial_type":"text","trial_index":0,"trial_index_global":3,"time_elapsed":53905,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":6,"dateTime":1427202463907,"trialdata":{"rt":2971,"correct":true,"stimulus":"/static/images/g9.png","key_press":49,"trial_type":"categorize","trial_index":0,"trial_index_global":4,"time_elapsed":57592,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":7,"dateTime":1427202469882,"trialdata":{"rt":2879,"correct":true,"stimulus":"/static/images/g6.png","key_press":50,"trial_type":"categorize","trial_index":1,"trial_index_global":5,"time_elapsed":63567,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":8,"dateTime":1427202476433,"trialdata":{"rt":3417,"correct":true,"stimulus":"/static/images/g10.png","key_press":49,"trial_type":"categorize","trial_index":2,"trial_index_global":6,"time_elapsed":70118,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":9,"dateTime":1427202482634,"trialdata":{"rt":3097,"correct":true,"stimulus":"/static/images/g5.png","key_press":49,"trial_type":"categorize","trial_index":3,"trial_index_global":7,"time_elapsed":76319,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":10,"dateTime":1427202488873,"trialdata":{"rt":3121,"correct":true,"stimulus":"/static/images/g11.png","key_press":51,"trial_type":"categorize","trial_index":4,"trial_index_global":8,"time_elapsed":82558,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":11,"dateTime":1427202500050,"trialdata":{"rt":8047,"correct":true,"stimulus":"/static/images/g15.png","key_press":50,"trial_type":"categorize","trial_index":5,"trial_index_global":9,"time_elapsed":93735,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":12,"dateTime":1427202506050,"trialdata":{"rt":2871,"correct":true,"stimulus":"/static/images/g13.png","key_press":51,"trial_type":"categorize","trial_index":6,"trial_index_global":10,"time_elapsed":99735,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":13,"dateTime":1427202514746,"trialdata":{"rt":5591,"correct":true,"stimulus":"/static/images/g1.png","key_press":49,"trial_type":"categorize","trial_index":7,"trial_index_global":11,"time_elapsed":108431,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":14,"dateTime":1427202522017,"trialdata":{"rt":4158,"correct":true,"stimulus":"/static/images/g2.png","key_press":51,"trial_type":"categorize","trial_index":8,"trial_index_global":12,"time_elapsed":115702,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":15,"dateTime":1427202527465,"trialdata":{"rt":2345,"correct":true,"stimulus":"/static/images/g4.png","key_press":49,"trial_type":"categorize","trial_index":9,"trial_index_global":13,"time_elapsed":121150,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":16,"dateTime":1427202533777,"trialdata":{"rt":3169,"correct":true,"stimulus":"/static/images/g8.png","key_press":50,"trial_type":"categorize","trial_index":10,"trial_index_global":14,"time_elapsed":127462,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":17,"dateTime":1427202541560,"trialdata":{"rt":4649,"correct":true,"stimulus":"/static/images/g7.png","key_press":51,"trial_type":"categorize","trial_index":11,"trial_index_global":15,"time_elapsed":135245,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":18,"dateTime":1427202552576,"trialdata":{"rt":7857,"correct":true,"stimulus":"/static/images/g12.png","key_press":49,"trial_type":"categorize","trial_index":12,"trial_index_global":16,"time_elapsed":146261,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":19,"dateTime":1427202563225,"trialdata":{"rt":7504,"correct":true,"stimulus":"/static/images/g14.png","key_press":50,"trial_type":"categorize","trial_index":13,"trial_index_global":17,"time_elapsed":156910,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":20,"dateTime":1427202570152,"trialdata":{"rt":3792,"correct":false,"stimulus":"/static/images/g16.png","key_press":49,"trial_type":"categorize","trial_index":14,"trial_index_global":18,"time_elapsed":163837,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":21,"dateTime":1427202577056,"trialdata":{"rt":3784,"correct":true,"stimulus":"/static/images/g3.png","key_press":51,"trial_type":"categorize","trial_index":15,"trial_index_global":19,"time_elapsed":170741,"internal_chunk_id":"0-0.3-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":22,"dateTime":1427202585736,"trialdata":{"rt":5573,"key_press":80,"trial_type":"text","trial_index":0,"trial_index_global":20,"time_elapsed":179421,"internal_chunk_id":"0-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":23,"dateTime":1427202600027,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[{\\"src\\":\\"g3.png\\",\\"x\\":649,\\"y\\":56}]","final_locations":"[{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"649px\\",\\"y\\":\\"56px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":13285,"trial_type":"free-sort","trial_index":0,"trial_index_global":21,"time_elapsed":193712,"internal_chunk_id":"0-0.5-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":24,"dateTime":1427202614969,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[{\\"src\\":\\"g6.png\\",\\"x\\":658,\\"y\\":40}]","final_locations":"[{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"658px\\",\\"y\\":\\"40px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":13910,"trial_type":"free-sort","trial_index":0,"trial_index_global":22,"time_elapsed":208654,"internal_chunk_id":"0-0.5-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":25,"dateTime":1427202619824,"trialdata":{"rt":3707,"key_press":84,"trial_type":"text","trial_index":0,"trial_index_global":23,"time_elapsed":213509,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":26,"dateTime":1427202620828,"trialdata":{"moviefile":"boy-rolling-none.mp4","Sub":"g7","Vrb":"g16","Obj":"none","trial_type":"free-sort","trial_index":0,"trial_index_global":24,"time_elapsed":214513,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":27,"dateTime":1427202643874,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[{\\"src\\":\\"g7.png\\",\\"x\\":657,\\"y\\":45},{\\"src\\":\\"g16.png\\",\\"x\\":655,\\"y\\":46}]","final_locations":"[{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"655px\\",\\"y\\":\\"46px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"657px\\",\\"y\\":\\"45px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":23042,"trial_type":"free-sort","trial_index":0,"trial_index_global":24,"time_elapsed":237559,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":28,"dateTime":1427202644893,"trialdata":{"moviefile":"boy-rolling-none.mp4","Sub":"g7","Vrb":"g16","Obj":"none","trial_type":"free-sort","trial_index":0,"trial_index_global":24,"time_elapsed":238578,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":29,"dateTime":1427202644895,"trialdata":{"moviefile":"boy-lifting-girl.mp4","Sub":"g7","Vrb":"g5","Obj":"g11","trial_type":"free-sort","trial_index":1,"trial_index_global":25,"time_elapsed":238580,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":30,"dateTime":1427202677654,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[{\\"src\\":\\"g7.png\\",\\"x\\":666,\\"y\\":33},{\\"src\\":\\"g11.png\\",\\"x\\":622,\\"y\\":62},{\\"src\\":\\"g5.png\\",\\"x\\":653,\\"y\\":73}]","final_locations":"[{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"666px\\",\\"y\\":\\"33px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"622px\\",\\"y\\":\\"62px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"653px\\",\\"y\\":\\"73px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":32755,"trial_type":"free-sort","trial_index":1,"trial_index_global":25,"time_elapsed":271339,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":31,"dateTime":1427202678680,"trialdata":{"moviefile":"boy-lifting-girl.mp4","Sub":"g7","Vrb":"g5","Obj":"g11","trial_type":"free-sort","trial_index":1,"trial_index_global":25,"time_elapsed":272365,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":32,"dateTime":1427202678683,"trialdata":{"moviefile":"girl-throwing-oldlady.mp4","Sub":"g11","Vrb":"g14","Obj":"g3","trial_type":"free-sort","trial_index":2,"trial_index_global":26,"time_elapsed":272368,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":33,"dateTime":1427202702389,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[{\\"src\\":\\"g11.png\\",\\"x\\":645,\\"y\\":46},{\\"src\\":\\"g3.png\\",\\"x\\":676,\\"y\\":17},{\\"src\\":\\"g14.png\\",\\"x\\":669,\\"y\\":59}]","final_locations":"[{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"676px\\",\\"y\\":\\"17px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"669px\\",\\"y\\":\\"59px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"645px\\",\\"y\\":\\"46px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":23704,"trial_type":"free-sort","trial_index":2,"trial_index_global":26,"time_elapsed":296074,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":34,"dateTime":1427202703407,"trialdata":{"moviefile":"girl-throwing-oldlady.mp4","Sub":"g11","Vrb":"g14","Obj":"g3","trial_type":"free-sort","trial_index":2,"trial_index_global":26,"time_elapsed":297092,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":35,"dateTime":1427202703410,"trialdata":{"moviefile":"girl-tumbling-none.mp4","Sub":"g11","Vrb":"g12","Obj":"none","trial_type":"free-sort","trial_index":3,"trial_index_global":27,"time_elapsed":297095,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":36,"dateTime":1427202726047,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[{\\"src\\":\\"g11.png\\",\\"x\\":670,\\"y\\":63},{\\"src\\":\\"g12.png\\",\\"x\\":656,\\"y\\":45}]","final_locations":"[{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"670px\\",\\"y\\":\\"63px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"656px\\",\\"y\\":\\"45px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":22634,"trial_type":"free-sort","trial_index":3,"trial_index_global":27,"time_elapsed":319732,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":37,"dateTime":1427202727066,"trialdata":{"moviefile":"girl-tumbling-none.mp4","Sub":"g11","Vrb":"g12","Obj":"none","trial_type":"free-sort","trial_index":3,"trial_index_global":27,"time_elapsed":320751,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":38,"dateTime":1427202727069,"trialdata":{"moviefile":"ball-rolling-none.mp4","Sub":"g13","Vrb":"g16","Obj":"none","trial_type":"free-sort","trial_index":4,"trial_index_global":28,"time_elapsed":320754,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":39,"dateTime":1427202727705,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[]","final_locations":"[{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":632,"trial_type":"free-sort","trial_index":4,"trial_index_global":28,"time_elapsed":321390,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":40,"dateTime":1427202728723,"trialdata":{"moviefile":"ball-rolling-none.mp4","Sub":"g13","Vrb":"g16","Obj":"none","trial_type":"free-sort","trial_index":4,"trial_index_global":28,"time_elapsed":322408,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":41,"dateTime":1427202728725,"trialdata":{"moviefile":"car-rolling-none.mp4","Sub":"g6","Vrb":"g16","Obj":"none","trial_type":"free-sort","trial_index":5,"trial_index_global":29,"time_elapsed":322410,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":42,"dateTime":1427202729314,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[]","final_locations":"[{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":583,"trial_type":"free-sort","trial_index":5,"trial_index_global":29,"time_elapsed":322999,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":43,"dateTime":1427202730330,"trialdata":{"moviefile":"car-rolling-none.mp4","Sub":"g6","Vrb":"g16","Obj":"none","trial_type":"free-sort","trial_index":5,"trial_index_global":29,"time_elapsed":324015,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":44,"dateTime":1427202730332,"trialdata":{"moviefile":"girl-elbowing-oldlady.mp4","Sub":"g11","Vrb":"g15","Obj":"g3","trial_type":"free-sort","trial_index":6,"trial_index_global":30,"time_elapsed":324017,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":45,"dateTime":1427202730932,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[]","final_locations":"[{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":595,"trial_type":"free-sort","trial_index":6,"trial_index_global":30,"time_elapsed":324617,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":46,"dateTime":1427202731947,"trialdata":{"moviefile":"girl-elbowing-oldlady.mp4","Sub":"g11","Vrb":"g15","Obj":"g3","trial_type":"free-sort","trial_index":6,"trial_index_global":30,"time_elapsed":325632,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":47,"dateTime":1427202731949,"trialdata":{"moviefile":"fireman-kicking-girl.mp4","Sub":"g4","Vrb":"g2","Obj":"g11","trial_type":"free-sort","trial_index":7,"trial_index_global":31,"time_elapsed":325634,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":48,"dateTime":1427202732613,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[]","final_locations":"[{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":660,"trial_type":"free-sort","trial_index":7,"trial_index_global":31,"time_elapsed":326298,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":49,"dateTime":1427202733630,"trialdata":{"moviefile":"fireman-kicking-girl.mp4","Sub":"g4","Vrb":"g2","Obj":"g11","trial_type":"free-sort","trial_index":7,"trial_index_global":31,"time_elapsed":327315,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":50,"dateTime":1427202733633,"trialdata":{"moviefile":"girl-rubbing-heart.mp4","Sub":"g11","Vrb":"g10","Obj":"g1","trial_type":"free-sort","trial_index":8,"trial_index_global":32,"time_elapsed":327318,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":51,"dateTime":1427202734520,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[]","final_locations":"[{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":884,"trial_type":"free-sort","trial_index":8,"trial_index_global":32,"time_elapsed":328205,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":52,"dateTime":1427202735540,"trialdata":{"moviefile":"girl-rubbing-heart.mp4","Sub":"g11","Vrb":"g10","Obj":"g1","trial_type":"free-sort","trial_index":8,"trial_index_global":32,"time_elapsed":329225,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":53,"dateTime":1427202735542,"trialdata":{"moviefile":"oldlady-rubbing-fireman.mp4","Sub":"g3","Vrb":"g10","Obj":"g4","trial_type":"free-sort","trial_index":9,"trial_index_global":33,"time_elapsed":329227,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":54,"dateTime":1427202736557,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[]","final_locations":"[{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":1011,"trial_type":"free-sort","trial_index":9,"trial_index_global":33,"time_elapsed":330242,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":55,"dateTime":1427202737573,"trialdata":{"moviefile":"oldlady-rubbing-fireman.mp4","Sub":"g3","Vrb":"g10","Obj":"g4","trial_type":"free-sort","trial_index":9,"trial_index_global":33,"time_elapsed":331258,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":56,"dateTime":1427202737575,"trialdata":{"moviefile":"oldlady-elbowing-heart.mp4","Sub":"g3","Vrb":"g15","Obj":"g1","trial_type":"free-sort","trial_index":10,"trial_index_global":34,"time_elapsed":331260,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":57,"dateTime":1427202738495,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[]","final_locations":"[{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":917,"trial_type":"free-sort","trial_index":10,"trial_index_global":34,"time_elapsed":332180,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":58,"dateTime":1427202739518,"trialdata":{"moviefile":"oldlady-elbowing-heart.mp4","Sub":"g3","Vrb":"g15","Obj":"g1","trial_type":"free-sort","trial_index":10,"trial_index_global":34,"time_elapsed":333203,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":59,"dateTime":1427202739521,"trialdata":{"moviefile":"girl-kissing-boy.mp4","Sub":"g11","Vrb":"g8","Obj":"g7","trial_type":"free-sort","trial_index":11,"trial_index_global":35,"time_elapsed":333206,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":60,"dateTime":1427202740962,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[]","final_locations":"[{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":1438,"trial_type":"free-sort","trial_index":11,"trial_index_global":35,"time_elapsed":334647,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":61,"dateTime":1427202741979,"trialdata":{"moviefile":"girl-kissing-boy.mp4","Sub":"g11","Vrb":"g8","Obj":"g7","trial_type":"free-sort","trial_index":11,"trial_index_global":35,"time_elapsed":335664,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":62,"dateTime":1427202741981,"trialdata":{"moviefile":"boy-kicking-ball.mp4","Sub":"g7","Vrb":"g2","Obj":"g13","trial_type":"free-sort","trial_index":12,"trial_index_global":36,"time_elapsed":335666,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":63,"dateTime":1427202742726,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[]","final_locations":"[{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":741,"trial_type":"free-sort","trial_index":12,"trial_index_global":36,"time_elapsed":336411,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":64,"dateTime":1427202743741,"trialdata":{"moviefile":"boy-kicking-ball.mp4","Sub":"g7","Vrb":"g2","Obj":"g13","trial_type":"free-sort","trial_index":12,"trial_index_global":36,"time_elapsed":337426,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":65,"dateTime":1427202743744,"trialdata":{"moviefile":"fireman-pushing-boy.mp4","Sub":"g4","Vrb":"g9","Obj":"g7","trial_type":"free-sort","trial_index":13,"trial_index_global":37,"time_elapsed":337429,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":66,"dateTime":1427202745303,"trialdata":{"init_locations":"[{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":0,\\"y\\":400},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":100,\\"y\\":400},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":200,\\"y\\":400},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":300,\\"y\\":400},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":400,\\"y\\":400},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":500,\\"y\\":400},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":600,\\"y\\":400},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":700,\\"y\\":400},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":0,\\"y\\":500},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":100,\\"y\\":500},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":200,\\"y\\":500},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":300,\\"y\\":500},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":400,\\"y\\":500},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":500,\\"y\\":500},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":600,\\"y\\":500},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":700,\\"y\\":500}]","moves":"[]","final_locations":"[{\\"src\\":\\"/static/images/g5.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g12.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g14.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g10.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g1.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g4.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g15.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g8.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"400px\\"},{\\"src\\":\\"/static/images/g9.png\\",\\"x\\":\\"0px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g13.png\\",\\"x\\":\\"100px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g11.png\\",\\"x\\":\\"200px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g3.png\\",\\"x\\":\\"300px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g2.png\\",\\"x\\":\\"400px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g6.png\\",\\"x\\":\\"500px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g16.png\\",\\"x\\":\\"600px\\",\\"y\\":\\"500px\\"},{\\"src\\":\\"/static/images/g7.png\\",\\"x\\":\\"700px\\",\\"y\\":\\"500px\\"}]","rt":1555,"trial_type":"free-sort","trial_index":13,"trial_index_global":37,"time_elapsed":338988,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":67,"dateTime":1427202746323,"trialdata":{"moviefile":"fireman-pushing-boy.mp4","Sub":"g4","Vrb":"g9","Obj":"g7","trial_type":"free-sort","trial_index":13,"trial_index_global":37,"time_elapsed":340007,"internal_chunk_id":"0-0.6-0"}},{"uniqueid":"debug2BK9AG:debugN6B44F","current_trial":68,"dateTime":1427202746325,"trialdata":{"moviefile":"fireman-throwing-ball.mp4","Sub":"g4","Vrb":"g14","Obj":"g13","trial_type":"free-sort","trial_index":14,"trial_index_global":38,"time_elapsed":340010,"internal_chunk_id":"0-0.6-0"}}],"questiondata":{},"eventdata":[{"eventtype":"initialized","value":null,"timestamp":1427202406282,"interval":0},{"eventtype":"window_resize","value":[1024,725],"timestamp":1427202406283,"interval":1},{"eventtype":"focus","value":"off","timestamp":1427202431628,"interval":25345},{"eventtype":"focus","value":"on","timestamp":1427202454039,"interval":22411}],"useragent":"","status":"user data saved"}', u'debug2BK9AG:debugN6B44F')
+2015-03-24 09:12:28,212 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:30,032 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-03-24 09:12:32,074 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Python/2.7/site-packages/psiturk/experiment.py", line 664, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
