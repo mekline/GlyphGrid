@@ -190,6 +190,7 @@
 
         
         /*DEFINE OBJECTS FOR THE LEARNING AND SORTING BLOCKS*/
+        shuffle(glyphs);
         var categorized = [];
         for(var j=0;j<glyphs.length;j++) {
             text = '/static/images/XXYX.png';
@@ -341,7 +342,6 @@
             }
         };     
 
-        shuffle(categorized);
         /*All other blocks and chunks defined here*/
         var categorization_block = {
             type: 'categorize',
