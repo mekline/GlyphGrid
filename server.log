@@ -9556,3 +9556,18 @@ Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
     raise TemplateNotFound(template)
 TemplateNotFound: blank.gif
+2015-03-23 20:30:52,652 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:30:52,655 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:30:52,721 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:30:52,721 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:30:52,737 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:36:30,784 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:36:30,914 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:36:30,975 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:36:31,017 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:36:31,018 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:42:11,091 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:42:11,206 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:42:11,267 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:42:11,295 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2015-03-23 20:42:11,301 /Library/Python/2.7/site-packages/psiturk/psiturk_js/psiturk.js

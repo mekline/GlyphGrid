@@ -341,11 +341,11 @@
             }
         };     
 
-        
+        shuffle(categorized);
         /*All other blocks and chunks defined here*/
         var categorization_block = {
             type: 'categorize',
-            stimuli: function () {return shuffle(categorized)},
+            stimuli: categorized,
             key_answer: keyans,
             choices: user_choices,
             text_answer: text_answers,
@@ -441,7 +441,7 @@
 
         experiment_blocks.push(prep_screen);
 
-        //experiment_blocks.push(quiz_chunk);
+        experiment_blocks.push(quiz_chunk);
 
         experiment_blocks.push(part2_prep);
 
