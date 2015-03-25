@@ -6,8 +6,8 @@ lifetime = 24
 us_only = true
 approve_requirement = 95
 contact_email_on_error = masm@mit.edu
-ad_group = jspsych simple dax game
-psiturk_keywords = categorization movies
+ad_group = jspsych glyphgrid
+psiturk_keywords = describing events with symbols
 organization_name = Massachusetts Institute of Technology
 browser_exclude_rule = MSIE, mobile, tablet
 
