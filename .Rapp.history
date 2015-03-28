@@ -1,0 +1,183 @@
+"lsr" %in% rownames(installed.packages())
+install.packages('lsr')
+"rjson" %in% rownames(installed.packages())
+install.packages('rjson')
+"RSQlite" %in% rownames(installed.packages())
+install.packages('RSQlite')
+install.packages('RSQLite')
+"stringr" %in% rownames(installed.packages())
+"Hmisc" %in% rownames(installed.packages())
+install.packages('Hmisc')
+"lsr" %in% rownames(installed.packages())
+"dplyr" %in% rownames(installed.packages())
+"rjson" %in% rownames(installed.packages())
+"RSQLite" %in% rownames(installed.packages())
+"stringr" %in% rownames(installed.packages())
+"ggplot2" %in% rownames(installed.packages())
+"Hmisc" %in% rownames(installed.packages())
+?rm
+# Packages ----------------------------------------------------------------#
+#
+rm(list=ls())#
+library(lsr)#
+library(dplyr)#
+library(rjson)#
+library(RSQLite)#
+library(stringr)#
+library(ggplot2)#
+library(Hmisc)#
+#
+mean.na.rm <- function(x) { mean(x,na.rm=T) }#
+sum.na.rm <- function(x) { sum(x,na.rm=T) }#
+stderr <- function(x) sqrt(var(x)/length(x))#
+#
+# Read data ---------------------------------------------------------------#
+#
+con = dbConnect(SQLite(),dbname = "/Users/miguelsalinas/Desktop/GlyphsTurk/participants.db");#
+df.complete = dbReadTable(con,"glyphs") #change the name of the database here (mine was called "almost")#
+dbDisconnect(con)#
+#
+#filter out incompletes (using dplyr methods)#
+df.complete = subset(df.complete, status %in% c(3,4)) #
+#
+#nrow(df.complete) includes alll subjects ever plus all debug attempts!#
+#filter to a particular day (if I haven't set codeversions). OR together multiple days if needed#
+df.complete$currentVersion.pilot1 = str_detect(df.complete$beginhit, "2015-03-24")#
+df.complete$currentVersion.pilot2 = str_detect(df.complete$beginhit, "2015-03-25")#
+#
+#Run 1, 03/24/2015 - 03/25/2015#
+df.complete = df.complete[df.complete$currentVersion.pilot1 == TRUE | df.complete$currentVersion.pilot2 == TRUE,]#
+#
+#Run 2, 1/16/15#
+#df.complete = df.complete[df.complete$currentVersion4 == TRUE,]#
+#
+nrow(df.complete)#
+#
+#filter out 'debug' participants!#
+df.complete = filter(df.complete, !str_detect(df.complete$workerid,"debug"))#
+nrow(df.complete)#
+#
+# Structure data ----------------------------------------------------------#
+#Note: Compile in wide form: 1 row/participant; each trial gets a series of column names, formatted XYFIELD_##
+#Also, no extra underscores in the column names, this breaks wideToLong#
+#df.wide = data.frame(NULL)#
+df.wide = data.frame(matrix(nrow=nrow(df.complete),ncol=4))#
+colnames(df.wide) = c("participant","workerId","browser","beginhit") #will dynamically add columns from datastring below#
+#
+global_indeces = c()#
+free_sorts = list()#
+for (i in 1:nrow(df.wide)){#
+  partic_free = list()#
+  if (!is.na(df.complete$datastring[i])){#
+    a = fromJSON(df.complete$datastring[i])#
+    mylength = length(a$data)#
+  } else{#
+    a = data.frame(NULL)#
+    mylength = 0#
+  }#
+  print(mylength)#
+  if (mylength>=85){#
+    df.wide$participant[i] = i#
+    df.wide$workerId[i] = a$workerId#
+    df.wide$browser[i] = df.complete$browser[i]#
+    df.wide$beginhit[i] = df.complete$beginhit[i]#
+    #cycle through all the trials, but only record where isTestTrial = 1#
+    for (j in 1:mylength){#
+      if(a$data[[j]]$trialdata$trial_type == "free-sort"){#
+        partic_free = c(partic_free, list(a$data[[j]]$trialdata))#
+      } #Else just don't make any columns right now!!!#
+    }#
+    free_sorts[a$workerId] = list(partic_free)#
+  } #
+}#
+#
+name_it = names(free_sorts)#
+for (i in 1:length(free_sorts)) {#
+  if (length(free_sorts[[name_it[i]]]) != 60 | i==11 | i==14) {#
+   df.wide[i,] = 'EXCLUDED' #
+   df.wide$workerId[i] = 'TOO MANY TRIALS'#
+  }#
+}#
+#
+for (i in 1:nrow(df.wide)){#
+  if (df.wide$participant[i] != 'EXCLUDED'){#
+    a = free_sorts[[df.wide$workerId[i]]]#
+    mylength = length(free_sorts[[df.wide$workerId[i]]])#
+  } else{#
+    a = data.frame(NULL)#
+    mylength = 0#
+    df.wide[i,] = 'EXCLUDED' #
+    df.wide$workerId[i] = 'TOO MANY TRIALS'#
+  }#
+  for (j in 1:mylength) {#
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$rt)){#
+    df.wide[[paste("rt_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$rt#
+  }#
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moves)){#
+    global_indeces <- unique(c(global_indeces,a$data[[j]]$trialdata$trial_index_global))#
+    df.wide[[paste("moves_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moves#
+  }#
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$glyph)){#
+    df.wide[[paste("glyph_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$glyph#
+  }#
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Sub)){#
+    df.wide[[paste("S_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Sub#
+  }#
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Vrb)){#
+    df.wide[[paste("V_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Vrb#
+  }#
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Obj)){#
+    df.wide[[paste("O_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Obj#
+  }#
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moviefile)){#
+    df.wide[[paste("MovieFile_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moviefile#
+  }
+}}
+head(df.wide)
+name_it
+df.wide$moves_41[1]
+?gsub
+grep(g\d\d?(?=.png), df.wide$moves_41[1])
+grep('g\d\d?(?=.png)', df.wide$moves_41[1])
+grep('g\\d\\d?(?=.png)', df.wide$moves_41[1])
+grep('[g]\\d\\d?(?=.png)', df.wide$moves_41[1])
+grep('\\d', df.wide$moves_41[1])
+grep('\\d?', df.wide$moves_41[1])
+grep('\\d?', df.wide$moves_41[1], value=T)
+?substr
+grep(".*\\g(.*)\\..*", df.wide$moves_41[1], value=T)
+gsub(".*\\g(.*)\\..*", df.wide$moves_41[1], value=T)
+gsub(".*\\g(.*)\\..*", df.wide$moves_41[1])
+gsub('.*\\g(.*)\\..*', df.wide$moves_41[1])
+gsub('.*\\g(.*)\\..*', "[{\"src\":\"g5.png\",\"x\":415,\"y\":0},{\"src\":\"g2.png\",\"x\":414,\"y\":110},{\"src\":\"g14.png\",\"x\":419,\"y\":217}]")
+sub('.*\\g(.*)\\..*', "[{\"src\":\"g5.png\",\"x\":415,\"y\":0},{\"src\":\"g2.png\",\"x\":414,\"y\":110},{\"src\":\"g14.png\",\"x\":419,\"y\":217}]")
+cow = "[{\"src\":\"g5.png\",\"x\":415,\"y\":0},{\"src\":\"g2.png\",\"x\":414,\"y\":110},{\"src\":\"g14.png\",\"x\":419,\"y\":217}]"
+sub('.*\\g(.*)\\..*', cow)
+?sub
+sub('.*\\g(.*)\\..*', x=cow)
+grep('.*\\g(.*)\\..*', x=cow)
+grep('.*\\g(.*)\\..*', x=cow, value=T)
+gsub(".+g(\\w+)..+", "\\1", cow, perl=T)
+gsub(".+g(\\w+)..+", "\\1", cow, perl=F)
+gsub(".+g(\\w+)\..+", "\\1", cow, perl=F)
+gsub(".+g(\\w+)..+", "\\1", cow, perl=F)
+gsub(".+g(\\w+)..+", "\\1", cow, perl=T)
+cow
+m = regexpr('src\":\"*.png',cow)#
+substr(cow,m+3,m+attr(m,"match.length")-2)
+m
+gsub('((?:[a-z][a-z]*[0-9]+[a-z0-9]*))', "\\1", cow, perl=T)
+gsub(gsub(".+g(\\w+)..+", "\\1", cow, perl=T), "\\1", cow, perl=T)
+gsub('((?:[a-z][a-z\\.\\d_]+)\\.(?:[a-z\\d]{3}))(?![\\w\\.])', "\\1", cow, perl=T)
+gsub("^.*"src\":\" *(.*?) +.png.*$", "\\1", cow)
+gsub('^.*"src\":\" *(.*?) +.png.*$', "\\1", cow)
+m = regexpr('g5',cow)
+m
+m = regexpr('g2',cow)
+m
+m = regexpr('g14',cow)
+m
+regexpr(df.wide$S_41, df.wide$moves_41)
+regexpr(df.wide$S_41[1], df.wide$moves_41[1])
+head(df.wide)
+global_indeces

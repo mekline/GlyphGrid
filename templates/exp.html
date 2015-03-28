@@ -98,7 +98,7 @@
         var prepHTML = "<h3></br></br>This Study has 2 Parts</h3>" +
                 "<p></br>In Part 1, you will memorize a set of symbols so that you can communicate with Upwilaah. This part also includes a quiz to see how familiar you are with the symbols. </br><b>Part 1 should take about 10 minutes.</b></p>" + 
                 "<p></br>In Part 2, you will be giving the symbols to Upwilaah so that he can guess what is happening. </br><b>Part 2 should take about 15 minutes.</b></p>" +
-                "<p></br>Press the letter <b>P</b> to continue to the next page.";
+                "<p></br>Press the letter <b>T</b> to continue to the next page.";
 
         var prepHTML2 = "<h3><center>PART 2</center></h3>" +
                 "<p></br>In this part, you will will be giving symbols to Upwilaah so that he can guess what is happening." + 
@@ -378,7 +378,7 @@
         var prep_screen = {
             type: "text",
             text: prepHTML,
-            cont_key : [80]
+            cont_key : [84]
         }
         
         var learning_block = {
@@ -508,6 +508,7 @@
             alien: '/static/images/upwilaah.jpeg',
             on_finish: function() { 
                 info = {};
+                info.isTestTrial = 1;
                 clip_name = jsPsych.currentTrial().eventclips;
                 clip_name = clip_name.split("/")[3];
                 info.moviefile = clip_name;
