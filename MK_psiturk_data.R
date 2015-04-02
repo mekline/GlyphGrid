@@ -77,13 +77,14 @@ for (i in 1:nrow(df.wide)){
 
 name_it = names(free_sorts)
 for (i in 1:length(free_sorts)) {
-  if (length(free_sorts[[name_it[i]]]) != 60 | i==11 | i==14) {
+  if (length(free_sorts[[name_it[i]]]) != 60) {
    df.wide[i,] = 'EXCLUDED' 
    df.wide$workerId[i] = 'TOO MANY TRIALS'
   }
 }
 
 for (i in 1:nrow(df.wide)){
+  counter = 1
   if (df.wide$participant[i] != 'EXCLUDED'){
     a = free_sorts[[df.wide$workerId[i]]]
     mylength = length(free_sorts[[df.wide$workerId[i]]])
@@ -93,47 +94,53 @@ for (i in 1:nrow(df.wide)){
     df.wide[i,] = 'EXCLUDED' 
     df.wide$workerId[i] = 'TOO MANY TRIALS'
   }
-  for (j in 1:mylength) {
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$rt)){
-    df.wide[[paste("rt_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$rt
-  }
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moves)){
-    df.wide[[paste("moves_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moves
-    if (free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global > 23) {
-      global_indeces <- unique(c(global_indeces,free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
-    }
-  }
+  for (j in mylength:1) {
+  if(j == mylength) {max_g_i = free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global}
   if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$glyph)){
-    df.wide[[paste("glyph_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$glyph
-  }
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Sub)){
-    df.wide[[paste("S_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Sub
-  }
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Vrb)){
-    df.wide[[paste("V_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Vrb
-  }
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Obj)){
-    df.wide[[paste("O_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Obj
+    trial_num = (21 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
+    df.wide[[paste("glyph_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$glyph
   }
   if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moviefile)){
-    df.wide[[paste("MovieFile_",free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moviefile
+    trial_num = (20 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
+    df.wide[[paste("MovieFile_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moviefile
+  }
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$rt)){
+    df.wide[[paste("rt_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$rt
+  }
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moves)){
+    df.wide[[paste("moves_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moves
+  }
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Sub)){
+    df.wide[[paste("S_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Sub
+  }
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Vrb)){
+    df.wide[[paste("V_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Vrb
+  }
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Obj)){
+    df.wide[[paste("O_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Obj
   }
   }
-}
+    #And grab the info we need from the last 'trial' (feedback)
+    if (is.null(a$data[[mylength-1]]$trialdata$responses)){df.wide$feedback[i] = "none"
+    }else{
+      df.wide$feedback[i] = a$data[[mylength-1]]$trialdata$responses
+    }
+} End of this participant
+
 names = c('moves_', "S_", "O_", "V_")
 
-for (w in 1:length(global_indeces)) {
-  df.wide[paste('WordOrder_', as.character(global_indeces[w]), sep = "")] = "EXCLUDED"
+for (w in 3:20) {
+  df.wide[paste('WordOrd_', w, sep = "")] = "EXCLUDED"
 }
 
 for (j in 1:nrow(df.wide)){
   if (df.wide$participant[j] != "EXCLUDED"){  
     for (i in 2:length(names)){
-      for (k in 1:length(global_indeces)) {
-        check_m = df.wide[paste(names[1], as.character(global_indeces[k]), sep = "")][j,]
-        check_s = df.wide[paste(names[2], as.character(global_indeces[k]), sep = "")][j,]
-        check_o = df.wide[paste(names[3], as.character(global_indeces[k]), sep = "")][j,]
-        check_v = df.wide[paste(names[4], as.character(global_indeces[k]), sep = "")][j,]
+      for (k in 3:20) {
+        check_m = df.wide[paste(names[1], k, sep = "")][j,]
+        check_s = df.wide[paste(names[2], k, sep = "")][j,]
+        check_o = df.wide[paste(names[3], k, sep = "")][j,]
+        check_v = df.wide[paste(names[4], k, sep = "")][j,]
         where_s = unlist(gregexpr(check_s, check_m))
         where_o = unlist(gregexpr(check_o, check_m))
         where_v = unlist(gregexpr(check_v, check_m))
@@ -149,11 +156,56 @@ for (j in 1:nrow(df.wide)){
             word_order = paste(word_order, 'V', sep='')
           } 
         }
-        df.wide[paste('WordOrder_', as.character(global_indeces[k]), sep = "")][j,] = word_order
+        df.wide[paste('WordOrd_', k, sep = "")][j,] = word_order
       }
     }
   }
 }
+
+it_events = c("girl-tumbling-none", "boy-rolling-none", "car-rolling-none", "ball-rolling-none") 
+animates = c("fireman-pushing-boy", "fireman-kicking-girl", "girl-elbowing-oldlady", "girl-kissing-boy", "girl-throwing-oldlady", "boy-lifting-girl",  "oldlady-rubbing-fireman")
+inanimates = c("fireman-lifting-car", "fireman-throwing-ball", "oldlady-kissing-ball", "oldlady-elbowing-heart", "girl-rubbing-heart", "boy-kicking-ball", "girl-pushing-car")
+all_events = c(it_events, animates, inanimates)
+order_col_names = c()
+
+for (w in 1:length(all_events)) {
+  change_name_in = ''
+  in_col = unlist(strsplit(all_events[w], '-'))
+  change_name_in = paste(in_col[1], '.', sep = "")
+  change_name_in = paste(change_name_in, unlist(strsplit(in_col[2], ''))[1], sep = "")
+  if (all_events[w] %in% it_events) {
+    change_name_in = paste("Intran.", paste(change_name_in, paste('.', in_col[3], sep=""), sep = ""), sep="")
+  } else if (all_events[w] %in% animates) {
+    change_name_in = paste("A.", paste(change_name_in, paste('.', in_col[3], sep=""), sep = ""), sep="")
+  } else if (all_events[w] %in% inanimates) {
+    change_name_in = paste("I.", paste(change_name_in, paste('.', in_col[3], sep=""), sep = ""), sep="")
+  }
+    
+  df.wide[change_name_in] = "EXCLUDED"
+  order_col_names = c(order_col_names, change_name_in)
+}
+
+for (k in 1:nrow(df.wide)) {
+  if (df.wide$participant[k] != "EXCLUDED") {
+    for (i in (1:length(all_events)+2)) {
+      for (j in 1:length(all_events)) {
+        if (isTRUE(unlist(gregexpr(all_events[j], df.wide[paste("MovieFile_", i, sep = "")][k,])) == 1)) {
+          long_order = df.wide[paste("WordOrd_", i, sep = "")][k,]
+          long_order = unlist(strsplit(long_order, ''))
+          how_long = length(long_order)
+          short_order = ''
+          for (l in 1:how_long) {
+            short_order = unique(c(short_order, long_order[l]))
+          }
+          short_order = paste(short_order, collapse='')
+          df.wide[order_col_names[j]][k,] = short_order
+        }
+      }
+    }
+  }
+}
+
+
 
 #   #And grab the info we need from the last 'trial' (feedback)
 #   if (is.null(a$data[[mylength-1]]$trialdata$responses)){df.wide$feedback[i] = "none"
