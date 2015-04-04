@@ -72,7 +72,12 @@ for (i in 1:nrow(df.wide)){
       } #Else just don't make any columns right now!!!
     }
     free_sorts[a$workerId] = list(partic_free)
-  } 
+  }
+  #And grab the info we need from the last 'trial' (feedback)
+  if (is.null(a$data[[mylength-1]]$trialdata$responses)){df.wide$feedback[i] = "none"
+  }else{
+    df.wide$feedback[i] = a$data[[mylength-1]]$trialdata$responses
+  }
 }
 
 name_it = names(free_sorts)
@@ -120,12 +125,7 @@ for (i in 1:nrow(df.wide)){
     df.wide[[paste("O_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Obj
   }
   }
-    #And grab the info we need from the last 'trial' (feedback)
-    if (is.null(a$data[[mylength-1]]$trialdata$responses)){df.wide$feedback[i] = "none"
-    }else{
-      df.wide$feedback[i] = a$data[[mylength-1]]$trialdata$responses
-    }
-} End of this participant
+} #End of this participant
 
 names = c('moves_', "S_", "O_", "V_")
 
@@ -135,18 +135,22 @@ for (w in 3:20) {
 
 for (j in 1:nrow(df.wide)){
   if (df.wide$participant[j] != "EXCLUDED"){  
-    for (i in 2:length(names)){
       for (k in 3:20) {
         check_m = df.wide[paste(names[1], k, sep = "")][j,]
         check_s = df.wide[paste(names[2], k, sep = "")][j,]
         check_o = df.wide[paste(names[3], k, sep = "")][j,]
         check_v = df.wide[paste(names[4], k, sep = "")][j,]
-        where_s = unlist(gregexpr(check_s, check_m))
-        where_o = unlist(gregexpr(check_o, check_m))
-        where_v = unlist(gregexpr(check_v, check_m))
-        where_svo = c(where_s, where_v, where_o)
+        where_s = where_o = where_v = ''
+        if (unlist(gregexpr(check_s, check_m))[1] != -1) {
+          where_s = unlist(gregexpr(check_s, check_m))}
+        if (unlist(gregexpr(check_o, check_m))[1] != -1) {
+          where_o = unlist(gregexpr(check_o, check_m))}
+        if (unlist(gregexpr(check_v, check_m))[1] != -1) {
+          where_v = unlist(gregexpr(check_v, check_m))}
+        where_svo = as.numeric(c(where_s, where_v, where_o))
         where_svo = sort(where_svo)
         word_order = ''
+        if (length(where_svo) > 0) {
         for (l in 1:length(where_svo)) {
           if (where_svo[l] %in% where_s) {
             word_order = paste(word_order, 'S', sep='')
@@ -155,10 +159,9 @@ for (j in 1:nrow(df.wide)){
           } else if (where_svo[l] %in% where_v) {
             word_order = paste(word_order, 'V', sep='')
           } 
-        }
+        }} else {word_order = 'NONE'}
         df.wide[paste('WordOrd_', k, sep = "")][j,] = word_order
       }
-    }
   }
 }
 
@@ -190,6 +193,7 @@ for (k in 1:nrow(df.wide)) {
     for (i in (1:length(all_events)+2)) {
       for (j in 1:length(all_events)) {
         if (isTRUE(unlist(gregexpr(all_events[j], df.wide[paste("MovieFile_", i, sep = "")][k,])) == 1)) {
+        if (df.wide[paste("WordOrd_", i, sep = "")][k,] != 'NONE') {
           long_order = df.wide[paste("WordOrd_", i, sep = "")][k,]
           long_order = unlist(strsplit(long_order, ''))
           how_long = length(long_order)
@@ -199,12 +203,79 @@ for (k in 1:nrow(df.wide)) {
           }
           short_order = paste(short_order, collapse='')
           df.wide[order_col_names[j]][k,] = short_order
+        } else {df.wide[order_col_names[j]][k,] = 'NONE'}
         }
       }
     }
   }
 }
 
+cln.table = df.wide[1:4]
+cln.table[order_col_names[5:length(order_col_names)]] = df.wide[order_col_names[5:length(order_col_names)]]
+#cln.table <- data.frame(matrix(unlist(cln.table), nrow=nrow(cln.table)))
+
+cln.table$Per.Vlat = cln.table$Per.Vmed = cln.table$Per.Othe = 0
+
+for (i in 1:nrow(cln.table)) {
+  if (cln.table$participant[i] != 'EXCLUDED') {
+    p_lat = p_med = p_none = 0
+    for (j in 5:length(order_col_names)) {
+      if ((cln.table[order_col_names[j]])[i,] != 'NONE') {
+        if (length(unlist(strsplit((cln.table[order_col_names[j]])[i,], ''))) != 3) {
+          p_none = p_none + 1
+        } else {
+          where = unlist(gregexpr('V', (cln.table[order_col_names[j]])[i,]))
+          if (where == 2) {
+            p_med = p_med + 1
+          } else {
+            p_lat = p_lat + 1
+          }
+        }
+      }
+    }
+    tot = (p_none+p_med+p_lat)
+    p_none = p_none/tot
+    p_med = p_med/tot
+    p_lat = p_lat/tot
+    cln.table$Per.Vlat[i] = p_lat
+    cln.table$Per.Vmed[i] = p_med
+    cln.table$Per.Othe[i] = p_none
+  }
+}
+
+cln.table[(nrow(cln.table)+1),] = "%Vlat"
+cln.table[(nrow(cln.table)+1),] = "#Incomplete"
+cln.table[(nrow(cln.table)+1),] = "%Incomplete"
+
+for (j in 5:length(order_col_names)) {
+  p_lat = p_med = p_none = 0
+  for (i in 1:(nrow(cln.table)-3)) {
+      if (length(unlist(strsplit((cln.table[order_col_names[j]])[i,], ''))) != 3) {
+        p_none = p_none + 1
+      } else {
+        where = unlist(gregexpr('V', (cln.table[order_col_names[j]])[i,]))
+        if (where == 2) {
+          p_med = p_med + 1
+        } else {
+          p_lat = p_lat + 1
+        }
+      } 
+    }
+  p_lat = p_lat/(p_lat+p_med)
+  cln.table[order_col_names[j]][(nrow(cln.table)-2),] = p_lat*100
+  cln.table[order_col_names[j]][(nrow(cln.table)-1),] = p_none
+  p_none = p_none/(p_lat+p_med+p_none)
+  cln.table[order_col_names[j]][(nrow(cln.table)),] = p_none*100
+}
+
+directory = getwd()
+write.csv(cln.table, file = paste0(directory, "/dfwide.csv"))
+  
+  
+#   tot = (p_med+p_lat)
+#   df.wide[order_col_names[j]][k,]
+#   (cln.table[cow])[(nrow(cln.table)),] <- p_none
+  }
 
 
 #   #And grab the info we need from the last 'trial' (feedback)
