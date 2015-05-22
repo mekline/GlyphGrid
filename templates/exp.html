@@ -9,7 +9,7 @@
         <script src="static/lib/underscore/underscore-min.js" type="text/javascript"> </script>
         <script src="static/lib/backbone-min.js" type="text/javascript"> </script>
         <script src="static/lib/d3-3.0.0/d3.min.js" type="text/javascript"> </script>
-
+        <link href="/static/css/jspsych.css" rel="stylesheet" type="text/css"></link>
         <script type="text/javascript">
         // Subject info, including condition and counterbalance codes.
             var uniqueId = "{{ uniqueId }}";
@@ -22,6 +22,8 @@
         <script src="static/js/psiturk.js" type="text/javascript"> </script>
         <!-- jsPsych -->
         <script src="/static/js/jsPsych/jspsych.js" type="text/javascript"></script>
+        <script src="/static/js/jsPsych/css/jspsych.css" type="text/css"></script>
+        <link href="/static/js/jsPsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
         <script src="/static/js/jsPsych/plugins/jspsych-free-sort.js" type="text/javascript"></script>
         <script src="/static/js/jsPsych/plugins/jspsych-text.js" type="text/javascript"></script>
         <script src="/static/js/jsPsych/plugins/jspsych-survey-text.js" type="text/javascript"></script>
@@ -77,6 +79,7 @@
 
         /* Declare an array to hold the events and block texts, tables, objects, HTML, etc.*/
         var Pevents = ["oldlady", "car"]; 
+        var Pmovies = ["car-tumbling-none", "girl-pushing-ball"];
         var Tevents = ["girl-tumbling-none", "boy-rolling-none", "car-rolling-none", 
                        "ball-rolling-none", "fireman-pushing-boy", "fireman-lifting-car", 
                        "fireman-kicking-girl", "fireman-throwing-ball", "girl-elbowing-oldlady", 
@@ -84,6 +87,12 @@
                        "girl-rubbing-heart", "girl-throwing-oldlady", "oldlady-elbowing-heart", 
                        "boy-lifting-girl", "oldlady-kissing-ball", "oldlady-rubbing-fireman"];
         var istransitive = [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+        var Pmovies_trans = [0,1];
+
+        var events_w_trans = [];
+        for (var i = 0; i < Tevents.length; i++) {
+            events_w_trans.push([Tevents[i], istransitive[i]]) 
+        };
 
         var instrucHTML = "<h3><center>Meet our friend Upwilaah!</center></h3>" +
                 "<div class='center-content'><img height=150 width=150 src='/static/images/upwilaah.jpeg' /></div>" +
@@ -95,20 +104,26 @@
                 "in a series of very short stories.</p>" + 
                 "<p><b>Press the spacebar to continue.</b></p>";
 
-        var prepHTML = "<h3></br></br>This Study has 2 Parts</h3>" +
+        var prepHTML1 = "<h3></br></br>This Study has 2 Parts</h3>" +
                 "<p></br>In Part 1, you will memorize a set of symbols so that you can communicate with Upwilaah. This part also includes a quiz to see how familiar you are with the symbols. </br><b>Part 1 should take about 10 minutes.</b></p>" + 
                 "<p></br>In Part 2, you will be giving the symbols to Upwilaah so that he can guess what is happening. </br><b>Part 2 should take about 15 minutes.</b></p>" +
                 "<p></br>Press the letter <b>T</b> to continue to the next page.";
 
         var prepHTML2 = "<h3><center>PART 2</center></h3>" +
                 "<p></br>In this part, you will will be giving symbols to Upwilaah so that he can guess what is happening." + 
-                "<p></br>First you will practice. </br>During practice you will see a picture. Give Upwilaah the symbol that best describes the picture." +
+                "<p></br>First you will practice. </br>In the first two practice screens you will see a picture. Give Upwilaah the one symbol that best describes the picture." +
                 "<p></br>Press the letter <b>P</b> to continue to the practice pages.";
 
-        var prepHTML3 = "<h3><center>PART 2</center></h3>" +
-                "<p></br>In this part, you will be watching short movies." + 
-                "<p></br>First watch the movie. </br></br>After the movie is over, give Upwilaah the symbols that best <b>describe what happened in the movie</b>. You will need to <u>drag more than one symbol</u> per movie." +
+        var prepHTML3 = "<h3><center>More Practice</center></h3>" +
+                "<p></br>In these practice screens you will be watching some short movies." + 
+                "<p></br>First watch the movie. </br></br>After the movie is over, give Upwilaah the symbols that best <b>describe what happened in the movie</b>. Upwilaah will tell you how many symbols you need per movie." +
+                "<p></br><b>Press the spacebar</b> to continue to the movies.";
+
+        var prepHTML4 = "<h3><center>PART 2</center></h3>" +
+                "<p></br>In this part, you will be watching more short movies." + 
+                "<p></br>First watch the movie. </br></br>After the movie is over, give Upwilaah the symbols that best <b>describe what happened in the movie</b>. Upwilaah will tell you how many symbols you need per movie." +
                 "<p></br>Press the letter <b>T</b> to continue to the movies.";
+
 
 
         /*This is a table for the learning block*/
@@ -148,12 +163,21 @@
         TestInfo.ptrialInfo = [];
         TestInfo.trialInfo = [];
         for (i=0;i<Tevents.length;i++){
-            if (i<2) {
-                var ptrial = [];
-                ptrial.isTestTrial=0;
-                ptrial.stimName=Pevents[i];
-                ptrial.glyphorder=tglyphs[i+3];
-                TestInfo.ptrialInfo.push(ptrial);
+            if (i<4) {
+                if (i<2) {                
+                    var ptrial = [];
+                    ptrial.isTestTrial=0;
+                    ptrial.stimName=Pevents[i];
+                    ptrial.glyphorder=tglyphs[i+3];
+                    TestInfo.ptrialInfo.push(ptrial);
+                } else {
+                    var ptrial = [];
+                    ptrial.isTestTrial=0;
+                    ptrial.stimName=Pmovies[i%2];
+                    ptrial.transitive=Pmovies_trans[i%2]
+                    ptrial.glyphorder=tglyphs[i+6];
+                    TestInfo.ptrialInfo.push(ptrial);
+                }
             };
             var trial = [];
             trial.isTestTrial=1;
@@ -166,24 +190,37 @@
         ptrial_words = [];
         trial_words = [];
         for (var i=0;i<TestInfo.trialInfo.length;i++) {
-            if (i<2) {
-                ptrial_words.push(TestInfo.ptrialInfo[i].stimName.split("-"));
+            if (i<4) {
+                if (i<4) {
+                    ptrial_words.push(TestInfo.ptrialInfo[i].stimName.split("-"));
+                }
             }
             trial_words.push(TestInfo.trialInfo[i].stimName.split("-"));
         }
 
         PoS = ['Sub', 'Vrb', 'Obj']
         for (var i=0;i<trial_words.length;i++) {
-            if(i<2) {
-                TestInfo.ptrialInfo[i].Rel_glyph = 'g' + String(words.indexOf(ptrial_words[i][0]) + 1);
+            if(i<4) {
+                if (i<2) {
+                    TestInfo.ptrialInfo[i].Rel_glyph = 'g' + String(words.indexOf(ptrial_words[i][0]) + 1);
+                } else {
+                    TestInfo.ptrialInfo[i].Rel_glyph = [];
+                }   
             }
             TestInfo.trialInfo[i].Rel_glyph = [];
             for (var j=0;j<PoS.length;j++) {
+                if (i==2 || i==3) {
+                    TestInfo.ptrialInfo[i].Rel_glyph[PoS[j]] = 'g' + String(words.indexOf(ptrial_words[i][j]) + 1);
+                }
                 TestInfo.trialInfo[i].Rel_glyph[PoS[j]] = 'g' + String(words.indexOf(trial_words[i][j]) + 1);
             }
             if (TestInfo.trialInfo[i].transitive == 0) {
                 TestInfo.trialInfo[i].Rel_glyph.Obj = 'none';
             }
+            if(i==2){
+                if (TestInfo.ptrialInfo[i].transitive == 0) {
+                    TestInfo.ptrialInfo[i].Rel_glyph.Obj = 'none';
+                }}
         }
 
         for (var i=0;i<TestInfo.trialInfo.length;i++) {
@@ -221,16 +258,23 @@
             categorized.push(text);
             }
 
-        shuffle(Tevents);
+        shuffle(events_w_trans);
         var eventclippy = [];
         for(var j=0;j<Tevents.length;j++) {
             text = '/static/movies/XXYX.mp4';
-            text = text.replace('XXYX', Tevents[j]);
+            text = text.replace('XXYX', events_w_trans[j][0]);
             eventclippy.push(text);
+            events_w_trans[j].push(text);
             }
+
+
         
         /*Add more information to TestInfo*/
-        TestInfo.trialOrder = Tevents;
+        TestInfo.trialOrder = [];
+        for (var i = 0; i < events_w_trans.length; i++) {
+            TestInfo.trialOrder.push(events_w_trans[i][0])
+        };
+
         for (var i=0;i<TestInfo.trialInfo.length;i++) {
             TestInfo.trialInfo[i].TrialNum = (Tevents.indexOf(TestInfo.trialInfo[i].stimName))+1;
         }
@@ -300,12 +344,21 @@
         NTestInfo.ptrialInfo = {};
         NTestInfo.trialInfo = {};
         for (i=0;i<TestInfo.trialInfo.length;i++){
-            if (i<2) {
-                var ptrial = {};
-                ptrial.isTestTrial=0;
-                ptrial.stimName=Pevents[i];
-                ptrial.glyphorder=tglyphs[i+3];
-                NTestInfo.ptrialInfo[i] = ptrial;
+            if (i<4) {
+                if (i<2) {
+                    var ptrial = {};
+                    ptrial.isTestTrial=0;
+                    ptrial.stimName=Pevents[i];
+                    ptrial.glyphorder=tglyphs[i+3];
+                    NTestInfo.ptrialInfo[i] = ptrial;
+                } else {
+                    var ptrial = {};
+                    ptrial.isTestTrial=0;
+                    ptrial.stimName=TestInfo.ptrialInfo[i].stimName;
+                    ptrial.transitive=Pmovies_trans[i%2];
+                    ptrial.glyphorder=TestInfo.ptrialInfo[i].glyphorder;
+                    NTestInfo.ptrialInfo[i] = ptrial;
+                }
             };
             var trial = {};
             trial.isTestTrial=1;
@@ -318,16 +371,27 @@
         NTestInfo.trialOrder = TestInfo.trialOrder;
 
         for (var i=0;i<trial_words.length;i++) {
-            if(i<2) {
-                NTestInfo.ptrialInfo[i].Rel_glyph = 'g' + String(words.indexOf(ptrial_words[i][0]) + 1);
+            if(i<4) {
+                if (i<2) {
+                    NTestInfo.ptrialInfo[i].Rel_glyph = 'g' + String(words.indexOf(ptrial_words[i][0]) + 1);
+                } else {
+                    NTestInfo.ptrialInfo[i].Rel_glyph = {};
+                }   
             }
             NTestInfo.trialInfo[i].Rel_glyph = {};
             for (var j=0;j<PoS.length;j++) {
+                if (i==2 || i==3) {
+                    NTestInfo.ptrialInfo[i].Rel_glyph[PoS[j]] = 'g' + String(words.indexOf(ptrial_words[i][j]) + 1);
+                }
                 NTestInfo.trialInfo[i].Rel_glyph[PoS[j]] = 'g' + String(words.indexOf(trial_words[i][j]) + 1);
             }
-            if (NTestInfo.trialInfo[i].transitive === 0) {
+            if (NTestInfo.trialInfo[i].transitive == 0) {
                 NTestInfo.trialInfo[i].Rel_glyph.Obj = 'none';
             }
+            if(i==2){
+                if (NTestInfo.ptrialInfo[i].transitive == 0) {
+                    NTestInfo.ptrialInfo[i].Rel_glyph.Obj = 'none';
+                }}
         }
 
         NTestInfo.trialOrder = Tevents;
@@ -346,7 +410,8 @@
         /* Load Psiturk */
         var psiturk = new PsiTurk(uniqueId, adServerLoc, mode);
 
-        /* Text blocks */
+/* Text blocks */
+//FIRST TEXT BLOCK -- WELCOME
         var welcome_block = {
             type: "text",
             text: "<h3><center></br></br>Welcome to the Alien Communication Experiment!</center></h3>" +
@@ -360,6 +425,7 @@
             }
         };
 
+//INSTRUCTIONS EXPLAINING COMMUNICATION GOALS
         var instructions_block = {
             type: "text",
             text: function() {
@@ -375,12 +441,7 @@
             }
         };
 
-        var prep_screen = {
-            type: "text",
-            text: prepHTML,
-            cont_key : [84]
-        }
-        
+//TABLE CONTAINING ALL GLYPHS (SHUFFLED) FOR MEMORIZATION
         var learning_block = {
             type: "text",
             text: function () {
@@ -404,18 +465,221 @@
             }
         };
 
-        var part2_prep = {
-            type: 'text',
-            text: prepHTML2,
-            cont_key: [80]
-        }   
+//THESE ARE PREP SCREENS FOR PROVIDING ADDITIONAL INSTRUCTIONS//
 
-        var part2_prep2 = {
-            type: 'text',
-            text: prepHTML3,
+//GIVES INFORMATION ON THE STUDY (TASKS AND THEIR TIMES)
+        var prep_screen1 = {
+            type: "text",
+            text: prepHTML1,
             cont_key: [84]
         }
 
+//INTRODUCES PART 2 AND THE TWO IMAGE PRACTICE TRIALS
+        var prep_screen2 = {
+            type: "text",
+            text: prepHTML2,
+            cont_key: [80]
+        }
+
+//INTRODUCES THE TWO VIDEO PRACTICE TRIALS
+        var prep_screen3 = {
+            type: "text",
+            text: prepHTML3,
+            cont_key: [32]
+        };
+
+//INTRODUCES THE TEST TRIALS AND PROVIDES INSTRUCTIONS
+        var prep_screen4 = {
+            type: "text",
+            text: prepHTML4,
+            cont_key: [84]
+        };
+
+
+//THESE TRIALS GIVE FEEDBACK (IF INCORRECT) IN THE PRACTICE SECTION
+//FEEDBACK FOR IMAGE OF CAR
+        var prep_feedback1 = {
+            type: "text",
+            text: function () {
+                checkit3 = jsPsych.data.getLastChunkData();
+                listit = [];
+                moves_array = checkit3[1].moves.split('src":"')
+                for (var i = 0; i < moves_array.length; i++) {
+                    splitit = moves_array[i].split(".")
+                    listit.push(splitit[0]);
+                correctit = 0
+                for (var j = 0; j < listit.length; j++) {
+                    if (listit[j] == checkit3[0].glyph) {
+                        correctit = 1
+                    }
+                    }                        
+                };
+                missed = ''
+                missed_num = 0
+                if (correctit == 0) {
+                    text1 = '<p>You missed the glyph for the car. You should have given Upwilaah this symbol:</p>' +
+                                '<img height=100 width=100 src="/static/images/GLYPH.png" /></br>'
+                    missed = missed + text1;
+                    missed_num++;
+                }                   
+
+                missed = missed.replace('GLYPH', checkit3[0].glyph);
+
+                missed = missed + '<p><b>Press the spacebar to continue.</b></p>'
+
+                if (missed_num > 0) {
+                    return missed
+                } else {return jsPsych.finishTrial()}
+
+            }
+        }
+
+//FEEDBACK FOR IMAGE OF OLD LADY
+        var prep_feedback2 = {
+            type: "text",
+            text: function () {
+                checkit4 = jsPsych.data.getLastChunkData();
+                listit = [];
+                moves_array = checkit4[1].moves.split('src":"')
+                for (var i = 0; i < moves_array.length; i++) {
+                    splitit = moves_array[i].split(".")
+                    listit.push(splitit[0]);
+                correctit = 0
+                for (var j = 0; j < listit.length; j++) {
+                    if (listit[j] == checkit4[0].glyph) {
+                        correctit = 1
+                    }
+                    }                        
+                };
+                missed = ''
+                missed_num = 0
+                if (correctit == 0) {
+                    text1 = '<p>You missed the glyph for the old lady. You should have given Upwilaah this symbol:</p>' +
+                                '<img height=100 width=100 src="/static/images/GLYPH.png" /></br>'
+                    missed = missed + text1;
+                    missed_num++;
+                }                   
+
+                missed = missed.replace('GLYPH', checkit4[0].glyph);
+
+                missed = missed + '<p><b>Press the spacebar to continue.</b></p>'
+
+                if (missed_num > 0) {
+                    return missed
+                } else {return jsPsych.finishTrial()}
+
+            }
+        }
+
+//FEEDBACK FOR CAR TUMBLING VIDEO
+        var prep_feedback3 = {
+            type: "text",
+            text: function () {
+                checkit1 = jsPsych.data.getLastChunkData();
+                if (checkit1[0].Obj == 'none') {
+                    listit = [];
+                    moves_array = checkit1[1].moves.split('src":"')
+                    for (var i = 0; i < moves_array.length; i++) {
+                        splitit = moves_array[i].split(".")
+                        listit.push(splitit[0]);
+                    correctit = [0,0]
+                    for (var j = 0; j < listit.length; j++) {
+                        if (listit[j] == checkit1[0].Sub) {
+                            correctit[0] = 1
+                        }
+                        if (listit[j] == checkit1[0].Vrb) {
+                            correctit[1] = 1
+                        }
+                    };
+                    };
+                }
+                missed = ''
+                missed_num = 0
+                if (correctit[0] == 0) {
+                    text1 = '<p>You missed the glyph for the car. You should have given Upwilaah this symbol:</p>' +
+                                '<img height=100 width=100 src="/static/images/SUB.png" /></br>'
+                    missed = missed + text1;
+                    missed_num++;
+                }
+                if (correctit[1] == 0) {
+                    text2 = '<p>You missed the glyph for tumbling. You should have given Upwilaah this symbol:</p>' +
+                                '<img height=100 width=100 src="/static/images/VRB.png" /></br>'
+                    missed = missed + text2;
+                    missed_num++;
+                }                    
+
+                missed = missed.replace('SUB', checkit1[0].Sub);
+                missed = missed.replace('VRB', checkit1[0].Vrb);
+
+                missed = missed + '<p><b>Press the spacebar to continue.</b></p>'
+
+                if (missed_num > 0) {
+                    return missed
+                } else {return jsPsych.finishTrial()}
+
+            }
+        }
+
+//FEEDBACK FOR GIRL PUSHING BALL VIDEO
+        var prep_feedback4 = {
+            type: "text",
+            text: function () {
+                checkit2 = jsPsych.data.getLastChunkData();
+                if (checkit2[0].Obj != 'none') {
+                    listit = [];
+                    moves_array = checkit2[1].moves.split('src":"')
+                    for (var i = 0; i < moves_array.length; i++) {
+                        splitit = moves_array[i].split(".")
+                        listit.push(splitit[0]);
+                    correctit = [0,0,0]
+                    for (var j = 0; j < listit.length; j++) {
+                        if (listit[j] == checkit2[0].Sub) {
+                            correctit[0] = 1
+                        }
+                        if (listit[j] == checkit2[0].Vrb) {
+                            correctit[1] = 1
+                        }
+                        if (listit[j] == checkit2[0].Obj) {
+                            correctit[2] = 1
+                        }                        
+                    };
+                    };
+                }
+                missed = ''
+                missed_num = 0
+                if (correctit[0] == 0) {
+                    text1 = '<p>You missed the glyph for the girl. You should have given Upwilaah this symbol:</p>' +
+                                '<img height=100 width=100 src="/static/images/SUB.png" /></br>'
+                    missed = missed + text1;
+                    missed_num++;
+                }
+                if (correctit[1] == 0) {
+                    text2 = '<p>You missed the glyph for push. You should have given Upwilaah this symbol:</p>' +
+                                '<img height=100 width=100 src="/static/images/VRB.png" /></br>'
+                    missed = missed + text2;
+                    missed_num++;
+                }
+                if (correctit[2] == 0) {
+                    text2 = '<p>You missed the glyph for the ball. You should have given Upwilaah this symbol:</p>' +
+                                '<img height=100 width=100 src="/static/images/OBJ.png" /></br>'
+                    missed = missed + text2;
+                    missed_num++;
+                }                    
+
+                missed = missed.replace('SUB', checkit2[0].Sub);
+                missed = missed.replace('OBJ', checkit2[0].Obj);
+                missed = missed.replace('VRB', checkit2[0].Vrb);
+
+                missed = missed + '<p><b>Press the spacebar to continue.</b></p>'
+
+                if (missed_num > 0) {
+                    return missed
+                } else {return jsPsych.finishTrial()}
+
+            }
+        }
+
+//THANK YOU BLOCK
         var debrief_block = {
             type: "text",
             text: function() {
@@ -427,7 +691,8 @@
             }
         };     
 
-        /*All other blocks and chunks defined here*/
+/*All other blocks and defined here*/
+//THIS IS THE ACTUAL QUIZ THAT PARTICIPANTS TAKE
         var categorization_block = {
             type: 'categorize',
             stimuli: categorized,
@@ -440,8 +705,141 @@
             prompt: prompt
         };     
 
-        
+//NUM OF RETAKES DOES NOT WORK, BUT BREAKS IF TAKEN OUT - IDK 
         num_of_retakes = 0;
+
+//PRACTICE BLOCK FOR IMAGE OF CAR
+        var pract_block1 = {
+            type: 'free-sort',
+            stimuli: [prac_trials[0]],
+            prompt: "<p>What is this?</p>",
+            eventpics: ['/static/images/car.png'],
+            eventpicside: 225,
+            moreinstr: 'static/images/one.png',
+            alien: '/static/images/upwilaah.jpeg',
+            on_finish: function () {
+                info = {};
+                info.glyph = NTestInfo.ptrialInfo[1].Rel_glyph;
+                jsPsych.data.write(info);
+            }
+        };
+
+//PRACTICE BLOCK FOR IMAGE OF OLD LADY
+        var pract_block2 = {
+            type: 'free-sort',
+            stimuli: [prac_trials[1]],
+            prompt: "<p>Who is this?</p>",
+            eventpics: ['/static/images/oldlady.png'],
+            eventpicside: 225,
+            moreinstr: 'static/images/one.png',
+            alien: '/static/images/upwilaah.jpeg',
+            on_finish: function () {
+                info = {};
+                info.glyph = NTestInfo.ptrialInfo[0].Rel_glyph;
+                jsPsych.data.write(info);
+            }
+        };
+
+//PRACTICE BLOCK FOR VIDEO OF CAR TUMBLING
+        var pract_block3 = {
+            type: 'free-sort',
+            stimuli: [shuffle(prac_trials[0])],
+            prompt: "Watch this movie!",
+            eventclips: ['/static/movies/car-tumbling-none.mp4'],
+            moreinstr: 'static/images/two.png',
+            alien: '/static/images/upwilaah.jpeg',
+            on_finish: function () {
+                info = {};
+                info.isTestTrial = 0;
+                clip_name = jsPsych.currentTrial().eventclips;
+                clip_name = clip_name.split("/")[3];
+                info.moviefile = clip_name;
+                stim = info.moviefile.split(".")[0];
+                for (var j=0;j<PoS.length;j++) {
+                   info[PoS[j]] = NTestInfo.ptrialInfo[2].Rel_glyph[PoS[j]];
+                }
+                jsPsych.data.write(info);
+        }};
+
+//PRACTICE BLOCK FOR VIDEO OF GIRL PUSHING BALL
+        var pract_block4 = {
+            type: 'free-sort',
+            stimuli: [shuffle(prac_trials[0])],
+            prompt: "Watch this movie!",
+            eventclips: ['/static/movies/girl-pushing-ball.mp4'],
+            moreinstr: 'static/images/three.png',
+            alien: '/static/images/upwilaah.jpeg',
+            on_finish: function () {
+                info = {};
+                info.isTestTrial = 0;
+                clip_name = jsPsych.currentTrial().eventclips;
+                clip_name = clip_name.split("/")[3];
+                info.moviefile = clip_name;
+                stim = info.moviefile.split(".")[0];
+                for (var j=0;j<PoS.length;j++) {
+                   info[PoS[j]] = NTestInfo.ptrialInfo[3].Rel_glyph[PoS[j]];
+                }
+                jsPsych.data.write(info);
+        }};
+
+//BLOCK CONTAINING THE 18 TEST TRIALS THAT WE OBSERVE
+        var sort_block = {
+            type: 'free-sort',
+            stimuli: glyphtrials,
+            prompt: "<p>Watch this movie!</p>",
+            eventclips: eventclippy,
+            alien: '/static/images/upwilaah.jpeg',
+            moreinstr: function() {
+                name = jsPsych.currentTrial().eventclips;
+                which_one = '';
+                for (var k = 0; k < events_w_trans.length; k++) {
+                    if (events_w_trans[k][2] == name) {
+                        if (events_w_trans[k][1] == 1) {
+                            which_one = '/static/images/three.png'
+                        } else {which_one = '/static/images/two.png'}
+                    };
+                };
+                return which_one
+            },
+            on_finish: function() { 
+                info = {};
+                info.isTestTrial = 1;
+                clip_name = jsPsych.currentTrial().eventclips;
+                clip_name = clip_name.split("/")[3];
+                info.moviefile = clip_name;
+                stim = info.moviefile.split(".")[0];
+                trial_num = TestInfo.trialOrder.indexOf(stim);
+                for (var i=0;i<TestInfo.trialInfo.length;i++) {
+                        if (NTestInfo.trialInfo[i].stimName == stim) {
+                            for (var j=0;j<PoS.length;j++) {
+                               info[PoS[j]] = NTestInfo.trialInfo[i].Rel_glyph[PoS[j]]; 
+                            }
+                            
+                        }
+                }
+                jsPsych.data.write(info);
+            }};
+
+//HERE THE PARTICIPANT GIVES US FEEDBACK ON THE STUDY
+//Does not refer to trial feedback//
+        var feedback_block = {
+            type: 'survey-text',
+            questions: [["<p><b>NOTE: Please answer the following questions honestly.</b> Your <u>payment will NOT be affected</u> by how you answer these questions.</p><p></br>In this study, we are interested in how people describe different types of events, given a new way of describing them. This will help us to understand how we use language.</p> <p>Do you have any feedback about the task, or comments on how you thought about the answers you gave? Enter your comments below.</p>", "<p>Did you copy down the symbols on a sheet of paper?</p>", "Did you take a screen shot or take a picture of the screen to help you during the task?</p>", "<p>Did you memorize the glyphs?</p>"]],
+            data:{
+                isTestTrial:0
+            }
+        };
+
+
+/* ***DEFINE CHUNKS HERE --- CHUNKS ARE WHAT GROUP BLOCKS*** */
+
+//INTRODUCTORY CHUNK THAT CONTAINS FIRST TWO BLOCKS
+        var intro_chunk = {
+            chunk_type: 'linear',
+            timeline: [welcome_block, instructions_block]
+        };
+
+//THIS CHUNK GROUPS THE LEARNING TABLE AND THE ACTUAL QUIZ
         var quiz_chunk = {
             chunk_type: 'while',
             timeline: [learning_block, categorization_block],
@@ -464,110 +862,85 @@
             }
         }
 
-        var pract_block1 = {
-            type: 'free-sort',
-            stimuli: [prac_trials[0]],
-            prompt: "<p>What is this?</p>",
-            eventpics: ['/static/images/car.png'],
-            eventpicside: 225,
-            moreinstr: 'static/images/more_instructions_pract.png',
-            alien: '/static/images/upwilaah.jpeg',
-            on_finish: function () {
-                info = {};
-                info.glyph = NTestInfo.ptrialInfo[1].Rel_glyph;
-                jsPsych.data.write(info);
-            }
-        };
+//RANDOMIZE THE PRACTICE BLOCKS WITH 
+//THEIR APPROPRIATE FEEDBACK BLOCKS
+        practice_images = shuffle([[pract_block1, prep_feedback1], [pract_block2, prep_feedback2]]);
+        practice_videos = shuffle([[pract_block3, prep_feedback3], [pract_block4, prep_feedback4]]);
 
-        var pract_block2 = {
-            type: 'free-sort',
-            stimuli: [prac_trials[1]],
-            prompt: "<p>Who is this?</p>",
-            eventpics: ['/static/images/oldlady.png'],
-            eventpicside: 225,
-            moreinstr: 'static/images/more_instructions_pract.png',
-            alien: '/static/images/upwilaah.jpeg',
-            on_finish: function () {
-                info = {};
-                info.glyph = NTestInfo.ptrialInfo[0].Rel_glyph;
-                jsPsych.data.write(info);
-            }
-        };
-
-        var pract_chunk = {
+//THESE CHUNKS HOLD INDIVIDUAL PRACTICE BLOCKS -- NECESSARY FOR FEEDBACK TO
+//WORK SINCE LastChunkData() FUNCTION IS USED FOR PARSING
+        var pract_chunk1 = {
             chunk_type: 'linear',
-            timeline: shuffle([pract_block2, pract_block1])
+            timeline: [practice_images[0][0]]
         };
 
-        var sort_block = {
-            type: 'free-sort',
-            stimuli: glyphtrials,
-            prompt: "<p>Watch this movie!</p>",
-            eventclips: eventclippy,
-            moreinstr: 'static/images/more_instructions_movie.png',
-            alien: '/static/images/upwilaah.jpeg',
-            on_finish: function() { 
-                info = {};
-                info.isTestTrial = 1;
-                clip_name = jsPsych.currentTrial().eventclips;
-                clip_name = clip_name.split("/")[3];
-                info.moviefile = clip_name;
-                stim = info.moviefile.split(".")[0];
-                trial_num = TestInfo.trialOrder.indexOf(stim);
-                for (var i=0;i<TestInfo.trialInfo.length;i++) {
-                        if (NTestInfo.trialInfo[i].stimName == stim) {
-                            for (var j=0;j<PoS.length;j++) {
-                               info[PoS[j]] = NTestInfo.trialInfo[i].Rel_glyph[PoS[j]]; 
-                            }
-                            
-                        }
-                }
-                jsPsych.data.write(info);
-            }};
+        var pract_chunk2 = {
+            chunk_type: 'linear',
+            timeline: [practice_images[1][0]]
+        };        
 
+        var pract_chunk3 = {
+            chunk_type: 'linear',
+            timeline: [practice_videos[0][0]]
+        };
 
+        var pract_chunk4 = {
+            chunk_type: 'linear',
+            timeline: [practice_videos[1][0]]
+        };  
+
+//CHUNK THAT HOLDS TEST TRIALS AND THEIR INSTRUCTIONS
         var sort_chunk = {
             chunk_type: 'linear',
-            timeline: [part2_prep2, sort_block]            
+            timeline: [prep_screen4, sort_block]            
         };
 
-        var feedback_block = {
-            type: 'survey-text',
-            questions: [["<p><b>NOTE: Please answer the following questions honestly.</b> Your <u>payment will NOT be affected</u> by how you answer these questions.</p><p></br>In this study, we are interested in how people describe different types of events, given a new way of describing them. This will help us to understand how we use language.</p> <p>Do you have any feedback about the task, or comments on how you thought about the answers you gave? Enter your comments below.</p>", "<p>Did you copy down the symbols on a sheet of paper?</p>", "Did you take a screen shot or take a picture of the screen to help you during the task?</p>", "<p>Did you memorize the glyphs?</p>"]],
-            data:{
-                isTestTrial:0
-            }
-        };
-
+//CHUNK THAT HOLDS THE LAST SET OF BLOCKS
         var ending_chunk = {
             chunk_type: 'linear',
             timeline: [feedback_block, debrief_block]
         }
 
 
-        /*Define the experiment's timeline*/
+//DEFINE THE EXPERIMENT'S TIMELINE HERE
         var experiment_blocks = [];
 
-        experiment_blocks.push(welcome_block);
+        experiment_blocks.push(intro_chunk);
 
-        experiment_blocks.push(instructions_block);
+        experiment_blocks.push(prep_screen1);
 
-        //experiment_blocks.push(prep_screen);
+       experiment_blocks.push(quiz_chunk);
 
-        //experiment_blocks.push(quiz_chunk);
+       experiment_blocks.push(prep_screen2);
 
-        experiment_blocks.push(part2_prep);
+       experiment_blocks.push(pract_chunk1);
 
-        experiment_blocks.push(pract_chunk);
+       experiment_blocks.push(practice_images[0][1]);
+
+       experiment_blocks.push(pract_chunk2);
+
+       experiment_blocks.push(practice_images[1][1]);
+
+       experiment_blocks.push(prep_screen3);
+
+       experiment_blocks.push(pract_chunk3);
+
+       experiment_blocks.push(practice_videos[0][1]);
+
+       experiment_blocks.push(pract_chunk4);
+
+       experiment_blocks.push(practice_videos[1][1]);
 
         experiment_blocks.push(sort_chunk);
 
         experiment_blocks.push(ending_chunk);
 
 
+//INITIALIZE jsPsych HERE AND BEGIN STUDY
         jsPsych.init({
             display_element: $('#jspsych_target'),
             experiment_structure: experiment_blocks,
+            show_progress_bar: true,
             on_finish: function() {
                 psiturk.saveData({
                     success: function() { psiturk.completeHIT(); }
