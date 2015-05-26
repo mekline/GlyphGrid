@@ -9,7 +9,6 @@
         <script src="static/lib/underscore/underscore-min.js" type="text/javascript"> </script>
         <script src="static/lib/backbone-min.js" type="text/javascript"> </script>
         <script src="static/lib/d3-3.0.0/d3.min.js" type="text/javascript"> </script>
-        <link href="/static/css/jspsych.css" rel="stylesheet" type="text/css"></link>
         <script type="text/javascript">
         // Subject info, including condition and counterbalance codes.
             var uniqueId = "{{ uniqueId }}";
@@ -22,7 +21,6 @@
         <script src="static/js/psiturk.js" type="text/javascript"> </script>
         <!-- jsPsych -->
         <script src="/static/js/jsPsych/jspsych.js" type="text/javascript"></script>
-        <script src="/static/js/jsPsych/css/jspsych.css" type="text/css"></script>
         <link href="/static/js/jsPsych/css/jspsych.css" rel="stylesheet" type="text/css"></link>
         <script src="/static/js/jsPsych/plugins/jspsych-free-sort.js" type="text/javascript"></script>
         <script src="/static/js/jsPsych/plugins/jspsych-text.js" type="text/javascript"></script>
@@ -309,7 +307,7 @@
 
         var prompt = [];
         for (var i = 0; i < choices.length; i++) {
-            prompt_text = '<br>Choices:  <br>XXX - press "1"   <br>XXX - Press "2"   <br>XXX - Press"3"';
+            prompt_text = '<br>Choices:  <br>XXX - Press "1"   <br>XXX - Press "2"   <br>XXX - Press "3"';
             for (var j = 0; j < choices[i].length; j++) {
                 prompt_text = prompt_text.replace('XXX', choices[i][j]);
             }
@@ -501,34 +499,34 @@
         var prep_feedback1 = {
             type: "text",
             text: function () {
-                checkit3 = jsPsych.data.getLastChunkData();
-                listit = [];
-                moves_array = checkit3[1].moves.split('src":"')
-                for (var i = 0; i < moves_array.length; i++) {
-                    splitit = moves_array[i].split(".")
-                    listit.push(splitit[0]);
-                correctit = 0
-                for (var j = 0; j < listit.length; j++) {
-                    if (listit[j] == checkit3[0].glyph) {
-                        correctit = 1
+                checkit1 = jsPsych.data.getLastChunkData();
+                listit1 = [];
+                moves_array1 = checkit1[1].moves.split('src":"')
+                for (var i = 0; i < moves_array1.length; i++) {
+                    splitit1 = moves_array1[i].split(".")
+                    listit1.push(splitit1[0]);
+                correctit1 = 0
+                for (var j = 0; j < listit1.length; j++) {
+                    if (listit1[j] == checkit1[0].glyph) {
+                        correctit1 = 1
                     }
                     }                        
                 };
-                missed = ''
-                missed_num = 0
-                if (correctit == 0) {
-                    text1 = '<p>You missed the glyph for the car. You should have given Upwilaah this symbol:</p>' +
+                missed1 = ''
+                missed_num1 = 0
+                if (correctit1 == 0) {
+                    text1_1 = '<p>You missed the glyph for the car. You should have given Upwilaah this symbol:</p>' +
                                 '<img height=100 width=100 src="/static/images/GLYPH.png" /></br>'
-                    missed = missed + text1;
-                    missed_num++;
+                    missed1 = missed1 + text1_1;
+                    missed_num1++;
                 }                   
 
-                missed = missed.replace('GLYPH', checkit3[0].glyph);
+                missed1 = missed1.replace('GLYPH', checkit1[0].glyph);
 
-                missed = missed + '<p><b>Press the spacebar to continue.</b></p>'
+                missed1 = missed1 + '<p><b>Press the spacebar to continue.</b></p>'
 
-                if (missed_num > 0) {
-                    return missed
+                if (missed_num1 > 0) {
+                    return missed1
                 } else {return jsPsych.finishTrial()}
 
             }
@@ -538,34 +536,34 @@
         var prep_feedback2 = {
             type: "text",
             text: function () {
-                checkit4 = jsPsych.data.getLastChunkData();
-                listit = [];
-                moves_array = checkit4[1].moves.split('src":"')
-                for (var i = 0; i < moves_array.length; i++) {
-                    splitit = moves_array[i].split(".")
-                    listit.push(splitit[0]);
-                correctit = 0
-                for (var j = 0; j < listit.length; j++) {
-                    if (listit[j] == checkit4[0].glyph) {
-                        correctit = 1
+                checkit2 = jsPsych.data.getLastChunkData();
+                listit2 = [];
+                moves_array2 = checkit2[1].moves.split('src":"')
+                for (var i = 0; i < moves_array2.length; i++) {
+                    splitit2 = moves_array2[i].split(".")
+                    listit2.push(splitit2[0]);
+                correctit2 = 0
+                for (var j = 0; j < listit2.length; j++) {
+                    if (listit2[j] == checkit2[0].glyph) {
+                        correctit2 = 1
                     }
                     }                        
                 };
-                missed = ''
-                missed_num = 0
-                if (correctit == 0) {
-                    text1 = '<p>You missed the glyph for the old lady. You should have given Upwilaah this symbol:</p>' +
+                missed2 = ''
+                missed_num2 = 0
+                if (correctit2 == 0) {
+                    text2_1 = '<p>You missed the glyph for the old lady. You should have given Upwilaah this symbol:</p>' +
                                 '<img height=100 width=100 src="/static/images/GLYPH.png" /></br>'
-                    missed = missed + text1;
-                    missed_num++;
+                    missed2 = missed2 + text2_1;
+                    missed_num2++;
                 }                   
 
-                missed = missed.replace('GLYPH', checkit4[0].glyph);
+                missed2 = missed2.replace('GLYPH', checkit2[0].glyph);
 
-                missed = missed + '<p><b>Press the spacebar to continue.</b></p>'
+                missed2 = missed2 + '<p><b>Press the spacebar to continue.</b></p>'
 
-                if (missed_num > 0) {
-                    return missed
+                if (missed_num2 > 0) {
+                    return missed2
                 } else {return jsPsych.finishTrial()}
 
             }
@@ -575,46 +573,46 @@
         var prep_feedback3 = {
             type: "text",
             text: function () {
-                checkit1 = jsPsych.data.getLastChunkData();
-                if (checkit1[0].Obj == 'none') {
-                    listit = [];
-                    moves_array = checkit1[1].moves.split('src":"')
-                    for (var i = 0; i < moves_array.length; i++) {
-                        splitit = moves_array[i].split(".")
-                        listit.push(splitit[0]);
-                    correctit = [0,0]
-                    for (var j = 0; j < listit.length; j++) {
-                        if (listit[j] == checkit1[0].Sub) {
-                            correctit[0] = 1
+                checkit3 = jsPsych.data.getLastChunkData();
+                if (true) {
+                    var listit3 = [];
+                    moves_array3 = checkit3[1].moves.split('src":"')
+                    for (var i = 0; i < moves_array3.length; i++) {
+                        splitit3 = moves_array3[i].split(".")
+                        listit3.push(splitit3[0]);
+                    correctit3 = [0,0]
+                    for (var j = 0; j < listit3.length; j++) {
+                        if (listit3[j] == checkit3[0].Sub) {
+                            correctit3[0] = 1
                         }
-                        if (listit[j] == checkit1[0].Vrb) {
-                            correctit[1] = 1
+                        if (listit3[j] == checkit3[0].Vrb) {
+                            correctit3[1] = 1
                         }
                     };
                     };
                 }
-                missed = ''
-                missed_num = 0
-                if (correctit[0] == 0) {
-                    text1 = '<p>You missed the glyph for the car. You should have given Upwilaah this symbol:</p>' +
+                missed3 = ''
+                missed_num3 = 0
+                if (correctit3[0] == 0) {
+                    text3_1 = '<p>You missed the glyph for the car. You should have given Upwilaah this symbol:</p>' +
                                 '<img height=100 width=100 src="/static/images/SUB.png" /></br>'
-                    missed = missed + text1;
-                    missed_num++;
+                    missed3 = missed3 + text3_1;
+                    missed_num3++;
                 }
-                if (correctit[1] == 0) {
-                    text2 = '<p>You missed the glyph for tumbling. You should have given Upwilaah this symbol:</p>' +
+                if (correctit3[1] == 0) {
+                    text3_2 = '<p>You missed the glyph for tumbling. You should have given Upwilaah this symbol:</p>' +
                                 '<img height=100 width=100 src="/static/images/VRB.png" /></br>'
-                    missed = missed + text2;
-                    missed_num++;
+                    missed3 = missed3 + text3_2;
+                    missed_num3++;
                 }                    
 
-                missed = missed.replace('SUB', checkit1[0].Sub);
-                missed = missed.replace('VRB', checkit1[0].Vrb);
+                missed3 = missed3.replace('SUB', checkit3[0].Sub);
+                missed3 = missed3.replace('VRB', checkit3[0].Vrb);
 
-                missed = missed + '<p><b>Press the spacebar to continue.</b></p>'
+                missed3 = missed3 + '<p><b>Press the spacebar to continue.</b></p>'
 
-                if (missed_num > 0) {
-                    return missed
+                if (missed_num3 > 0) {
+                    return missed3
                 } else {return jsPsych.finishTrial()}
 
             }
@@ -624,56 +622,56 @@
         var prep_feedback4 = {
             type: "text",
             text: function () {
-                checkit2 = jsPsych.data.getLastChunkData();
-                if (checkit2[0].Obj != 'none') {
-                    listit = [];
-                    moves_array = checkit2[1].moves.split('src":"')
-                    for (var i = 0; i < moves_array.length; i++) {
-                        splitit = moves_array[i].split(".")
-                        listit.push(splitit[0]);
-                    correctit = [0,0,0]
-                    for (var j = 0; j < listit.length; j++) {
-                        if (listit[j] == checkit2[0].Sub) {
-                            correctit[0] = 1
+                checkit4 = jsPsych.data.getLastChunkData();
+                if (true) {
+                    var listit4 = [];
+                    moves_array4 = checkit4[1].moves.split('src":"')
+                    for (var i = 0; i < moves_array4.length; i++) {
+                        splitit4 = moves_array4[i].split(".")
+                        listit4.push(splitit4[0]);
+                    correctit4 = [0,0,0]
+                    for (var j = 0; j < listit4.length; j++) {
+                        if (listit4[j] == checkit4[0].Sub) {
+                            correctit4[0] = 1
                         }
-                        if (listit[j] == checkit2[0].Vrb) {
-                            correctit[1] = 1
+                        if (listit4[j] == checkit4[0].Vrb) {
+                            correctit4[1] = 1
                         }
-                        if (listit[j] == checkit2[0].Obj) {
-                            correctit[2] = 1
+                        if (listit4[j] == checkit4[0].Obj) {
+                            correctit4[2] = 1
                         }                        
                     };
                     };
                 }
-                missed = ''
-                missed_num = 0
-                if (correctit[0] == 0) {
-                    text1 = '<p>You missed the glyph for the girl. You should have given Upwilaah this symbol:</p>' +
+                missed4 = ''
+                missed_num4 = 0
+                if (correctit4[0] == 0) {
+                    text4_1 = '<p>You missed the glyph for the girl. You should have given Upwilaah this symbol:</p>' +
                                 '<img height=100 width=100 src="/static/images/SUB.png" /></br>'
-                    missed = missed + text1;
-                    missed_num++;
+                    missed4 = missed4 + text4_1;
+                    missed_num4++;
                 }
-                if (correctit[1] == 0) {
-                    text2 = '<p>You missed the glyph for push. You should have given Upwilaah this symbol:</p>' +
+                if (correctit4[1] == 0) {
+                    text4_2 = '<p>You missed the glyph for push. You should have given Upwilaah this symbol:</p>' +
                                 '<img height=100 width=100 src="/static/images/VRB.png" /></br>'
-                    missed = missed + text2;
-                    missed_num++;
+                    missed4 = missed4 + text4_2;
+                    missed_num4++;
                 }
-                if (correctit[2] == 0) {
-                    text2 = '<p>You missed the glyph for the ball. You should have given Upwilaah this symbol:</p>' +
+                if (correctit4[2] == 0) {
+                    text4_3 = '<p>You missed the glyph for the ball. You should have given Upwilaah this symbol:</p>' +
                                 '<img height=100 width=100 src="/static/images/OBJ.png" /></br>'
-                    missed = missed + text2;
-                    missed_num++;
+                    missed4 = missed4 + text4_3;
+                    missed_num4++;
                 }                    
 
-                missed = missed.replace('SUB', checkit2[0].Sub);
-                missed = missed.replace('OBJ', checkit2[0].Obj);
-                missed = missed.replace('VRB', checkit2[0].Vrb);
+                missed4 = missed4.replace('SUB', checkit4[0].Sub);
+                missed4 = missed4.replace('OBJ', checkit4[0].Obj);
+                missed4 = missed4.replace('VRB', checkit4[0].Vrb);
 
-                missed = missed + '<p><b>Press the spacebar to continue.</b></p>'
+                missed4 = missed4 + '<p><b>Press the spacebar to continue.</b></p>'
 
-                if (missed_num > 0) {
-                    return missed
+                if (missed_num4 > 0) {
+                    return missed4
                 } else {return jsPsych.finishTrial()}
 
             }
@@ -909,27 +907,27 @@
 
         experiment_blocks.push(prep_screen1);
 
-       experiment_blocks.push(quiz_chunk);
+        //experiment_blocks.push(quiz_chunk);
 
-       experiment_blocks.push(prep_screen2);
+        experiment_blocks.push(prep_screen2);
 
-       experiment_blocks.push(pract_chunk1);
+        experiment_blocks.push(pract_chunk1);
 
-       experiment_blocks.push(practice_images[0][1]);
+        experiment_blocks.push(practice_images[0][1]);
 
-       experiment_blocks.push(pract_chunk2);
+        experiment_blocks.push(pract_chunk2);
 
-       experiment_blocks.push(practice_images[1][1]);
+        experiment_blocks.push(practice_images[1][1]);
 
-       experiment_blocks.push(prep_screen3);
+        experiment_blocks.push(prep_screen3);
 
-       experiment_blocks.push(pract_chunk3);
+        experiment_blocks.push(pract_chunk3);
 
-       experiment_blocks.push(practice_videos[0][1]);
+        experiment_blocks.push(practice_videos[0][1]);
 
-       experiment_blocks.push(pract_chunk4);
+        experiment_blocks.push(pract_chunk4);
 
-       experiment_blocks.push(practice_videos[1][1]);
+        experiment_blocks.push(practice_videos[1][1]);
 
         experiment_blocks.push(sort_chunk);
 
