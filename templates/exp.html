@@ -414,12 +414,12 @@
             type: "text",
             text: "<h3><center></br></br>Welcome to the Alien Communication Experiment!</center></h3>" +
                         "<p></br></br><b><center>Press the spacebar to continue.</b></center></p>",
-            on_finish: function () {
+            data: function () {
                 stuff = {};
                 stuff.isTestTrial = 0;
                 stuff.glyph_assignment = NTestInfo.glyphass;
 
-                jsPsych.data.write(stuff);
+                return stuff;
             }
         };
 
@@ -494,6 +494,110 @@
         };
 
 
+//THANK YOU BLOCK
+        var debrief_block = {
+            type: "text",
+            text: function() {
+                return "<p>Thank you for participating in the experiment!</p>" +
+                "<p> To submit this HIT, press any key on your keyboard to return to the Mechanical Turk interface, and then press the 'submit' button. </p>";
+            },
+            data:{
+                isTestTrial:0
+            }
+        };     
+
+/*All other blocks and defined here*/
+//THIS IS THE ACTUAL QUIZ THAT PARTICIPANTS TAKE
+        var categorization_block = {
+            type: 'categorize',
+            stimuli: categorized,
+            key_answer: keyans,
+            choices: user_choices,
+            text_answer: text_answers,
+            timing_stim: -1,
+            is_html: false,
+            incorrect_text: "Incorrect. The correct answer is %ANS%.",
+            prompt: prompt
+        };     
+
+//NUM OF RETAKES DOES NOT WORK, BUT BREAKS IF TAKEN OUT - IDK 
+        num_of_retakes = 0;
+
+//PRACTICE BLOCK FOR IMAGE OF CAR
+        var pract_block1 = {
+            type: 'free-sort',
+            stimuli: [NTestInfo.ptrialInfo[0].glyphorder],
+            prompt: "<p>What is this?</p>",
+            eventpics: ['/static/images/car.png'],
+            eventpicside: 225,
+            moreinstr: 'static/images/one.png',
+            alien: '/static/images/upwilaah.jpeg',
+            data: function () {
+                info = {};
+                info.glyph = NTestInfo.ptrialInfo[1].Rel_glyph;
+                return info;
+            }
+        };
+
+//PRACTICE BLOCK FOR IMAGE OF OLD LADY
+        var pract_block2 = {
+            type: 'free-sort',
+            stimuli: [NTestInfo.ptrialInfo[1].glyphorder],
+            prompt: "<p>Who is this?</p>",
+            eventpics: ['/static/images/oldlady.png'],
+            eventpicside: 225,
+            moreinstr: 'static/images/one.png',
+            alien: '/static/images/upwilaah.jpeg',
+            data: function () {
+                info = {};
+                info.glyph = NTestInfo.ptrialInfo[0].Rel_glyph;
+                return info;
+            }
+        };
+
+//PRACTICE BLOCK FOR VIDEO OF CAR TUMBLING
+        var pract_block3 = {
+            type: 'free-sort',
+            stimuli: [NTestInfo.ptrialInfo[2].glyphorder],
+            prompt: "Watch this movie!",
+            eventclips: ['/static/movies/car-tumbling-none.mp4'],
+            moreinstr: 'static/images/two.png',
+            alien: '/static/images/upwilaah.jpeg',
+            data: function () {
+                info = {};
+                info.isTestTrial = 0;
+                clip_name = jsPsych.currentTrial().eventclips;
+                clip_name = clip_name.split("/")[3];
+                info.moviefile = clip_name;
+                stim = info.moviefile.split(".")[0];
+                for (var j=0;j<PoS.length;j++) {
+                   info[PoS[j]] = NTestInfo.ptrialInfo[2].Rel_glyph[PoS[j]];
+                }
+                return info;
+        }};
+
+//PRACTICE BLOCK FOR VIDEO OF GIRL PUSHING BALL
+        var pract_block4 = {
+            type: 'free-sort',
+            stimuli: [NTestInfo.ptrialInfo[3].glyphorder],
+            prompt: "Watch this movie!",
+            eventclips: ['/static/movies/girl-pushing-ball.mp4'],
+            moreinstr: 'static/images/three.png',
+            alien: '/static/images/upwilaah.jpeg',
+            data: function () {
+                info = {};
+                info.isTestTrial = 0;
+                clip_name = jsPsych.currentTrial().eventclips;
+                clip_name = clip_name.split("/")[3];
+                info.moviefile = clip_name;
+                stim = info.moviefile.split(".")[0];
+                for (var j=0;j<PoS.length;j++) {
+                   info[PoS[j]] = NTestInfo.ptrialInfo[3].Rel_glyph[PoS[j]];
+                }
+                return info;
+        }};
+
+
 //THESE TRIALS GIVE FEEDBACK (IF INCORRECT) IN THE PRACTICE SECTION
 //FEEDBACK FOR IMAGE OF CAR
         var prep_feedback1 = {
@@ -501,7 +605,7 @@
             text: function () {
                 checkit1 = jsPsych.data.getLastChunkData();
                 listit1 = [];
-                moves_array1 = checkit1[1].moves.split('src":"')
+                moves_array1 = checkit1[0].moves.split('src":"')
                 for (var i = 0; i < moves_array1.length; i++) {
                     splitit1 = moves_array1[i].split(".")
                     listit1.push(splitit1[0]);
@@ -527,7 +631,7 @@
 
                 if (missed_num1 > 0) {
                     return missed1
-                } else {return jsPsych.finishTrial()}
+                } else {return '<p><b>Press the spacebar to continue.</b></p>'}
 
             }
         }
@@ -538,7 +642,7 @@
             text: function () {
                 checkit2 = jsPsych.data.getLastChunkData();
                 listit2 = [];
-                moves_array2 = checkit2[1].moves.split('src":"')
+                moves_array2 = checkit2[0].moves.split('src":"')
                 for (var i = 0; i < moves_array2.length; i++) {
                     splitit2 = moves_array2[i].split(".")
                     listit2.push(splitit2[0]);
@@ -564,7 +668,7 @@
 
                 if (missed_num2 > 0) {
                     return missed2
-                } else {return jsPsych.finishTrial()}
+                } else {return '<p><b>Press the spacebar to continue.</b></p>'}
 
             }
         }
@@ -576,7 +680,7 @@
                 checkit3 = jsPsych.data.getLastChunkData();
                 if (true) {
                     var listit3 = [];
-                    moves_array3 = checkit3[1].moves.split('src":"')
+                    moves_array3 = checkit3[0].moves.split('src":"')
                     for (var i = 0; i < moves_array3.length; i++) {
                         splitit3 = moves_array3[i].split(".")
                         listit3.push(splitit3[0]);
@@ -625,7 +729,7 @@
                 checkit4 = jsPsych.data.getLastChunkData();
                 if (true) {
                     var listit4 = [];
-                    moves_array4 = checkit4[1].moves.split('src":"')
+                    moves_array4 = checkit4[0].moves.split('src":"')
                     for (var i = 0; i < moves_array4.length; i++) {
                         splitit4 = moves_array4[i].split(".")
                         listit4.push(splitit4[0]);
@@ -677,108 +781,8 @@
             }
         }
 
-//THANK YOU BLOCK
-        var debrief_block = {
-            type: "text",
-            text: function() {
-                return "<p>Thank you for participating in the experiment!</p>" +
-                "<p> To submit this HIT, press any key on your keyboard to return to the Mechanical Turk interface, and then press the 'submit' button. </p>";
-            },
-            data:{
-                isTestTrial:0
-            }
-        };     
 
-/*All other blocks and defined here*/
-//THIS IS THE ACTUAL QUIZ THAT PARTICIPANTS TAKE
-        var categorization_block = {
-            type: 'categorize',
-            stimuli: categorized,
-            key_answer: keyans,
-            choices: user_choices,
-            text_answer: text_answers,
-            timing_stim: -1,
-            is_html: false,
-            incorrect_text: "Incorrect. The correct answer is %ANS%.",
-            prompt: prompt
-        };     
 
-//NUM OF RETAKES DOES NOT WORK, BUT BREAKS IF TAKEN OUT - IDK 
-        num_of_retakes = 0;
-
-//PRACTICE BLOCK FOR IMAGE OF CAR
-        var pract_block1 = {
-            type: 'free-sort',
-            stimuli: [prac_trials[0]],
-            prompt: "<p>What is this?</p>",
-            eventpics: ['/static/images/car.png'],
-            eventpicside: 225,
-            moreinstr: 'static/images/one.png',
-            alien: '/static/images/upwilaah.jpeg',
-            on_finish: function () {
-                info = {};
-                info.glyph = NTestInfo.ptrialInfo[1].Rel_glyph;
-                jsPsych.data.write(info);
-            }
-        };
-
-//PRACTICE BLOCK FOR IMAGE OF OLD LADY
-        var pract_block2 = {
-            type: 'free-sort',
-            stimuli: [prac_trials[1]],
-            prompt: "<p>Who is this?</p>",
-            eventpics: ['/static/images/oldlady.png'],
-            eventpicside: 225,
-            moreinstr: 'static/images/one.png',
-            alien: '/static/images/upwilaah.jpeg',
-            on_finish: function () {
-                info = {};
-                info.glyph = NTestInfo.ptrialInfo[0].Rel_glyph;
-                jsPsych.data.write(info);
-            }
-        };
-
-//PRACTICE BLOCK FOR VIDEO OF CAR TUMBLING
-        var pract_block3 = {
-            type: 'free-sort',
-            stimuli: [shuffle(prac_trials[0])],
-            prompt: "Watch this movie!",
-            eventclips: ['/static/movies/car-tumbling-none.mp4'],
-            moreinstr: 'static/images/two.png',
-            alien: '/static/images/upwilaah.jpeg',
-            on_finish: function () {
-                info = {};
-                info.isTestTrial = 0;
-                clip_name = jsPsych.currentTrial().eventclips;
-                clip_name = clip_name.split("/")[3];
-                info.moviefile = clip_name;
-                stim = info.moviefile.split(".")[0];
-                for (var j=0;j<PoS.length;j++) {
-                   info[PoS[j]] = NTestInfo.ptrialInfo[2].Rel_glyph[PoS[j]];
-                }
-                jsPsych.data.write(info);
-        }};
-
-//PRACTICE BLOCK FOR VIDEO OF GIRL PUSHING BALL
-        var pract_block4 = {
-            type: 'free-sort',
-            stimuli: [shuffle(prac_trials[0])],
-            prompt: "Watch this movie!",
-            eventclips: ['/static/movies/girl-pushing-ball.mp4'],
-            moreinstr: 'static/images/three.png',
-            alien: '/static/images/upwilaah.jpeg',
-            on_finish: function () {
-                info = {};
-                info.isTestTrial = 0;
-                clip_name = jsPsych.currentTrial().eventclips;
-                clip_name = clip_name.split("/")[3];
-                info.moviefile = clip_name;
-                stim = info.moviefile.split(".")[0];
-                for (var j=0;j<PoS.length;j++) {
-                   info[PoS[j]] = NTestInfo.ptrialInfo[3].Rel_glyph[PoS[j]];
-                }
-                jsPsych.data.write(info);
-        }};
 
 //BLOCK CONTAINING THE 18 TEST TRIALS THAT WE OBSERVE
         var sort_block = {
@@ -799,7 +803,7 @@
                 };
                 return which_one
             },
-            on_finish: function() { 
+            data: function() { 
                 info = {};
                 info.isTestTrial = 1;
                 clip_name = jsPsych.currentTrial().eventclips;
@@ -815,7 +819,7 @@
                             
                         }
                 }
-                jsPsych.data.write(info);
+                return info;
             }};
 
 //HERE THE PARTICIPANT GIVES US FEEDBACK ON THE STUDY
@@ -907,7 +911,7 @@
 
         experiment_blocks.push(prep_screen1);
 
-        //experiment_blocks.push(quiz_chunk);
+        experiment_blocks.push(quiz_chunk);
 
         experiment_blocks.push(prep_screen2);
 
