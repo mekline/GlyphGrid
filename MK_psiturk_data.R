@@ -152,6 +152,9 @@ for (i in 1:length(col.nums)){
   }
 }
 
+
+
+
 for (j in 1:nrow(df.wide)){
   if (df.wide$participant[j] != "EXCLUDED"){  
       for (k in 1:length(col.nums)) {
@@ -219,7 +222,7 @@ for (i in 1:length(col.nums)) {
   } else {df.wide[paste("Glyphs_",col.nums[i], sep="")] = df.wide[paste("glyph_",col.nums[i], sep="")]}
 }
 
-df.wide <- data.frame(matrix(unlist(df.wide), nrow=nrow(df.wide), byrow=T))
+#df.wide <- data.frame(matrix(unlist(df.wide), nrow=nrow(df.wide), byrow=T))
 
 
 
@@ -322,28 +325,28 @@ df.long$IsComplete = mapply(complete_answer, ShortOrder = df.long$ShortOrder, Is
 
 
 
-directory = getwd()
-write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
-
-
-
 it_events = c("girl-tumbling-none", "boy-rolling-none", "car-rolling-none", "ball-rolling-none") 
 animates = c("fireman-pushing-boy", "fireman-kicking-girl", "girl-elbowing-oldlady", "girl-kissing-boy", "girl-throwing-oldlady", "boy-lifting-girl",  "oldlady-rubbing-fireman")
 inanimates = c("fireman-lifting-car", "fireman-throwing-ball", "oldlady-kissing-ball", "oldlady-elbowing-heart", "girl-rubbing-heart", "boy-kicking-ball", "girl-pushing-car")
 all_events = c(it_events, animates, inanimates)
 
-animacy = function (video) {
-  if (mean(str_detect(video, inanimates)) > 0) {
-    tr.anim = 'inanimate'
-  } else if (mean(str_detect(video, animates)) > 0) {
+animacy = function (video, animate_events) {
+  if (mean(str_detect(video, 'none')) > 0) {
+    tr.anim = 'NoObject'
+  } else if (mean(str_detect(video, 'PracticeImage')) > 0) {
+      tr.anim = 'PracticeImage'
+    } else if (mean(str_detect(video, animate_events)) > 0){
       tr.anim = 'animate'
-    } else {
-      tr.anim = NA
-  }
+  } else {tr.anim = 'inanimate'}
   return(tr.anim)
 }
 
-df.long$Animacy = mapply(animacy, video = df.long$stimulus, USE.NAMES = FALSE)
+df.long$Animacy = sapply(df.long$stimulus, FUN=animacy, animate_events = animates, USE.NAMES = FALSE)
+
+
+
+directory = getwd()
+write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
 
 df.long.testtrials = df.long[df.long$isTestTrial == 1,]
 df.long.completes = df.long[df.long$IsComplete == 1,]
