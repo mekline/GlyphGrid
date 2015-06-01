@@ -162,17 +162,25 @@ for (j in 1:nrow(df.wide)){
           check_m = df.wide[paste(names[1], col.nums[k], sep = "")][j,]
           check_m = unlist(strsplit(check_m, split='{\"src\":\"', fixed=TRUE))
           check_m = unlist(strsplit(check_m, split='.png\",', fixed=TRUE))
-          check_m = check_m[which()]
+          check_m = check_m[which(str_detect(check_m, 'g'))]
           check_s = df.wide[paste(names[2], col.nums[k], sep = "")][j,]
           check_o = df.wide[paste(names[3], col.nums[k], sep = "")][j,]
           check_v = df.wide[paste(names[4], col.nums[k], sep = "")][j,]
           where_s = where_o = where_v = ''
-          if (unlist(gregexpr(check_s, check_m))[1] != -1) {
-            where_s = unlist(gregexpr(check_s, check_m))}
-          if (unlist(gregexpr(check_o, check_m))[1] != -1) {
-            where_o = unlist(gregexpr(check_o, check_m))}
-          if (unlist(gregexpr(check_v, check_m))[1] != -1) {
-            where_v = unlist(gregexpr(check_v, check_m))}
+          check_m[which(unlist(gregexpr(check_s, check_m)) == 1)] = 'S'
+          check_m[which(unlist(gregexpr(check_o, check_m)) == 1)] = 'O'
+          check_m[which(unlist(gregexpr(check_v, check_m)) == 1)] = 'V'
+          choices = c('A', 'B', 'C', 'D', 'E', 'F', 'H', 'J')
+          choice_num = 0
+          while (mean(str_detect(check_m, 'g')) > 0) {
+            choice_num = choice_num + 1
+            which_g = check_m[which(grepl('g', check_m))][1]
+            check_m[which(str_detect(check_m, which_g))] = choices[choice_num]
+          }
+#           if (unlist(gregexpr(check_o, check_m))[1] != -1) {
+#             where_o = unlist(gregexpr(check_o, check_m))}
+#           if (unlist(gregexpr(check_v, check_m))[1] != -1) {
+#             where_v = unlist(gregexpr(check_v, check_m))}
           where_svo = as.numeric(c(where_s, where_v, where_o))
           where_svo = sort(where_svo)
           word_order = ''
