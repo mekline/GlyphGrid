@@ -160,6 +160,9 @@ for (j in 1:nrow(df.wide)){
       for (k in 1:length(col.nums)) {
         if (paste(df.wide[paste('Stimulus_', col.nums[k], sep = "")][j,] != "PracticeImage")) {
           check_m = df.wide[paste(names[1], col.nums[k], sep = "")][j,]
+          check_m = unlist(strsplit(check_m, split='{\"src\":\"', fixed=TRUE))
+          check_m = unlist(strsplit(check_m, split='.png\",', fixed=TRUE))
+          check_m = check_m[which()]
           check_s = df.wide[paste(names[2], col.nums[k], sep = "")][j,]
           check_o = df.wide[paste(names[3], col.nums[k], sep = "")][j,]
           check_v = df.wide[paste(names[4], col.nums[k], sep = "")][j,]
@@ -600,6 +603,13 @@ names(bothScores) = c("participant","condition","bothscore")
 Scores = merge(mannerScores, pathScores, by=c("participant", "condition"))
 Scores = merge(Scores, sameScores, by=c("participant", "condition"))
 Scores = merge(Scores, bothScores, by=c("participant", "condition"))
+
+
+
+
+
+
+
 
 #Basic descriptives
 
