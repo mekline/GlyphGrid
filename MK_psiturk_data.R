@@ -132,8 +132,6 @@ for (i in 1:nrow(df.wide)){
 
 
 
-
-
 names = c('moves_', "S_", "O_", "V_", "glyph_")
 col.names = names(df.wide)
 col.nums = c()
@@ -291,6 +289,8 @@ complete_answer = function(ShortOrder, IsTransitive) {
     complete = 1
   } else if (IsTransitive == 0 & nchar(ShortOrder) == 2) {
     complete = 1
+  } else if (ShortOrder == 'G') {
+    complete = 1 
   } else {complete = 0}
   return(complete)
 }
