@@ -81,9 +81,9 @@ for (i in 1:nrow(df.wide)){
   }
 }
 
-name_it = names(free_sorts)
+worker_ids = names(free_sorts)
 for (i in 1:length(free_sorts)) {
-  if (length(free_sorts[[name_it[i]]]) != 22) {
+  if (length(free_sorts[[worker_ids[i]]]) != 22) {
    df.wide[i,] = 'EXCLUDED' 
    df.wide$workerId[i] = 'TOO MANY TRIALS'
   }
@@ -105,14 +105,16 @@ for (i in 1:nrow(df.wide)){
   if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$glyph)){
     trial_num = (28 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
     df.wide[[paste("glyph_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$glyph
+    df.wide[[paste("Stimulus_",trial_num, sep="")]][i] = "PracticeImage"
   }
   if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moviefile)){
     trial_num = (26 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
-    df.wide[[paste("MovieFile_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moviefile
+    df.wide[[paste("Stimulus_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moviefile
   }
-#   if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$rt)){
-#     df.wide[[paste("rt_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$rt
-#   }
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$isTestTrial)){
+    if(free_sorts[[df.wide$workerId[i]]][[j]]$isTestTrial == 1) {
+       df.wide[[paste("isTestTrial_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$isTestTrial
+  }}
   if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moves)){
     df.wide[[paste("moves_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moves
   }
@@ -142,13 +144,20 @@ for (w in 1:length(where_moves)) {
 }
 
 col.nums = as.numeric(col.nums[-which(col.nums %in% "")])
+col.nums = sort(col.nums)
 
 df.wide[paste('WordOrd_', col.nums, sep='')] = 'NoOrderYet'
+
+for (i in 1:length(col.nums)){
+  if (!exists(paste("isTestTrial_",col.nums[i], sep=""), where=df.wide)){
+    df.wide[paste("isTestTrial_",col.nums[i], sep="")] = 0
+  }
+}
 
 for (j in 1:nrow(df.wide)){
   if (df.wide$participant[j] != "EXCLUDED"){  
       for (k in 1:length(col.nums)) {
-        if (exists(paste('MovieFile_', col.nums[k], sep = ""), where=df.wide)) {
+        if (paste(df.wide[paste('Stimulus_', col.nums[k], sep = "")][j,] != "PracticeImage")) {
           check_m = df.wide[paste(names[1], col.nums[k], sep = "")][j,]
           check_s = df.wide[paste(names[2], col.nums[k], sep = "")][j,]
           check_o = df.wide[paste(names[3], col.nums[k], sep = "")][j,]
@@ -196,6 +205,25 @@ for (j in 1:nrow(df.wide)){
   }
 }
 
+nec.glyphs = function(S, O, V) {
+  final_group = ''
+  final_group = paste("S:", S, sep='')
+  final_group = paste(final_group, ' O:', sep='')
+  final_group = paste(final_group, O, sep='')
+  final_group = paste(final_group, ' V:', sep='')
+  final_group = paste(final_group, V, sep='')
+}
+
+glyphs.group = ''
+for (i in 1:length(col.nums)) {
+  if (df.wide[paste('Stimulus_', col.nums[i], sep = "")][1,] != "PracticeImage") {
+    df.wide[paste("Glyphs_",col.nums[i], sep="")] = mapply(nec.glyphs, S=df.wide[[paste("S_",col.nums[i], sep="")]], O=df.wide[[paste("O_",col.nums[i], sep="")]], V=df.wide[[paste("V_",col.nums[i], sep="")]])
+  } else {df.wide[paste("Glyphs_",col.nums[i], sep="")] = df.wide[paste("glyph_",col.nums[i], sep="")]}
+}
+
+df.wide <- data.frame(matrix(unlist(df.wide), nrow=nrow(df.wide), byrow=T))
+
+
 
 #REFORMAT FROM WIDE TO LONG
 moves_list = c()
@@ -204,30 +232,46 @@ S_list = c()
 O_list = c()
 V_list = c()
 order_list = c()
+glyphs_list = c()
+rem.glyph = c()
+isTestTrial_list = c()
 
 for (i in 1:length(col.nums)) {
-  if (col.nums[i] > 6) {
-  moves_list = c(moves_list, paste("moves_",col.nums[i], sep=""))
-  stimulus_list = c(stimulus_list, paste("MovieFile_",col.nums[i], sep=""))
-  S_list = c(S_list, paste("S_",col.nums[i], sep=""))
-  O_list = c(O_list, paste("O_",col.nums[i], sep=""))
-  V_list = c(V_list, paste("V_",col.nums[i], sep=""))
-  order_list = c(order_list, paste("WordOrd_",col.nums[i], sep=""))
- # answers_list = c(answers_list, paste("Answers_",col.nums[i], sep=""))
-}}
+  if (exists(paste('S_', col.nums[i], sep=''), df.wide)) {
+      moves_list = c(moves_list, paste("moves_",col.nums[i], sep=""))
+      stimulus_list = c(stimulus_list, paste("Stimulus_",col.nums[i], sep=""))
+      S_list = c(S_list, paste("S_",col.nums[i], sep=""))
+      O_list = c(O_list, paste("O_",col.nums[i], sep=""))
+      V_list = c(V_list, paste("V_",col.nums[i], sep=""))
+      order_list = c(order_list, paste("WordOrd_",col.nums[i], sep=""))
+      glyphs_list = c(glyphs_list, paste("Glyphs_",col.nums[i], sep=""))
+      isTestTrial_list = c(isTestTrial_list, paste("isTestTrial_",col.nums[i], sep=""))
+  } else {
+      moves_list = c(moves_list, paste("moves_",col.nums[i], sep=""))
+      stimulus_list = c(stimulus_list, paste("Stimulus_",col.nums[i], sep=""))
+      order_list = c(order_list, paste("WordOrd_",col.nums[i], sep=""))
+      glyphs_list = c(glyphs_list, paste("Glyphs_",col.nums[i], sep=""))
+      rem.glyph = c(rem.glyph, paste("glyph_",col.nums[i], sep=""))
+      isTestTrial_list = c(isTestTrial_list, paste("isTestTrial_",col.nums[i], sep=""))
+  }
+}
 
-list_of_lists = list(stimulus_list, S_list, O_list, V_list, moves_list, order_list) #literal_list, keypress_list, match_list)
+list_of_lists = list(stimulus_list, glyphs_list, moves_list, isTestTrial_list, order_list) #literal_list, keypress_list, match_list)
 
 df.long <- reshape(df.wide, 
                    varying = list_of_lists, 
-                   v.names = c('video', 'Sglyph', 'Oglyph', 'Vglyph', 'moves', 'LongOrder'),
+                   v.names = c('stimulus', 'glyphs', 'moves', 'isTestTrial', 'LongOrder'),
                    timevar = "trial.number", 
                    times = 1:length(moves_list), 
-                   drop = c("WordOrd_6", "WordOrd_4", "WordOrd_3", "WordOrd_1", "MovieFile_6", "moves_6", "S_6", "V_6", "O_6", "MovieFile_4", "moves_4", "S_4", "V_4", "O_4", "glyph_3", "moves_3", "glyph_1", "moves_1"),
+                   drop = c(S_list, O_list, V_list, rem.glyph),
                    direction = "long")
 
-## Sort df.long
+## Sort and clean df.long
 df.long <- df.long[order(df.long$workerId),]
+long.names = names(df.long)
+long.names = long.names[-which(long.names %in% "id")]
+df.long = df.long[long.names]
+
 
 long_split = strsplit(df.long$LongOrder, '')
 short_order = list()
@@ -239,7 +283,8 @@ for (i in 1:length(long_split)){
 
 df.long$ShortOrder = as.character(as.factor(unlist(short_order)))
 
-df.long$IsTransitive = as.numeric(!str_detect(df.long$Oglyph, 'none'))
+df.long$IsTransitive = as.numeric(!str_detect(df.long$glyphs, 'none') & !str_detect(df.long$stimulus, 'PracticeImage'))
+
 
 complete_answer = function(ShortOrder, IsTransitive) {
   if (IsTransitive == 1 & nchar(ShortOrder) == 3) {
@@ -251,6 +296,31 @@ complete_answer = function(ShortOrder, IsTransitive) {
 }
 
 df.long$IsComplete = mapply(complete_answer, ShortOrder = df.long$ShortOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
+
+# df.long$PassesPractice = 0
+# 
+# for (i in length(worker_ids)) {
+#   pract_temp = df.long[df.long$workerId == worker_ids[i] & df.long$isTestTrial == 0,]
+#   pract_score = numeric()
+#   for (j in 1:nrow(pract_temp)) {
+#     if (!str_detect(pract_temp$LongOrder[j], "NONE")) {
+#       if (pract_temp$stimulus[j] == "PracticeImage") {
+#         pract_score = c(pract_score, str_detect(pract_temp$LongOrder[j], "G"))
+#       } else {
+#           if (pract_temp$IsComplete[j]) {
+#             pract_score = c(pract_score, 1)
+#           } else if (nchar(df.long$ShortOrder[j]) > 1) {
+#             pract_score = c(pract_score, 1)
+#           } else {pract_score = c(pract_score, 0)}
+#         }
+#       } else {pract_score = c(pract_score, 0)}
+#   }
+#   if (mean(pract_score) == 1) {
+#     df.long$PassesPractice[which(df.long$workerId == worker_ids[i])] = 1
+#   }
+# }
+
+
 
 directory = getwd()
 write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
@@ -273,16 +343,62 @@ animacy = function (video) {
   return(tr.anim)
 }
 
-df.long$Animacy = mapply(animacy, video = df.long$video, USE.NAMES = FALSE)
+df.long$Animacy = mapply(animacy, video = df.long$stimulus, USE.NAMES = FALSE)
+
+df.long.testtrials = df.long[df.long$isTestTrial == 1,]
+df.long.completes = df.long[df.long$IsComplete == 1,]
+df.long.transitives = df.long[df.long$IsTransitive == 1,]
+df.long.usables = df.long.transitives[df.long$IsComplete == 1,]
+
+
+
+isVLat = function (shortorder, iscomplete, istrans) {
+  if(istrans) {
+    if (unlist(strsplit(shortorder, ''))[2]=="V"){
+      return(0)
+    } else {return(1)}
+  }
+}
+
+df.long.usables$isVLat = mapply(isVLat, shortorder = df.long.usables$ShortOrder, USE.NAMES = FALSE)
+
+
+
+###GET SOME BASIC STATS HERE ABOUT RESPONSES###
+percent.complete = nrow(df.long.completes)/nrow(df.long)
+trans.complete = mean(df.long.transitives$IsComplete)
+percent.Vlat = mean(df.long.usables$isVLat)
+
 
 
 directory = getwd()
 write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
+write.csv(df.long.completes, file = paste0(directory, "/dflong_completes.csv"))
+write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
+
+
+
+
+
+
+
 
 
 
 
 ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
