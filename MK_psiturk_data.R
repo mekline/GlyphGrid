@@ -15,7 +15,7 @@ stderr <- function(x) sqrt(var(x)/length(x))
 
 # Read data ---------------------------------------------------------------
 
-con = dbConnect(SQLite(),dbname = "/Users/miguelsalinas/Desktop/GlyphsTurk/participants.db");
+con = dbConnect(SQLite(),dbname = "/Users/masm/Desktop/GlyphGrid/participants.db");
 df.complete = dbReadTable(con,"glyphs") #change the name of the database here (mine was called "almost")
 dbDisconnect(con)
 
@@ -26,12 +26,13 @@ df.complete = subset(df.complete, status %in% c(3,4))
 #filter to a particular day (if I haven't set codeversions). OR together multiple days if needed
 df.complete$currentVersion.pilot1 = str_detect(df.complete$beginhit, "2015-03-24")
 df.complete$currentVersion.pilot2 = str_detect(df.complete$beginhit, "2015-03-25")
+df.complete$currentVersion.pilot3 = str_detect(df.complete$beginhit, "2015-05-27")
 
 #Run 1, 03/24/2015 - 03/25/2015
-df.complete = df.complete[df.complete$currentVersion.pilot1 == TRUE | df.complete$currentVersion.pilot2 == TRUE,]
+#df.complete = df.complete[df.complete$currentVersion.pilot1 == TRUE | df.complete$currentVersion.pilot2 == TRUE,]
 
 #Run 2, 1/16/15
-#df.complete = df.complete[df.complete$currentVersion4 == TRUE,]
+df.complete = df.complete[df.complete$currentVersion.pilot3 == TRUE,]
 
 nrow(df.complete)
 
@@ -60,7 +61,7 @@ for (i in 1:nrow(df.wide)){
     mylength = 0
   }
   print(mylength)
-  if (mylength>=85){
+  if (mylength>=51){
     df.wide$participant[i] = i
     df.wide$workerId[i] = a$workerId
     df.wide$browser[i] = df.complete$browser[i]
@@ -82,7 +83,7 @@ for (i in 1:nrow(df.wide)){
 
 name_it = names(free_sorts)
 for (i in 1:length(free_sorts)) {
-  if (length(free_sorts[[name_it[i]]]) != 60) {
+  if (length(free_sorts[[name_it[i]]]) != 22) {
    df.wide[i,] = 'EXCLUDED' 
    df.wide$workerId[i] = 'TOO MANY TRIALS'
   }
@@ -102,16 +103,16 @@ for (i in 1:nrow(df.wide)){
   for (j in mylength:1) {
   if(j == mylength) {max_g_i = free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global}
   if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$glyph)){
-    trial_num = (21 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
+    trial_num = (28 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
     df.wide[[paste("glyph_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$glyph
   }
   if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moviefile)){
-    trial_num = (20 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
+    trial_num = (26 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
     df.wide[[paste("MovieFile_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moviefile
   }
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$rt)){
-    df.wide[[paste("rt_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$rt
-  }
+#   if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$rt)){
+#     df.wide[[paste("rt_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$rt
+#   }
   if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moves)){
     df.wide[[paste("moves_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moves
   }
@@ -127,66 +128,171 @@ for (i in 1:nrow(df.wide)){
   }
 } #End of this participant
 
-names = c('moves_', "S_", "O_", "V_")
 
-for (w in 3:20) {
-  df.wide[paste('WordOrd_', w, sep = "")] = "EXCLUDED"
+
+
+
+names = c('moves_', "S_", "O_", "V_", "glyph_")
+col.names = names(df.wide)
+col.nums = c()
+
+where_moves = which(str_detect(col.names, 'moves'))
+for (w in 1:length(where_moves)) {
+  col.nums = unique(c(col.nums, unlist(strsplit(col.names[where_moves][w], split='moves_'))))
 }
+
+col.nums = as.numeric(col.nums[-which(col.nums %in% "")])
+
+df.wide[paste('WordOrd_', col.nums, sep='')] = 'NoOrderYet'
 
 for (j in 1:nrow(df.wide)){
   if (df.wide$participant[j] != "EXCLUDED"){  
-      for (k in 3:20) {
-        check_m = df.wide[paste(names[1], k, sep = "")][j,]
-        check_s = df.wide[paste(names[2], k, sep = "")][j,]
-        check_o = df.wide[paste(names[3], k, sep = "")][j,]
-        check_v = df.wide[paste(names[4], k, sep = "")][j,]
-        where_s = where_o = where_v = ''
-        if (unlist(gregexpr(check_s, check_m))[1] != -1) {
-          where_s = unlist(gregexpr(check_s, check_m))}
-        if (unlist(gregexpr(check_o, check_m))[1] != -1) {
-          where_o = unlist(gregexpr(check_o, check_m))}
-        if (unlist(gregexpr(check_v, check_m))[1] != -1) {
-          where_v = unlist(gregexpr(check_v, check_m))}
-        where_svo = as.numeric(c(where_s, where_v, where_o))
-        where_svo = sort(where_svo)
+      for (k in 1:length(col.nums)) {
+        if (exists(paste('MovieFile_', col.nums[k], sep = ""), where=df.wide)) {
+          check_m = df.wide[paste(names[1], col.nums[k], sep = "")][j,]
+          check_s = df.wide[paste(names[2], col.nums[k], sep = "")][j,]
+          check_o = df.wide[paste(names[3], col.nums[k], sep = "")][j,]
+          check_v = df.wide[paste(names[4], col.nums[k], sep = "")][j,]
+          where_s = where_o = where_v = ''
+          if (unlist(gregexpr(check_s, check_m))[1] != -1) {
+            where_s = unlist(gregexpr(check_s, check_m))}
+          if (unlist(gregexpr(check_o, check_m))[1] != -1) {
+            where_o = unlist(gregexpr(check_o, check_m))}
+          if (unlist(gregexpr(check_v, check_m))[1] != -1) {
+            where_v = unlist(gregexpr(check_v, check_m))}
+          where_svo = as.numeric(c(where_s, where_v, where_o))
+          where_svo = sort(where_svo)
+          word_order = ''
+          if (length(where_svo) > 0) {
+          for (l in 1:length(where_svo)) {
+            if (where_svo[l] %in% where_s) {
+              word_order = paste(word_order, 'S', sep='')
+            } else if (where_svo[l] %in% where_o) {
+              word_order = paste(word_order, 'O', sep='')
+            } else if (where_svo[l] %in% where_v) {
+              word_order = paste(word_order, 'V', sep='')
+            } 
+          }} else {word_order = 'NONE'}
+          df.wide[paste('WordOrd_', col.nums[k], sep = "")][j,] = word_order
+      } else {
+        check_m = df.wide[paste(names[1], col.nums[k], sep = "")][j,]
+        check_g = df.wide[paste(names[5], col.nums[k], sep = "")][j,]
+        where_g = ''
+        if (unlist(gregexpr(check_g, check_m))[1] != -1) {
+          where_g = unlist(gregexpr(check_g, check_m))
+        }
+        where_moved = as.numeric(where_g)
+        where_moved = sort(where_moved)
         word_order = ''
-        if (length(where_svo) > 0) {
-        for (l in 1:length(where_svo)) {
-          if (where_svo[l] %in% where_s) {
-            word_order = paste(word_order, 'S', sep='')
-          } else if (where_svo[l] %in% where_o) {
-            word_order = paste(word_order, 'O', sep='')
-          } else if (where_svo[l] %in% where_v) {
-            word_order = paste(word_order, 'V', sep='')
-          } 
-        }} else {word_order = 'NONE'}
-        df.wide[paste('WordOrd_', k, sep = "")][j,] = word_order
+        if (length(where_moved) > 0) {
+          for (l in 1:length(where_moved)) {
+            if (where_moved[l] %in% where_g) {
+              word_order = paste(word_order, 'G', sep='')
+            } 
+          }} else {word_order = 'NONE'}
+        df.wide[paste('WordOrd_', col.nums[k], sep = "")][j,] = word_order
       }
+    }
   }
 }
+
+
+#REFORMAT FROM WIDE TO LONG
+moves_list = c()
+stimulus_list = c()
+S_list = c()
+O_list = c()
+V_list = c()
+order_list = c()
+
+for (i in 1:length(col.nums)) {
+  if (col.nums[i] > 6) {
+  moves_list = c(moves_list, paste("moves_",col.nums[i], sep=""))
+  stimulus_list = c(stimulus_list, paste("MovieFile_",col.nums[i], sep=""))
+  S_list = c(S_list, paste("S_",col.nums[i], sep=""))
+  O_list = c(O_list, paste("O_",col.nums[i], sep=""))
+  V_list = c(V_list, paste("V_",col.nums[i], sep=""))
+  order_list = c(order_list, paste("WordOrd_",col.nums[i], sep=""))
+ # answers_list = c(answers_list, paste("Answers_",col.nums[i], sep=""))
+}}
+
+list_of_lists = list(stimulus_list, S_list, O_list, V_list, moves_list, order_list) #literal_list, keypress_list, match_list)
+
+df.long <- reshape(df.wide, 
+                   varying = list_of_lists, 
+                   v.names = c('video', 'Sglyph', 'Oglyph', 'Vglyph', 'moves', 'LongOrder'),
+                   timevar = "trial.number", 
+                   times = 1:length(moves_list), 
+                   drop = c("WordOrd_6", "WordOrd_4", "WordOrd_3", "WordOrd_1", "MovieFile_6", "moves_6", "S_6", "V_6", "O_6", "MovieFile_4", "moves_4", "S_4", "V_4", "O_4", "glyph_3", "moves_3", "glyph_1", "moves_1"),
+                   direction = "long")
+
+## Sort df.long
+df.long <- df.long[order(df.long$workerId),]
+
+long_split = strsplit(df.long$LongOrder, '')
+short_order = list()
+for (i in 1:length(long_split)){
+  if(df.long$LongOrder[i]!="NONE"){
+    short_order[[i]] = paste(unique(long_split[[i]]), collapse='')
+  } else {short_order[[i]] = "NONE"}
+}
+
+df.long$ShortOrder = as.character(as.factor(unlist(short_order)))
+
+df.long$IsTransitive = as.numeric(!str_detect(df.long$Oglyph, 'none'))
+
+complete_answer = function(ShortOrder, IsTransitive) {
+  if (IsTransitive == 1 & nchar(ShortOrder) == 3) {
+    complete = 1
+  } else if (IsTransitive == 0 & nchar(ShortOrder) == 2) {
+    complete = 1
+  } else {complete = 0}
+  return(complete)
+}
+
+df.long$IsComplete = mapply(complete_answer, ShortOrder = df.long$ShortOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
+
+directory = getwd()
+write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
+
+
+
+
+
+
+
+
+
+
 
 it_events = c("girl-tumbling-none", "boy-rolling-none", "car-rolling-none", "ball-rolling-none") 
 animates = c("fireman-pushing-boy", "fireman-kicking-girl", "girl-elbowing-oldlady", "girl-kissing-boy", "girl-throwing-oldlady", "boy-lifting-girl",  "oldlady-rubbing-fireman")
 inanimates = c("fireman-lifting-car", "fireman-throwing-ball", "oldlady-kissing-ball", "oldlady-elbowing-heart", "girl-rubbing-heart", "boy-kicking-ball", "girl-pushing-car")
 all_events = c(it_events, animates, inanimates)
-order_col_names = c()
 
-for (w in 1:length(all_events)) {
-  change_name_in = ''
-  in_col = unlist(strsplit(all_events[w], '-'))
-  change_name_in = paste(in_col[1], '.', sep = "")
-  change_name_in = paste(change_name_in, unlist(strsplit(in_col[2], ''))[1], sep = "")
-  if (all_events[w] %in% it_events) {
-    change_name_in = paste("Intran.", paste(change_name_in, paste('.', in_col[3], sep=""), sep = ""), sep="")
-  } else if (all_events[w] %in% animates) {
-    change_name_in = paste("A.", paste(change_name_in, paste('.', in_col[3], sep=""), sep = ""), sep="")
-  } else if (all_events[w] %in% inanimates) {
-    change_name_in = paste("I.", paste(change_name_in, paste('.', in_col[3], sep=""), sep = ""), sep="")
+animacy = function (video) {
+  if (mean(str_detect(video, inanimates)) > 0) {
+    tr.anim = 'inanimate'
+  } else if (mean(str_detect(video, animates)) > 0) {
+      tr.anim = 'animate'
+    } else {
+      tr.anim = NA
   }
-    
-  df.wide[change_name_in] = "EXCLUDED"
-  order_col_names = c(order_col_names, change_name_in)
+  return(tr.anim)
 }
+
+df.long$Animacy = mapply(animacy, video = df.long$video, USE.NAMES = FALSE)
+
+
+directory = getwd()
+write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
+
+
+
+
+##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+
+
 
 for (k in 1:nrow(df.wide)) {
   if (df.wide$participant[k] != "EXCLUDED") {
