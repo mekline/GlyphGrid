@@ -158,7 +158,25 @@ for (i in 1:length(col.nums)){
 for (j in 1:nrow(df.wide)){
   if (df.wide$participant[j] != "EXCLUDED"){  
       for (k in 1:length(col.nums)) {
-        if (paste(df.wide[paste('Stimulus_', col.nums[k], sep = "")][j,] != "PracticeImage")) {
+        if (df.wide[paste('Stimulus_', col.nums[k], sep = "")][j,] == "PracticeImage") {
+          check_m = df.wide[paste(names[1], col.nums[k], sep = "")][j,]
+          check_m = unlist(strsplit(check_m, split='{\"src\":\"', fixed=TRUE))
+          check_m = unlist(strsplit(check_m, split='.png\",', fixed=TRUE))
+          check_m = check_m[which(str_detect(check_m, 'g'))]
+          check_g = df.wide[paste(names[5], col.nums[k], sep = "")][j,]
+          where_g = ''
+          check_m[which(unlist(gregexpr(check_g, check_m)) == 1)] = 'G'
+          choices = c('X', 'Y', 'Z', 'Q', 'H', 'W', 'R')
+          choice_num = 0
+          while (mean(str_detect(check_m, 'g')) > 0) {
+            choice_num = choice_num + 1
+            which_g = check_m[which(grepl('g', check_m))][1]
+            check_m[which(str_detect(check_m, which_g))] = choices[choice_num]
+          }
+          if (length(check_m) > 0) {
+            word_order = paste0(check_m, collapse='')
+          } else {word_order = 'NONE'}
+        } else if (df.wide[paste('Stimulus_', col.nums[k], sep = "")][j,] != "") {
           check_m = df.wide[paste(names[1], col.nums[k], sep = "")][j,]
           check_m = unlist(strsplit(check_m, split='{\"src\":\"', fixed=TRUE))
           check_m = unlist(strsplit(check_m, split='.png\",', fixed=TRUE))
@@ -170,51 +188,21 @@ for (j in 1:nrow(df.wide)){
           check_m[which(unlist(gregexpr(check_s, check_m)) == 1)] = 'S'
           check_m[which(unlist(gregexpr(check_o, check_m)) == 1)] = 'O'
           check_m[which(unlist(gregexpr(check_v, check_m)) == 1)] = 'V'
-          choices = c('A', 'B', 'C', 'D', 'E', 'F', 'H', 'J')
+          choices = c('X', 'Y', 'Z', 'Q', 'H', 'W', 'R')
           choice_num = 0
+          if (length(check_m) != 0) {
           while (mean(str_detect(check_m, 'g')) > 0) {
             choice_num = choice_num + 1
             which_g = check_m[which(grepl('g', check_m))][1]
             check_m[which(str_detect(check_m, which_g))] = choices[choice_num]
-          }
-#           if (unlist(gregexpr(check_o, check_m))[1] != -1) {
-#             where_o = unlist(gregexpr(check_o, check_m))}
-#           if (unlist(gregexpr(check_v, check_m))[1] != -1) {
-#             where_v = unlist(gregexpr(check_v, check_m))}
-          where_svo = as.numeric(c(where_s, where_v, where_o))
-          where_svo = sort(where_svo)
-          word_order = ''
-          if (length(where_svo) > 0) {
-          for (l in 1:length(where_svo)) {
-            if (where_svo[l] %in% where_s) {
-              word_order = paste(word_order, 'S', sep='')
-            } else if (where_svo[l] %in% where_o) {
-              word_order = paste(word_order, 'O', sep='')
-            } else if (where_svo[l] %in% where_v) {
-              word_order = paste(word_order, 'V', sep='')
-            } 
-          }} else {word_order = 'NONE'}
-          df.wide[paste('WordOrd_', col.nums[k], sep = "")][j,] = word_order
-      } else {
-        check_m = df.wide[paste(names[1], col.nums[k], sep = "")][j,]
-        check_g = df.wide[paste(names[5], col.nums[k], sep = "")][j,]
-        where_g = ''
-        if (unlist(gregexpr(check_g, check_m))[1] != -1) {
-          where_g = unlist(gregexpr(check_g, check_m))
-        }
-        where_moved = as.numeric(where_g)
-        where_moved = sort(where_moved)
-        word_order = ''
-        if (length(where_moved) > 0) {
-          for (l in 1:length(where_moved)) {
-            if (where_moved[l] %in% where_g) {
-              word_order = paste(word_order, 'G', sep='')
-            } 
-          }} else {word_order = 'NONE'}
-        df.wide[paste('WordOrd_', col.nums[k], sep = "")][j,] = word_order
-      }
+          }}
+          if (length(check_m) > 0) {
+            word_order = paste0(check_m, collapse='')
+          } else {word_order = 'NONE'}
+      } else {word_order = 'NONE'}
+    df.wide[paste('WordOrd_', col.nums[k], sep = "")][j,] = word_order  
     }
-  }
+  }  
 }
 
 nec.glyphs = function(S, O, V) {
