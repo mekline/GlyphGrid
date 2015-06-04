@@ -49,10 +49,11 @@ colnames(df.wide) = c("participant","workerId","browser","beginhit") #will dynam
 
 global_indeces = c()
 free_sorts = list()
-
+categorized = list()
 
 for (i in 1:nrow(df.wide)){
   partic_free = list()
+  partic_catg = list()
   if (!is.na(df.complete$datastring[i])){
     a = fromJSON(df.complete$datastring[i])
     mylength = length(a$data)
@@ -70,9 +71,12 @@ for (i in 1:nrow(df.wide)){
     for (j in 1:mylength){
       if(a$data[[j]]$trialdata$trial_type == "free-sort"){
         partic_free = c(partic_free, list(a$data[[j]]$trialdata))
-      } #Else just don't make any columns right now!!!
+      } else if (a$data[[j]]$trialdata$trial_type == "categorize") {
+        partic_catg = c(partic_catg, list(a$data[[j]]$trialdata))
+      }
     }
     free_sorts[a$workerId] = list(partic_free)
+    categorized[a$workerId] = list(partic_catg)
   }
   #And grab the info we need from the last 'trial' (feedback)
   if (is.null(a$data[[mylength-1]]$trialdata$responses)){df.wide$feedback[i] = "none"
@@ -80,6 +84,22 @@ for (i in 1:nrow(df.wide)){
     df.wide$feedback[i] = a$data[[mylength-1]]$trialdata$responses
   }
 }
+
+df.wide$NumQuizTries = 'NoInputYet'
+df.wide$LastQuizScore = 'NoInputYet'
+
+for (i in 1:length(names(categorized))) {
+  myquizlength = length(categorized[[names(categorized)[i]]])
+  df.wide$NumQuizTries[i] = myquizlength/16
+  tot_score = numeric()
+  for (j in (myquizlength-15):myquizlength) {
+    tot_score = c(tot_score, categorized[[names(categorized)[i]]][[j]]$correct)
+  }
+  df.wide$LastQuizScore[i] = mean(tot_score)
+}
+
+
+
 
 worker_ids = names(free_sorts)
 for (i in 1:length(free_sorts)) {
@@ -204,6 +224,8 @@ for (j in 1:nrow(df.wide)){
     }
   }  
 }
+
+
 
 nec.glyphs = function(S, O, V) {
   final_group = ''
