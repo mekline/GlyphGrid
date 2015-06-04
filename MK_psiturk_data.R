@@ -47,9 +47,12 @@ nrow(df.complete)
 df.wide = data.frame(matrix(nrow=nrow(df.complete),ncol=4))
 colnames(df.wide) = c("participant","workerId","browser","beginhit") #will dynamically add columns from datastring below
 
+
+#LIST SPECIFIC TRIAL TYPES INTO LISTS#
 global_indeces = c()
 free_sorts = list()
 categorized = list()
+
 
 for (i in 1:nrow(df.wide)){
   partic_free = list()
@@ -85,22 +88,26 @@ for (i in 1:nrow(df.wide)){
   }
 }
 
+
+
+
+##INSERT QUIZ DATA TO WIDE DATA FRAME##
 df.wide$NumQuizTries = 'NoInputYet'
 df.wide$LastQuizScore = 'NoInputYet'
 
 for (i in 1:length(names(categorized))) {
   myquizlength = length(categorized[[names(categorized)[i]]])
-  df.wide$NumQuizTries[i] = myquizlength/16
+  df.wide$NumQuizTries[i] = as.numeric(myquizlength/16)
   tot_score = numeric()
   for (j in (myquizlength-15):myquizlength) {
     tot_score = c(tot_score, categorized[[names(categorized)[i]]][[j]]$correct)
   }
-  df.wide$LastQuizScore[i] = mean(tot_score)
+  df.wide$LastQuizScore[i] = as.numeric(mean(tot_score))
 }
 
 
-
-
+##LABEL PARTICIPANTS THAT HAD TOO MANY TRIALS, AND EXCLUDE##
+##OTHERWISE GRAB EACH TRIALS DATA##
 worker_ids = names(free_sorts)
 for (i in 1:length(free_sorts)) {
   if (length(free_sorts[[worker_ids[i]]]) != 22) {
@@ -151,7 +158,7 @@ for (i in 1:nrow(df.wide)){
 } #End of this participant
 
 
-
+##PREP FOR GETTING RAW WORD ORDER##
 names = c('moves_', "S_", "O_", "V_", "glyph_")
 col.names = names(df.wide)
 col.nums = c()
@@ -164,7 +171,7 @@ for (w in 1:length(where_moves)) {
 col.nums = as.numeric(col.nums[-which(col.nums %in% "")])
 col.nums = sort(col.nums)
 
-df.wide[paste('WordOrd_', col.nums, sep='')] = 'NoOrderYet'
+df.wide[paste('RawOrd_', col.nums, sep='')] = 'NoOrderYet'
 
 for (i in 1:length(col.nums)){
   if (!exists(paste("isTestTrial_",col.nums[i], sep=""), where=df.wide)){
@@ -174,7 +181,7 @@ for (i in 1:length(col.nums)){
 
 
 
-
+###GET RAW WORD ORDER###
 for (j in 1:nrow(df.wide)){
   if (df.wide$participant[j] != "EXCLUDED"){  
       for (k in 1:length(col.nums)) {
@@ -220,13 +227,13 @@ for (j in 1:nrow(df.wide)){
             word_order = paste0(check_m, collapse='')
           } else {word_order = 'NONE'}
       } else {word_order = 'NONE'}
-    df.wide[paste('WordOrd_', col.nums[k], sep = "")][j,] = word_order  
+    df.wide[paste('RawOrd_', col.nums[k], sep = "")][j,] = word_order  
     }
   }  
 }
 
 
-
+##GROUP INDIVIDUAL TRIAL GLYPH INFO COLUMNS INTO ONE COLUMN##
 nec.glyphs = function(S, O, V) {
   final_group = ''
   final_group = paste("S:", S, sep='')
@@ -247,7 +254,7 @@ for (i in 1:length(col.nums)) {
 
 
 
-#REFORMAT FROM WIDE TO LONG
+###REFORMAT FROM WIDE TO LONG###
 moves_list = c()
 stimulus_list = c()
 S_list = c()
@@ -265,13 +272,13 @@ for (i in 1:length(col.nums)) {
       S_list = c(S_list, paste("S_",col.nums[i], sep=""))
       O_list = c(O_list, paste("O_",col.nums[i], sep=""))
       V_list = c(V_list, paste("V_",col.nums[i], sep=""))
-      order_list = c(order_list, paste("WordOrd_",col.nums[i], sep=""))
+      order_list = c(order_list, paste("RawOrd_",col.nums[i], sep=""))
       glyphs_list = c(glyphs_list, paste("Glyphs_",col.nums[i], sep=""))
       isTestTrial_list = c(isTestTrial_list, paste("isTestTrial_",col.nums[i], sep=""))
   } else {
       moves_list = c(moves_list, paste("moves_",col.nums[i], sep=""))
       stimulus_list = c(stimulus_list, paste("Stimulus_",col.nums[i], sep=""))
-      order_list = c(order_list, paste("WordOrd_",col.nums[i], sep=""))
+      order_list = c(order_list, paste("RawOrd_",col.nums[i], sep=""))
       glyphs_list = c(glyphs_list, paste("Glyphs_",col.nums[i], sep=""))
       rem.glyph = c(rem.glyph, paste("glyph_",col.nums[i], sep=""))
       isTestTrial_list = c(isTestTrial_list, paste("isTestTrial_",col.nums[i], sep=""))
@@ -282,34 +289,40 @@ list_of_lists = list(stimulus_list, glyphs_list, moves_list, isTestTrial_list, o
 
 df.long <- reshape(df.wide, 
                    varying = list_of_lists, 
-                   v.names = c('stimulus', 'glyphs', 'moves', 'isTestTrial', 'LongOrder'),
+                   v.names = c('stimulus', 'glyphs', 'moves', 'isTestTrial', 'RawOrder'),
                    timevar = "trial.number", 
                    times = 1:length(moves_list), 
                    drop = c(S_list, O_list, V_list, rem.glyph),
                    direction = "long")
 
-## Sort and clean df.long
+
+
+
+##SORT AND CLEAN DF.LONG##
 df.long <- df.long[order(df.long$workerId),]
 long.names = names(df.long)
 long.names = long.names[-which(long.names %in% "id")]
 df.long = df.long[long.names]
 
 
-long_split = strsplit(df.long$LongOrder, '')
+##GET RAW SHORT ORDER WITH MISTAKES##
+long_split = strsplit(df.long$RawOrder, '')
 short_order = list()
 for (i in 1:length(long_split)){
-  if(df.long$LongOrder[i]!="NONE"){
+  if(df.long$RawOrder[i]!="NONE"){
     short_order[[i]] = paste(unique(long_split[[i]]), collapse='')
   } else {short_order[[i]] = "NONE"}
 }
 
-df.long$ShortOrder = as.character(as.factor(unlist(short_order)))
+df.long$ShortRawOrder = as.character(as.factor(unlist(short_order)))
 
+##LABEL IS STIMULUS IS TRANSITIVE OR NOT##
 df.long$IsTransitive = as.numeric(!str_detect(df.long$glyphs, 'none') & !str_detect(df.long$stimulus, 'PracticeImage'))
 
 
+## LABEL WHETHER PARTICIPANT GAVE A COMPLETE RESPONSE FOR THAT STIMULUS RAW RAW RAW RAW ####
 complete_answer = function(ShortOrder, IsTransitive) {
-  if (IsTransitive == 1 & nchar(ShortOrder) == 3) {
+  if (IsTransitive == 1 & nchar(ShortOrder) >= 3) {
     complete = 1
   } else if (IsTransitive == 0 & nchar(ShortOrder) == 2) {
     complete = 1
@@ -319,7 +332,20 @@ complete_answer = function(ShortOrder, IsTransitive) {
   return(complete)
 }
 
-df.long$IsComplete = mapply(complete_answer, ShortOrder = df.long$ShortOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
+df.long$IsComplete = mapply(complete_answer, ShortOrder = df.long$ShortRawOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
+
+
+##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+
+
+
+
+
+
+
 
 # df.long$PassesPractice = 0
 # 
@@ -410,7 +436,7 @@ write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
 
 
 
-##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+
 
 
 
