@@ -88,7 +88,8 @@ for (i in 1:nrow(df.wide)){
   }
 }
 
-
+#### CHECK TO SEE IF PARTICIPANT CONFESSES TO CHEATING ####
+df.wide$cheated = as.numeric(grepl('Q1\":\"y', df.wide$feedback, ignore.case=TRUE) | grepl('Q2\":\"y', df.wide$feedback, ignore.case=TRUE))
 
 
 ##INSERT QUIZ DATA TO WIDE DATA FRAME##
@@ -233,7 +234,7 @@ for (j in 1:nrow(df.wide)){
 }
 
 
-##GROUP INDIVIDUAL TRIAL GLYPH INFO COLUMNS INTO ONE COLUMN##
+##GROUP INDIVIDUAL GLYPH COLUMNS INTO ONE COLUMN##
 nec.glyphs = function(S, O, V) {
   final_group = ''
   final_group = paste("S:", S, sep='')
@@ -316,7 +317,7 @@ for (i in 1:length(long_split)){
 
 df.long$ShortRawOrder = as.character(as.factor(unlist(short_order)))
 
-##LABEL IS STIMULUS IS TRANSITIVE OR NOT##
+##LABEL IS STIMULUS AS TRANSITIVE OR NOT##
 df.long$IsTransitive = as.numeric(!str_detect(df.long$glyphs, 'none') & !str_detect(df.long$stimulus, 'PracticeImage'))
 
 
@@ -332,7 +333,7 @@ complete_answer = function(ShortOrder, IsTransitive) {
   return(complete)
 }
 
-df.long$IsComplete = mapply(complete_answer, ShortOrder = df.long$ShortRawOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
+df.long$RawComplete = mapply(complete_answer, ShortOrder = df.long$ShortRawOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
 
 
 ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
