@@ -323,19 +323,68 @@ df.long$IsTransitive = as.numeric(!str_detect(df.long$glyphs, 'none') & !str_det
 
 ## LABEL WHETHER PARTICIPANT GAVE A COMPLETE RESPONSE FOR THAT STIMULUS RAW RAW RAW RAW ####
 complete_answer = function(ShortOrder, IsTransitive) {
+  complete = numeric()
+  if (ShortOrder != 'NONE') {
   if (IsTransitive == 1 & nchar(ShortOrder) >= 3) {
     complete = 1
   } else if (IsTransitive == 0 & nchar(ShortOrder) == 2) {
     complete = 1
   } else if (ShortOrder == 'G') {
     complete = 1 
-  } else {complete = 0}
+  }} else {complete = 0}
   return(complete)
 }
 
 df.long$RawComplete = mapply(complete_answer, ShortOrder = df.long$ShortRawOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
 
 
+raw_to_clean = function(raworder) {
+  rawsplit = unlist(strsplit(raworder, split=''))
+  cleanorder = character()
+  if (mean(str_detect(rawsplit, 'N')) > 0) {
+    cleanorder = "NONE"
+  } else if (mean(str_detect(rawsplit, 'G')) > 0) {
+    cleanorder = raworder
+  } else {
+    cleanorder = paste0(rawsplit[which(rawsplit %in% "S" | rawsplit %in% "O" | rawsplit %in% "V")], collapse='')
+  }
+  return(cleanorder)
+}  
+
+df.long$CleanOrder = mapply(raw_to_clean, df.long$ShortRawOrder)
+
+df.long$CleanComplete = unlist(as.numeric(mapply(complete_answer, ShortOrder = df.long$CleanOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)))
+
+
+df.long$PassesPractice = 0
+
+for (i in 1:length(worker_ids)) {
+  pract_temp = df.long[df.long$workerId == worker_ids[i] & df.long$isTestTrial == 0,]
+  pract_score = numeric()
+  for (j in 1:nrow(pract_temp)) {
+    if (!str_detect(pract_temp$CleanOrder[j], "NONE")) {
+      if (pract_temp$stimulus[j] == "PracticeImage") {
+        pract_score = c(pract_score, str_detect(pract_temp$CleanOrder[j], "G"))
+      } else {
+          if (as.logical(pract_temp$CleanComplete[j])) {
+            pract_score = c(pract_score, 1)
+          } else if (as.logical((nchar(pract_temp$CleanOrder[j]) >= 1)) & !as.logical(pract_temp$IsTransitive[j])) {
+            pract_score = c(pract_score, 1)
+          } else if (as.logical((nchar(pract_temp$CleanOrder[j]) > 1))) {
+            pract_score = c(pract_score, 1)
+          } else {pract_score = c(pract_score, 0)}
+        }
+      } else {pract_score = c(pract_score, 0)}
+  }
+  if (mean(pract_score) == 1) {
+    df.long$PassesPractice[which(df.long$workerId == worker_ids[i])] = 1
+  }
+}
+
+
+
+
+
 ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
 ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
 ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
@@ -344,32 +393,6 @@ df.long$RawComplete = mapply(complete_answer, ShortOrder = df.long$ShortRawOrder
 
 
 
-
-
-
-
-# df.long$PassesPractice = 0
-# 
-# for (i in length(worker_ids)) {
-#   pract_temp = df.long[df.long$workerId == worker_ids[i] & df.long$isTestTrial == 0,]
-#   pract_score = numeric()
-#   for (j in 1:nrow(pract_temp)) {
-#     if (!str_detect(pract_temp$LongOrder[j], "NONE")) {
-#       if (pract_temp$stimulus[j] == "PracticeImage") {
-#         pract_score = c(pract_score, str_detect(pract_temp$LongOrder[j], "G"))
-#       } else {
-#           if (pract_temp$IsComplete[j]) {
-#             pract_score = c(pract_score, 1)
-#           } else if (nchar(df.long$ShortOrder[j]) > 1) {
-#             pract_score = c(pract_score, 1)
-#           } else {pract_score = c(pract_score, 0)}
-#         }
-#       } else {pract_score = c(pract_score, 0)}
-#   }
-#   if (mean(pract_score) == 1) {
-#     df.long$PassesPractice[which(df.long$workerId == worker_ids[i])] = 1
-#   }
-# }
 
 
 
@@ -391,27 +414,39 @@ animacy = function (video, animate_events) {
 
 df.long$Animacy = sapply(df.long$stimulus, FUN=animacy, animate_events = animates, USE.NAMES = FALSE)
 
+isVLat = function (shortorder, iscomplete, istrans) {
+  if (istrans & iscomplete) { 
+    if (unlist(strsplit(shortorder, ''))[2]=="V"){
+      return(0)
+    } else {return(1)}
+  } else {return(0)}
+}
+
+df.long$isVLat = mapply(isVLat, shortorder = df.long$CleanOrder, iscomplete = df.long$CleanComplete, istrans = df.long$IsTransitive, USE.NAMES = FALSE)
+
+
+
+
 
 
 directory = getwd()
 write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
 
+
+
+
 df.long.testtrials = df.long[df.long$isTestTrial == 1,]
-df.long.completes = df.long[df.long$IsComplete == 1,]
+df.long.completes = df.long[df.long$CleanComplete == 1,]
 df.long.transitives = df.long[df.long$IsTransitive == 1,]
-df.long.usables = df.long.transitives[df.long$IsComplete == 1,]
 
 
 
-isVLat = function (shortorder, iscomplete, istrans) {
-  if(istrans) {
-    if (unlist(strsplit(shortorder, ''))[2]=="V"){
-      return(0)
-    } else {return(1)}
-  }
-}
 
-df.long.usables$isVLat = mapply(isVLat, shortorder = df.long.usables$ShortOrder, USE.NAMES = FALSE)
+df.long.usables = df.long.transitives[df.long$CleanComplete == 1,]
+df.long.no.cheat = df.long.transitives[df.long$cheated == 0,]
+
+
+
 
 
 
