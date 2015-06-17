@@ -30,7 +30,8 @@
                     "alien": params.alien,
                     "moreinstr": params.moreinstr,
                     "eventpics": (typeof params.eventpics === 'undefined') ? 'blank.gif' : params.eventpics[i],
-                    "eventpicside": params.eventpicside || 0
+                    "eventpicside": params.eventpicside || 0,
+                    "timer": params.timer || false
                 };
             }
             return trials;
@@ -66,6 +67,42 @@
             if (trial.prompt && trial.prompt_location == "below") {
                 display_element.append(trial.prompt);
             }
+
+
+            timerHTML = '<div class="screen">' +
+                                '<script language="JavaScript">' +
+                                    'TargetDate = new Date();' +
+                                    'BackColor = "palegreen";' +
+                                    'ForeColor = "navy";' +
+                                    'CountActive = true;' +
+                                    'CountStepper = 1;' +
+                                    'LeadingZero = true;' +
+                                    'DisplayFormat = "%%M%%:%%S%%";' +
+                                    'FinishMessage = "";' +
+                                '</script>' +
+                            '<div class="innerdiv">' +
+                                '<script language="JavaScript" src="/static/js/countdown.js"></script>' +
+                            '</div>' +
+                        '</div>';
+            
+
+            if (trial.timer) {
+                display_element.append(timerHTML);
+            };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
             // store initial location data
             var init_locations = [];
@@ -111,6 +148,8 @@
                     "height": trial.eventpicside
                 }
             }));
+            
+
 
             new_clippy = '<video id="Event" width="388" height="291" z-index=1 border=0 position="absolute" top="0" left="0" preload autoplay>'+
                 '<source id="src_mpg" src="XXYYXX"  type=\'video/mp4; codecs="avc1.42E01E, mp4a.40.2"\'>';

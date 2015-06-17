@@ -299,11 +299,13 @@ df.long <- reshape(df.wide,
 
 
 
+
 ##SORT AND CLEAN DF.LONG##
-df.long <- df.long[order(df.long$workerId),]
+df.long <- df.long[order(df.long$participant),]
 long.names = names(df.long)
 long.names = long.names[-which(long.names %in% "id")]
 df.long = df.long[long.names]
+
 
 
 ##GET RAW SHORT ORDER WITH MISTAKES##
@@ -316,6 +318,8 @@ for (i in 1:length(long_split)){
 }
 
 df.long$ShortRawOrder = as.character(as.factor(unlist(short_order)))
+
+
 
 ##LABEL IS STIMULUS AS TRANSITIVE OR NOT##
 df.long$IsTransitive = as.numeric(!str_detect(df.long$glyphs, 'none') & !str_detect(df.long$stimulus, 'PracticeImage'))
@@ -331,13 +335,15 @@ complete_answer = function(ShortOrder, IsTransitive) {
     complete = 1
   } else if (ShortOrder == 'G') {
     complete = 1 
-  }} else {complete = 0}
+  } else {complete = 0}
+  } else {complete = 0}
   return(complete)
 }
 
 df.long$RawComplete = mapply(complete_answer, ShortOrder = df.long$ShortRawOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
 
 
+### PRODUCE A CLEAN WORD ORDER WITH ONLY SOV's ###
 raw_to_clean = function(raworder) {
   rawsplit = unlist(strsplit(raworder, split=''))
   cleanorder = character()
@@ -353,9 +359,13 @@ raw_to_clean = function(raworder) {
 
 df.long$CleanOrder = mapply(raw_to_clean, df.long$ShortRawOrder)
 
-df.long$CleanComplete = unlist(as.numeric(mapply(complete_answer, ShortOrder = df.long$CleanOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)))
+
+### GET WHETHER A COMPLETE RESPONSES WAS PRODUCED WITH THIS NEW ORDER ###
+df.long$CleanComplete = mapply(complete_answer, ShortOrder = df.long$CleanOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
 
 
+### CHECK WHETHER PARTICIPANT WAS EXPOSED TO A WORD ORDER ###
+### AND GOT BOTH PRACTICE IMAGE TRIALS CORRECT ###
 df.long$PassesPractice = 0
 
 for (i in 1:length(worker_ids)) {
@@ -383,23 +393,11 @@ for (i in 1:length(worker_ids)) {
 
 
 
-
-
-##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
-##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
-##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
-##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
-
-
-
-
-
-
-
-it_events = c("girl-tumbling-none", "boy-rolling-none", "car-rolling-none", "ball-rolling-none") 
+### LABEL ANIMACY OF STIMULI ###
+#it_events = c("girl-tumbling-none", "boy-rolling-none", "car-rolling-none", "ball-rolling-none") 
 animates = c("fireman-pushing-boy", "fireman-kicking-girl", "girl-elbowing-oldlady", "girl-kissing-boy", "girl-throwing-oldlady", "boy-lifting-girl",  "oldlady-rubbing-fireman")
-inanimates = c("fireman-lifting-car", "fireman-throwing-ball", "oldlady-kissing-ball", "oldlady-elbowing-heart", "girl-rubbing-heart", "boy-kicking-ball", "girl-pushing-car")
-all_events = c(it_events, animates, inanimates)
+#inanimates = c("fireman-lifting-car", "fireman-throwing-ball", "oldlady-kissing-ball", "oldlady-elbowing-heart", "girl-rubbing-heart", "boy-kicking-ball", "girl-pushing-car")
+#all_events = c(it_events, animates, inanimates)
 
 animacy = function (video, animate_events) {
   if (mean(str_detect(video, 'none')) > 0) {
@@ -414,6 +412,8 @@ animacy = function (video, animate_events) {
 
 df.long$Animacy = sapply(df.long$stimulus, FUN=animacy, animate_events = animates, USE.NAMES = FALSE)
 
+
+### CHECK IS RESPONSE IS V-lat or V-med ###
 isVLat = function (shortorder, iscomplete, istrans) {
   if (istrans & iscomplete) { 
     if (unlist(strsplit(shortorder, ''))[2]=="V"){
@@ -425,41 +425,45 @@ isVLat = function (shortorder, iscomplete, istrans) {
 df.long$isVLat = mapply(isVLat, shortorder = df.long$CleanOrder, iscomplete = df.long$CleanComplete, istrans = df.long$IsTransitive, USE.NAMES = FALSE)
 
 
-
-
-
-
+### PRODUCE A CSV WITHIN THE GLYPHGRID FOLDER
 directory = getwd()
 write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
 
 
 
 
-df.long.testtrials = df.long[df.long$isTestTrial == 1,]
-df.long.completes = df.long[df.long$CleanComplete == 1,]
-df.long.transitives = df.long[df.long$IsTransitive == 1,]
+
+### GRAB ROWS FROM PARTICIPANTS THAT DID NOT CHEAT ###
+df.long.no.cheat = df.long[df.long$cheated == 0,]
+
+### GRAB ROWS THAT ARE TEST TRIALS ###
+df.long.testtrials = df.long.no.cheat[df.long.no.cheat$isTestTrial == 1,]
+
+### OF THOSE, NOW GRAB TRANSITIVE STIMULI ###
+df.long.transitives = df.long.testtrials[df.long.testtrials$IsTransitive == 1,]
+
+### OF THOSE, NOW GRAB COMPLETE RESPONSES ###
+df.long.usables = df.long.transitives[df.long.transitives$CleanComplete == 1,]
 
 
 
-
-df.long.usables = df.long.transitives[df.long$CleanComplete == 1,]
-df.long.no.cheat = df.long.transitives[df.long$cheated == 0,]
-
-
-
-
-
-
-###GET SOME BASIC STATS HERE ABOUT RESPONSES###
-percent.complete = nrow(df.long.completes)/nrow(df.long)
-trans.complete = mean(df.long.transitives$IsComplete)
+###GET SOME BASIC %'s HERE ABOUT RESPONSES###
+raw.complete = mean(df.long$RawComplete)
+clean.complete = mean(df.long$CleanComplete)
+trans.complete = mean(df.long.transitives$CleanComplete)
 percent.Vlat = mean(df.long.usables$isVLat)
 
 
+summary1 = df.long.usables %>% group_by(Animacy) %>% summarise(Vlat = mean(isVLat), how_many=sum(IsTransitive))
+summary2 = df.long.transitives %>% group_by(Animacy) %>% summarise(Vlat = mean(isVLat), how_many=sum(IsTransitive))
+summary3 = df.long %>% group_by(Animacy) %>% summarise(Vlat = mean(isVLat), how_many=sum(IsTransitive))
+
+
+
 
 directory = getwd()
 write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
-write.csv(df.long.completes, file = paste0(directory, "/dflong_completes.csv"))
+write.csv(df.long.transitives, file = paste0(directory, "/dflong_transitives.csv"))
 write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
 
 
@@ -467,6 +471,10 @@ write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
 
 
 
+##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
 
 
 
@@ -488,154 +496,22 @@ write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
 
 
 
-for (k in 1:nrow(df.wide)) {
-  if (df.wide$participant[k] != "EXCLUDED") {
-    for (i in (1:length(all_events)+2)) {
-      for (j in 1:length(all_events)) {
-        if (isTRUE(unlist(gregexpr(all_events[j], df.wide[paste("MovieFile_", i, sep = "")][k,])) == 1)) {
-        if (df.wide[paste("WordOrd_", i, sep = "")][k,] != 'NONE') {
-          long_order = df.wide[paste("WordOrd_", i, sep = "")][k,]
-          long_order = unlist(strsplit(long_order, ''))
-          how_long = length(long_order)
-          short_order = ''
-          for (l in 1:how_long) {
-            short_order = unique(c(short_order, long_order[l]))
-          }
-          short_order = paste(short_order, collapse='')
-          df.wide[order_col_names[j]][k,] = short_order
-        } else {df.wide[order_col_names[j]][k,] = 'NONE'}
-        }
-      }
-    }
-  }
-}
-
-cln.table = df.wide[1:4]
-cln.table[order_col_names[5:length(order_col_names)]] = df.wide[order_col_names[5:length(order_col_names)]]
-#cln.table <- data.frame(matrix(unlist(cln.table), nrow=nrow(cln.table)))
-
-cln.table$Per.Vlat = cln.table$Per.Vmed = cln.table$Per.Othe = 0
-
-for (i in 1:nrow(cln.table)) {
-  if (cln.table$participant[i] != 'EXCLUDED') {
-    p_lat = p_med = p_none = 0
-    for (j in 5:length(order_col_names)) {
-      if ((cln.table[order_col_names[j]])[i,] != 'NONE') {
-        if (length(unlist(strsplit((cln.table[order_col_names[j]])[i,], ''))) != 3) {
-          p_none = p_none + 1
-        } else {
-          where = unlist(gregexpr('V', (cln.table[order_col_names[j]])[i,]))
-          if (where == 2) {
-            p_med = p_med + 1
-          } else {
-            p_lat = p_lat + 1
-          }
-        }
-      }
-    }
-    tot = (p_none+p_med+p_lat)
-    p_none = p_none/tot
-    p_med = p_med/tot
-    p_lat = p_lat/tot
-    cln.table$Per.Vlat[i] = p_lat
-    cln.table$Per.Vmed[i] = p_med
-    cln.table$Per.Othe[i] = p_none
-  }
-}
-
-cln.table[(nrow(cln.table)+1),] = "%Vlat"
-cln.table[(nrow(cln.table)+1),] = "#Incomplete"
-cln.table[(nrow(cln.table)+1),] = "%Incomplete"
-
-for (j in 5:length(order_col_names)) {
-  p_lat = p_med = p_none = 0
-  for (i in 1:(nrow(cln.table)-3)) {
-      if (length(unlist(strsplit((cln.table[order_col_names[j]])[i,], ''))) != 3) {
-        p_none = p_none + 1
-      } else {
-        where = unlist(gregexpr('V', (cln.table[order_col_names[j]])[i,]))
-        if (where == 2) {
-          p_med = p_med + 1
-        } else {
-          p_lat = p_lat + 1
-        }
-      } 
-    }
-  p_lat = p_lat/(p_lat+p_med)
-  cln.table[order_col_names[j]][(nrow(cln.table)-2),] = p_lat*100
-  cln.table[order_col_names[j]][(nrow(cln.table)-1),] = p_none
-  p_none = p_none/(p_lat+p_med+p_none)
-  cln.table[order_col_names[j]][(nrow(cln.table)),] = p_none*100
-}
-
-directory = getwd()
-write.csv(cln.table, file = paste0(directory, "/dfwide.csv"))
-  
-  
-#   tot = (p_med+p_lat)
-#   df.wide[order_col_names[j]][k,]
-#   (cln.table[cow])[(nrow(cln.table)),] <- p_none
-  }
 
 
-#   #And grab the info we need from the last 'trial' (feedback)
-#   if (is.null(a$data[[mylength-1]]$trialdata$responses)){df.wide$feedback[i] = "none"
-#   }else{
-#     df.wide$feedback[i] = a$data[[mylength-1]]$trialdata$responses
-#   }
-} #End of this participant
 
-# Run this again for participants who did not pass the quiz the first time.
-# for (i in 1:nrow(df.wide)){
-#   if (!is.na(df.complete$datastring[i])){
-#     a = fromJSON(df.complete$datastring[i])
-#     mylength = length(a$data)
-#   } else{
-#     a = data.frame(NULL)
-#     mylength = 0
-#   }
-#   print(mylength)
-#   if (mylength>86){
-#     df.wide$participant[i] = i
-#     df.wide$workerId[i] = a$workerId
-#     df.wide$browser[i] = df.complete$browser[i]
-#     df.wide$beginhit[i] = df.complete$beginhit[i]
-#     for (j in 1:mylength){
-#       try(
-#       if(a$data[[j]]$trialdata$trial_index_global %in% global_indeces){
-#         if(!is.null(a$data[[j]]$trialdata$rt)){
-#           df.wide[[paste("rt_",a$data[[j]]$trialdata$trial_index_global, sep="")]][i] = a$data[[j]]$trialdata$rt
-#         }
-#         if(!is.null(a$data[[j]]$trialdata$moves)){
-#           df.wide[[paste("moves_",a$data[[j]]$trialdata$trial_index_global, sep="")]][i] = a$data[[j]]$trialdata$moves
-#           global_indeces <- unique(c(global_indeces,a$data[[j]]$trialdata$trial_index_global))
-#         }
-#         if(!is.null(a$data[[j]]$trialdata$glyph)){
-#           df.wide[[paste("PracGlyph_",a$data[[j]]$trialdata$trial_index_global, sep="")]][i] = a$data[[j]]$trialdata$glyph
-#         }
-#         if(!is.null(a$data[[j]]$trialdata$Sub)){
-#           df.wide[[paste("Sub_",a$data[[j]]$trialdata$trial_index_global, sep="")]][i] = a$data[[j]]$trialdata$Sub
-#         }
-#         if(!is.null(a$data[[j]]$trialdata$Vrb)){
-#           df.wide[[paste("Vrb_",a$data[[j]]$trialdata$trial_index_global, sep="")]][i] = a$data[[j]]$trialdata$Vrb
-#         }
-#         if(!is.null(a$data[[j]]$trialdata$Obj)){
-#           df.wide[[paste("Obj_",a$data[[j]]$trialdata$trial_index_global, sep="")]][i] = a$data[[j]]$trialdata$Obj
-#         }
-#       } #Else just don't make any columns right now!!!
-#     )}
-#   }
-#   
-#   #And grab the info we need from the last 'trial' (feedback)
-#   if (is.null(a$data[[mylength-1]]$trialdata$responses)){df.wide$feedback[i] = "none"
-#   }else{
-#     df.wide$feedback[i] = a$data[[mylength-1]]$trialdata$responses
-#   }
-# } 
 
-    
-    
-#Notes: Something up with 1/16/15 subj 71's datastring:it's missing - recorded at end, so presumably lost before that?  Add a check for null datastrings
+
+
+
+
+
+####
+####
+#### HERE IS OLD CODE FROM MELISSA'S ANALYSIS FOR MANY-DAX
+####
+####
+
+
 
 #Weird behavior! I got those wrong-lenght participants to be assigned a participant no of NA, which is something, anyway.
 #Lost 6 people to this.
