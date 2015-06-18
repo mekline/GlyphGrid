@@ -48,7 +48,7 @@ df.wide = data.frame(matrix(nrow=nrow(df.complete),ncol=4))
 colnames(df.wide) = c("participant","workerId","browser","beginhit") #will dynamically add columns from datastring below
 
 
-#LIST SPECIFIC TRIAL TYPES INTO LISTS#
+#PLACA DATA OF SPECIFIC TRIAL TYPES INTO LISTS#
 global_indeces = c()
 free_sorts = list()
 categorized = list()
@@ -88,7 +88,7 @@ for (i in 1:nrow(df.wide)){
   }
 }
 
-#### CHECK TO SEE IF PARTICIPANT CONFESSES TO CHEATING ####
+#### CHECK TO SEE IF PARTICIPANT CHEATED ####
 df.wide$cheated = as.numeric(grepl('Q1\":\"y', df.wide$feedback, ignore.case=TRUE) | grepl('Q2\":\"y', df.wide$feedback, ignore.case=TRUE))
 
 
@@ -469,8 +469,6 @@ write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
 
 
 
-
-
 ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
 ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
 ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
@@ -505,170 +503,170 @@ write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
 
 
 
-####
-####
-#### HERE IS OLD CODE FROM MELISSA'S ANALYSIS FOR MANY-DAX
-####
-####
-
-
-
-#Weird behavior! I got those wrong-lenght participants to be assigned a participant no of NA, which is something, anyway.
-#Lost 6 people to this.
-nrow(df.wide)
-df.wide = df.wide[!is.na(df.wide$participant),]
-nrow(df.wide)
-
-#OOPS from 1/15/15: I didn't have the first trial (set to show the prototype movie) save the right variables, so record them
-#here
-
-df.wide$exposurePath_5 =df.wide$exposurePath_6
-df.wide$exposureManner_5 =df.wide$exposureManner_6
-df.wide$condition_5 =df.wide$condition_6
-  
-
-#Reformat into long form!
-df.long = wideToLong(subset(df.wide,select=-feedback),within="trial")
-
-#create factors
-df.long = mutate(df.long, participant = as.numeric(participant),
-          trial = as.numeric(as.character(trial)),
-          rt = as.numeric(as.character(rt)),
-          keypress = as.numeric(as.character(keypress))-48, #transform keycodes to numerals!
-          stimCondition = factor(stimCondition,levels=c("NoChange","BothChange", "PathChange","MannerChange")),
-          condition = factor(condition, levels=c("Noun","Verb")))
-
-df.long = df.long[order(df.long$participant,df.long$trial),]
-
-#Analyze data!--------------------------------------------------
-
-#For each participant, make a score, which is abs(mean(mannerchange)-mean(pathchange))
-#(And add some extra descriptive stats for the paper)
-
-Scores = ""
-
-mannerScores = aggregate(df.long[df.long$stimCondition=="MannerChange",]$keypress, by=list(df.long[df.long$stimCondition=="MannerChange",]$participant, df.long[df.long$stimCondition=="MannerChange",]$condition), mean.na.rm)
-names(mannerScores) = c("participant", "condition", "mannerscore")
-pathScores = aggregate(df.long[df.long$stimCondition=="PathChange",]$keypress, by=list(df.long[df.long$stimCondition=="PathChange",]$participant, df.long[df.long$stimCondition=="PathChange",]$condition), mean.na.rm)
-names(pathScores) = c("participant", "condition", "pathscore")
-sameScores = aggregate(df.long[df.long$stimCondition=="NoChange",]$keypress, by=list(df.long[df.long$stimCondition=="NoChange",]$participant, df.long[df.long$stimCondition=="NoChange",]$condition), mean.na.rm)
-names(sameScores) = c("participant","condition","samescore")
-bothScores = aggregate(df.long[df.long$stimCondition=="BothChange",]$keypress, by=list(df.long[df.long$stimCondition=="BothChange",]$participant, df.long[df.long$stimCondition=="BothChange",]$condition), mean.na.rm)
-names(bothScores) = c("participant","condition","bothscore")
-      
-Scores = merge(mannerScores, pathScores, by=c("participant", "condition"))
-Scores = merge(Scores, sameScores, by=c("participant", "condition"))
-Scores = merge(Scores, bothScores, by=c("participant", "condition"))
-
-
-
-
-
-
-
-
-#Basic descriptives
-
-mean(Scores$samescore)
-mean(Scores$mannerscore)
-mean(Scores$pathscore)
-mean(Scores$bothscore)
-
-with(Scores, tapply(samescore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-t.test(Scores[Scores$condition == "Noun",]$samescore, Scores[Scores$condition == "Verb",]$samescore)
-
-with(Scores, tapply(bothscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-t.test(Scores[Scores$condition == "Noun",]$bothscore, Scores[Scores$condition == "Verb",]$bothscore)
-
-with(Scores, tapply(mannerscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-t.test(Scores[Scores$condition == "Noun",]$mannerscore, Scores[Scores$condition == "Verb",]$mannerscore)
-
-with(Scores, tapply(pathscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-t.test(Scores[Scores$condition == "Noun",]$pathscore, Scores[Scores$condition == "Verb",]$pathscore)
-
-#More interesting measures
-Scores$diffscore = abs(Scores$mannerscore - Scores$pathscore)
-Scores$ILikeMannerscore = Scores$pathscore - Scores$mannerscore
-
-with(Scores, tapply(diffscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-with(Scores, tapply(diffscore, list(condition), stderr), drop=TRUE)
-
-with(Scores, tapply(ILikeMannerscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-with(Scores, tapply(ILikeMannerscore, list(condition),stderr), drop=TRUE)
-
-#And let's do a dead simple t test on that
-
-t.test(Scores[Scores$condition == "Noun",]$diffscore, Scores[Scores$condition == "Verb",]$diffscore)
-cohensD(Scores[Scores$condition == "Noun",]$diffscore, Scores[Scores$condition == "Verb",]$diffscore)
-
-
-#Time for some regressions
-nounScores <- Scores[Scores$condition == 'Noun',]
-verbScores <- Scores[Scores$condition == 'Verb',]
-
-noun.lm <- lm(mannerscore ~ pathscore, data=nounScores)
-summary(noun.lm)
-summary(noun.lm)$r.squared
-
-verb.lm <- lm(mannerscore ~ pathscore, data=verbScores)
-summary(verb.lm)
-summary(verb.lm)$r.squared
-
-#A post-hoc analysis: do verb or noun people say yes more often?
-allScores = aggregate(df.long$keypress, by=list(df.long$participant, df.long$condition), mean.na.rm)
-names(allScores) = c("participant", "condition", "allscore")
-
-with(allScores, tapply(allscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-with(allScores, tapply(allscore, list(condition), stderr), drop=TRUE)
-
-t.test(allScores[allScores$condition == "Noun",]$allscore, allScores[allScores$condition == "Verb",]$allscore)
-cohensD(allScores[allScores$condition == "Noun",]$allscore, allScores[allScores$condition == "Verb",]$allscore)
-
-#Against the prediction I might have made, Noun categories are slightly SMALLER!  
-#So this isn't just verb people making smaller categories - they say yes to about the same # of things, but distribute differently
-
-#Graph data------------------------------------------------
-
-#Bar graph of means----------------
-
-##Summarize the data for graphing
-data.summary.diffscores <- data.frame(
-  condition=levels(Scores$condition),
-  mean=with(Scores, tapply(diffscore, list(condition), mean, na.rm=TRUE), drop=TRUE),
-  n=with(Scores, tapply(diffscore, list(condition), length)),
-  se=with(Scores, tapply(ILikeMannerscore, list(condition), stderr), drop=TRUE)
-)
-
-# Precalculate margin of error for confidence interval
-data.summary.diffscores$me <- qt(1-0.05/2, df=data.summary.diffscores$n)*data.summary.diffscores$se
-
-# Use ggplot to draw the bar plot!
-png('manydax-barplot-se.png') # Write to PNG
-ggplot(data.summary.diffscores, aes(x = condition, y = mean)) +  
-  geom_bar(position = position_dodge(), stat="identity", fill="brown") + 
-  geom_errorbar(aes(ymin=mean-se, ymax=mean+se), width=0.25) +
-  ylim(0,6) +
-  ylab("Abs(mean(manner) - mean(path))")+
-  xlab("")+
-  ggtitle("Rating of manner vs. path changes") + # plot title
-  theme_bw() + # remove grey background (because Tufte said so)
-  theme(panel.grid.major = element_blank()) # remove x and y major grid lines (because Tufte said so)
-dev.off() # Close PNG
-
-#Scatterplot of manner vs. path scores of each partic ---------
-
-
-png('manydax-noun-scatterplot-95ci.png')
-ggplot(nounScores, aes(x=mannerscore, y=pathscore)) +
-  geom_point(shape=1) +    # Use hollow circles
-  geom_smooth(method=lm)   # Add linear regression line 
-#  (by default includes 95% confidence region)
-dev.off()
-
-png('manydax-verb-scatterplot-95ci.png')
-ggplot(verbScores, aes(x=mannerscore, y=pathscore)) +
-  geom_point(shape=1) +    # Use hollow circles
-  geom_smooth(method=lm)   # Add linear regression line 
-#  (by default includes 95% confidence region)
-dev.off()
-
+# ####
+# ####
+# #### HERE IS OLD CODE FROM MELISSA'S ANALYSIS FOR MANY-DAX
+# ####
+# ####
+# 
+# 
+# 
+# #Weird behavior! I got those wrong-lenght participants to be assigned a participant no of NA, which is something, anyway.
+# #Lost 6 people to this.
+# nrow(df.wide)
+# df.wide = df.wide[!is.na(df.wide$participant),]
+# nrow(df.wide)
+# 
+# #OOPS from 1/15/15: I didn't have the first trial (set to show the prototype movie) save the right variables, so record them
+# #here
+# 
+# df.wide$exposurePath_5 =df.wide$exposurePath_6
+# df.wide$exposureManner_5 =df.wide$exposureManner_6
+# df.wide$condition_5 =df.wide$condition_6
+#   
+# 
+# #Reformat into long form!
+# df.long = wideToLong(subset(df.wide,select=-feedback),within="trial")
+# 
+# #create factors
+# df.long = mutate(df.long, participant = as.numeric(participant),
+#           trial = as.numeric(as.character(trial)),
+#           rt = as.numeric(as.character(rt)),
+#           keypress = as.numeric(as.character(keypress))-48, #transform keycodes to numerals!
+#           stimCondition = factor(stimCondition,levels=c("NoChange","BothChange", "PathChange","MannerChange")),
+#           condition = factor(condition, levels=c("Noun","Verb")))
+# 
+# df.long = df.long[order(df.long$participant,df.long$trial),]
+# 
+# #Analyze data!--------------------------------------------------
+# 
+# #For each participant, make a score, which is abs(mean(mannerchange)-mean(pathchange))
+# #(And add some extra descriptive stats for the paper)
+# 
+# Scores = ""
+# 
+# mannerScores = aggregate(df.long[df.long$stimCondition=="MannerChange",]$keypress, by=list(df.long[df.long$stimCondition=="MannerChange",]$participant, df.long[df.long$stimCondition=="MannerChange",]$condition), mean.na.rm)
+# names(mannerScores) = c("participant", "condition", "mannerscore")
+# pathScores = aggregate(df.long[df.long$stimCondition=="PathChange",]$keypress, by=list(df.long[df.long$stimCondition=="PathChange",]$participant, df.long[df.long$stimCondition=="PathChange",]$condition), mean.na.rm)
+# names(pathScores) = c("participant", "condition", "pathscore")
+# sameScores = aggregate(df.long[df.long$stimCondition=="NoChange",]$keypress, by=list(df.long[df.long$stimCondition=="NoChange",]$participant, df.long[df.long$stimCondition=="NoChange",]$condition), mean.na.rm)
+# names(sameScores) = c("participant","condition","samescore")
+# bothScores = aggregate(df.long[df.long$stimCondition=="BothChange",]$keypress, by=list(df.long[df.long$stimCondition=="BothChange",]$participant, df.long[df.long$stimCondition=="BothChange",]$condition), mean.na.rm)
+# names(bothScores) = c("participant","condition","bothscore")
+#       
+# Scores = merge(mannerScores, pathScores, by=c("participant", "condition"))
+# Scores = merge(Scores, sameScores, by=c("participant", "condition"))
+# Scores = merge(Scores, bothScores, by=c("participant", "condition"))
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# #Basic descriptives
+# 
+# mean(Scores$samescore)
+# mean(Scores$mannerscore)
+# mean(Scores$pathscore)
+# mean(Scores$bothscore)
+# 
+# with(Scores, tapply(samescore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# t.test(Scores[Scores$condition == "Noun",]$samescore, Scores[Scores$condition == "Verb",]$samescore)
+# 
+# with(Scores, tapply(bothscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# t.test(Scores[Scores$condition == "Noun",]$bothscore, Scores[Scores$condition == "Verb",]$bothscore)
+# 
+# with(Scores, tapply(mannerscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# t.test(Scores[Scores$condition == "Noun",]$mannerscore, Scores[Scores$condition == "Verb",]$mannerscore)
+# 
+# with(Scores, tapply(pathscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# t.test(Scores[Scores$condition == "Noun",]$pathscore, Scores[Scores$condition == "Verb",]$pathscore)
+# 
+# #More interesting measures
+# Scores$diffscore = abs(Scores$mannerscore - Scores$pathscore)
+# Scores$ILikeMannerscore = Scores$pathscore - Scores$mannerscore
+# 
+# with(Scores, tapply(diffscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# with(Scores, tapply(diffscore, list(condition), stderr), drop=TRUE)
+# 
+# with(Scores, tapply(ILikeMannerscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# with(Scores, tapply(ILikeMannerscore, list(condition),stderr), drop=TRUE)
+# 
+# #And let's do a dead simple t test on that
+# 
+# t.test(Scores[Scores$condition == "Noun",]$diffscore, Scores[Scores$condition == "Verb",]$diffscore)
+# cohensD(Scores[Scores$condition == "Noun",]$diffscore, Scores[Scores$condition == "Verb",]$diffscore)
+# 
+# 
+# #Time for some regressions
+# nounScores <- Scores[Scores$condition == 'Noun',]
+# verbScores <- Scores[Scores$condition == 'Verb',]
+# 
+# noun.lm <- lm(mannerscore ~ pathscore, data=nounScores)
+# summary(noun.lm)
+# summary(noun.lm)$r.squared
+# 
+# verb.lm <- lm(mannerscore ~ pathscore, data=verbScores)
+# summary(verb.lm)
+# summary(verb.lm)$r.squared
+# 
+# #A post-hoc analysis: do verb or noun people say yes more often?
+# allScores = aggregate(df.long$keypress, by=list(df.long$participant, df.long$condition), mean.na.rm)
+# names(allScores) = c("participant", "condition", "allscore")
+# 
+# with(allScores, tapply(allscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# with(allScores, tapply(allscore, list(condition), stderr), drop=TRUE)
+# 
+# t.test(allScores[allScores$condition == "Noun",]$allscore, allScores[allScores$condition == "Verb",]$allscore)
+# cohensD(allScores[allScores$condition == "Noun",]$allscore, allScores[allScores$condition == "Verb",]$allscore)
+# 
+# #Against the prediction I might have made, Noun categories are slightly SMALLER!  
+# #So this isn't just verb people making smaller categories - they say yes to about the same # of things, but distribute differently
+# 
+# #Graph data------------------------------------------------
+# 
+# #Bar graph of means----------------
+# 
+# ##Summarize the data for graphing
+# data.summary.diffscores <- data.frame(
+#   condition=levels(Scores$condition),
+#   mean=with(Scores, tapply(diffscore, list(condition), mean, na.rm=TRUE), drop=TRUE),
+#   n=with(Scores, tapply(diffscore, list(condition), length)),
+#   se=with(Scores, tapply(ILikeMannerscore, list(condition), stderr), drop=TRUE)
+# )
+# 
+# # Precalculate margin of error for confidence interval
+# data.summary.diffscores$me <- qt(1-0.05/2, df=data.summary.diffscores$n)*data.summary.diffscores$se
+# 
+# # Use ggplot to draw the bar plot!
+# png('manydax-barplot-se.png') # Write to PNG
+# ggplot(data.summary.diffscores, aes(x = condition, y = mean)) +  
+#   geom_bar(position = position_dodge(), stat="identity", fill="brown") + 
+#   geom_errorbar(aes(ymin=mean-se, ymax=mean+se), width=0.25) +
+#   ylim(0,6) +
+#   ylab("Abs(mean(manner) - mean(path))")+
+#   xlab("")+
+#   ggtitle("Rating of manner vs. path changes") + # plot title
+#   theme_bw() + # remove grey background (because Tufte said so)
+#   theme(panel.grid.major = element_blank()) # remove x and y major grid lines (because Tufte said so)
+# dev.off() # Close PNG
+# 
+# #Scatterplot of manner vs. path scores of each partic ---------
+# 
+# 
+# png('manydax-noun-scatterplot-95ci.png')
+# ggplot(nounScores, aes(x=mannerscore, y=pathscore)) +
+#   geom_point(shape=1) +    # Use hollow circles
+#   geom_smooth(method=lm)   # Add linear regression line 
+# #  (by default includes 95% confidence region)
+# dev.off()
+# 
+# png('manydax-verb-scatterplot-95ci.png')
+# ggplot(verbScores, aes(x=mannerscore, y=pathscore)) +
+#   geom_point(shape=1) +    # Use hollow circles
+#   geom_smooth(method=lm)   # Add linear regression line 
+# #  (by default includes 95% confidence region)
+# dev.off()
+# 
