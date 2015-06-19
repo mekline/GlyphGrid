@@ -155,6 +155,9 @@ for (i in 1:nrow(df.wide)){
   if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Obj)){
     df.wide[[paste("O_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Obj
   }
+  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$rt)){
+    df.wide[[paste("rt_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$rt
+  }
   }
 } #End of this participant
 
@@ -258,6 +261,7 @@ for (i in 1:length(col.nums)) {
 ###REFORMAT FROM WIDE TO LONG###
 moves_list = c()
 stimulus_list = c()
+rt_list = c()
 S_list = c()
 O_list = c()
 V_list = c()
@@ -270,6 +274,7 @@ for (i in 1:length(col.nums)) {
   if (exists(paste('S_', col.nums[i], sep=''), df.wide)) {
       moves_list = c(moves_list, paste("moves_",col.nums[i], sep=""))
       stimulus_list = c(stimulus_list, paste("Stimulus_",col.nums[i], sep=""))
+      rt_list = c(rt_list, paste("rt_",col.nums[i], sep=""))
       S_list = c(S_list, paste("S_",col.nums[i], sep=""))
       O_list = c(O_list, paste("O_",col.nums[i], sep=""))
       V_list = c(V_list, paste("V_",col.nums[i], sep=""))
@@ -279,6 +284,7 @@ for (i in 1:length(col.nums)) {
   } else {
       moves_list = c(moves_list, paste("moves_",col.nums[i], sep=""))
       stimulus_list = c(stimulus_list, paste("Stimulus_",col.nums[i], sep=""))
+      rt_list = c(rt_list, paste("rt_",col.nums[i], sep=""))
       order_list = c(order_list, paste("RawOrd_",col.nums[i], sep=""))
       glyphs_list = c(glyphs_list, paste("Glyphs_",col.nums[i], sep=""))
       rem.glyph = c(rem.glyph, paste("glyph_",col.nums[i], sep=""))
@@ -286,11 +292,11 @@ for (i in 1:length(col.nums)) {
   }
 }
 
-list_of_lists = list(stimulus_list, glyphs_list, moves_list, isTestTrial_list, order_list) #literal_list, keypress_list, match_list)
+list_of_lists = list(stimulus_list, rt_list, glyphs_list, moves_list, isTestTrial_list, order_list) #literal_list, keypress_list, match_list)
 
 df.long <- reshape(df.wide, 
                    varying = list_of_lists, 
-                   v.names = c('stimulus', 'glyphs', 'moves', 'isTestTrial', 'RawOrder'),
+                   v.names = c('stimulus', 't.time', 'glyphs', 'moves', 'isTestTrial', 'RawOrder'),
                    timevar = "trial.number", 
                    times = 1:length(moves_list), 
                    drop = c(S_list, O_list, V_list, rem.glyph),
@@ -458,6 +464,8 @@ summary1 = df.long.usables %>% group_by(Animacy) %>% summarise(Vlat = mean(isVLa
 summary2 = df.long.transitives %>% group_by(Animacy) %>% summarise(Vlat = mean(isVLat), how_many=sum(IsTransitive))
 summary3 = df.long %>% group_by(Animacy) %>% summarise(Vlat = mean(isVLat), how_many=sum(IsTransitive))
 
+time.summary1 = df.long %>% group_by(participant) %>% summarise(AvgTime = mean(t.time), how_many=sum(IsTransitive))
+time.summary2 = df.long.transitives %>% group_by(participant) %>% summarise(AvgTime = mean(t.time), how_many=sum(IsTransitive))
 
 
 
