@@ -261,10 +261,10 @@ button:hover {
 html, body {height: 100%;}
 
 #hex {
-    color: white; font: 64px/64px Lato; height: 64px;
+    color: white; font: 50px/50px Lato; height: 50px;
     /*Vertical centering*/
     position: relative; 
-    top: -600px;
+    top: -660px;
     /*Horizontal centering*/
     text-align: center;
 }

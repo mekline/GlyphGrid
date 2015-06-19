@@ -28,7 +28,7 @@
                     "sort_area_height": params.sort_area_height || 600,
                     "eventclips": (typeof params.eventclips === 'undefined') ? '' : params.eventclips[i],
                     "alien": params.alien,
-                    "moreinstr": params.moreinstr,
+                    "moreinstr": (typeof params.moreinstr === 'undefined') ? '' : params.moreinstr,
                     "eventpics": (typeof params.eventpics === 'undefined') ? 'blank.gif' : params.eventpics[i],
                     "eventpicside": params.eventpicside || 0,
                     "timer": params.timer || false
@@ -69,7 +69,7 @@
             }
 
 
-            timerHTML = '<div id="hex" style="height:10px;"><script src="/static/js/countdown.js"></script></div>';
+            timerHTML = '<div id="hex" style="height:2px;"><script src="/static/js/countdown.js"></script></div>';
             
 
             if (trial.timer) {
@@ -155,8 +155,9 @@
                 }
             }));
 
-            $("#jspsych-free-sort-arena").append($('<img>', {
-                "src": trial.moreinstr,
+
+            
+            $("#jspsych-free-sort-arena").append($(trial.moreinstr, {
                 "class": "",
                 "css": {
                     "position": "absolute",

@@ -93,14 +93,14 @@
         };
 
         var instrucHTML = "<h3><center>Meet our friend Upwilaah!</center></h3></br>" +
-                "<div class='center-content'><img height=150 width=150 src='/static/images/upwilaah.jpeg' /></div></br>" +
+                "<div class='center-content'><img height=150 width=150 src='/static/images/upwilaah.jpeg' /></div>" +
                 "<p>Upwilaah is a very friendly alien and likes stories very much. Upwilaah's favorite story-spot " +
                 "is inside his box because it helps him avoid distractions. Unfortunately for us, Upwilaah does not " + 
                 "have any ears and can only communicate by reading and writing in his alien language which uses symbols like these:</p></br>" +
                 "<div class='center-content'><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /></div>" +
                 "<p>Your task is to communicate with Upwilaah in his language, and tell him what happened " + 
                 "in a series of very short stories.</p>" + 
-                "<p><b>Press the spacebar to continue.</b></p>";
+                "</br><p><b>Press the spacebar to continue.</b></p>";
 
         var prepHTML1 = "<h3></br></br>This Study has 2 Parts</h3>" +
                 "<p></br>In Part 1, you will memorize a set of symbols so that you can communicate with Upwilaah. This part also includes a quiz to see how familiar you are with the symbols. </br><b>Part 1 should take about 10 minutes.</b></p>" + 
@@ -121,6 +121,8 @@
                 "<p></br>In this part, you will be watching more short movies." + 
                 "<p></br>First watch the movie. </br></br>After the movie is over, give Upwilaah the symbols that best <b>describe what happened in the movie</b>. Upwilaah will tell you how many symbols you need per movie." +
                 "<p></br>Press the letter <b>T</b> to continue to the movies.";
+
+        var moreinstructions = "<p>Drag and drop the appropriate symbol so that Upwilaah knows what you are looking at. </br>Then Press Done. <b>Upwilaah wants %%HOWMANY%% symbols.</b></p>";
 
 
 
@@ -530,13 +532,16 @@
             prompt: "<p>What is this?</p>",
             eventpics: ['/static/images/car.png'],
             eventpicside: 225,
-            moreinstr: 'static/images/one.png',
+            moreinstr: moreinstructions.replace('%%HOWMANY%%', '1'),
             alien: '/static/images/upwilaah.jpeg',
-            timer: true,
+            timer: false,
             data: function () {
                 info = {};
                 info.glyph = NTestInfo.ptrialInfo[1].Rel_glyph;
                 return info;
+            },
+            on_finish: function () {
+                document.body.style.background = '#FFFFFF';
             }
         };
 
@@ -547,13 +552,16 @@
             prompt: "<p>Who is this?</p>",
             eventpics: ['/static/images/oldlady.png'],
             eventpicside: 225,
-            moreinstr: 'static/images/one.png',
+            moreinstr: moreinstructions.replace('%%HOWMANY%%', '1'),
             alien: '/static/images/upwilaah.jpeg',
-            timer: true,
+            timer: false,
             data: function () {
                 info = {};
                 info.glyph = NTestInfo.ptrialInfo[0].Rel_glyph;
                 return info;
+            },
+            on_finish: function () {
+                document.body.style.background = '#FFFFFF';
             }
         };
 
@@ -563,7 +571,7 @@
             stimuli: [NTestInfo.ptrialInfo[2].glyphorder],
             prompt: "Watch this movie!",
             eventclips: ['/static/movies/car-tumbling-none.mp4'],
-            moreinstr: 'static/images/two.png',
+            moreinstr: moreinstructions.replace('%%HOWMANY%%', '2'),
             alien: '/static/images/upwilaah.jpeg',
             timer: true,
             data: function () {
@@ -577,7 +585,11 @@
                    info[PoS[j]] = NTestInfo.ptrialInfo[2].Rel_glyph[PoS[j]];
                 }
                 return info;
-        }};
+            },
+            on_finish: function () {
+                document.body.style.background = '#FFFFFF';
+            }
+        };
 
 //PRACTICE BLOCK FOR VIDEO OF GIRL PUSHING BALL
         var pract_block4 = {
@@ -585,7 +597,7 @@
             stimuli: [NTestInfo.ptrialInfo[3].glyphorder],
             prompt: "Watch this movie!",
             eventclips: ['/static/movies/girl-pushing-ball.mp4'],
-            moreinstr: 'static/images/three.png',
+            moreinstr: moreinstructions.replace('%%HOWMANY%%', '3'),
             alien: '/static/images/upwilaah.jpeg',
             timer: true,
             data: function () {
@@ -599,7 +611,11 @@
                    info[PoS[j]] = NTestInfo.ptrialInfo[3].Rel_glyph[PoS[j]];
                 }
                 return info;
-        }};
+            },
+            on_finish: function () {
+                document.body.style.background = '#FFFFFF';
+            }
+        };
 
 
 //THESE TRIALS GIVE FEEDBACK (IF INCORRECT) IN THE PRACTICE SECTION
@@ -623,7 +639,7 @@
                 missed1 = ''
                 missed_num1 = 0
                 if (correctit1 == 0) {
-                    text1_1 = '<p>You missed the glyph for the car. You should have given Upwilaah this symbol:</p>' +
+                    text1_1 = '<p>You missed the glyph for the car. You should have given Upwilaah this symbol:</p></br>' +
                                 '<img height=100 width=100 src="/static/images/GLYPH.png" /></br>'
                     missed1 = missed1 + text1_1;
                     missed_num1++;
@@ -631,7 +647,7 @@
 
                 missed1 = missed1.replace('GLYPH', checkit1[0].glyph);
 
-                missed1 = missed1 + '<p><b>Press the spacebar to continue.</b></p>'
+                missed1 = missed1 + '</br><p><b>Press the spacebar to continue.</b></p>'
 
                 if (missed_num1 > 0) {
                     return missed1
@@ -660,7 +676,7 @@
                 missed2 = ''
                 missed_num2 = 0
                 if (correctit2 == 0) {
-                    text2_1 = '<p>You missed the glyph for the old lady. You should have given Upwilaah this symbol:</p>' +
+                    text2_1 = '<p>You missed the glyph for the old lady. You should have given Upwilaah this symbol:</p></br>' +
                                 '<img height=100 width=100 src="/static/images/GLYPH.png" /></br>'
                     missed2 = missed2 + text2_1;
                     missed_num2++;
@@ -668,7 +684,7 @@
 
                 missed2 = missed2.replace('GLYPH', checkit2[0].glyph);
 
-                missed2 = missed2 + '<p><b>Press the spacebar to continue.</b></p>'
+                missed2 = missed2 + '</br><p><b>Press the spacebar to continue.</b></p>'
 
                 if (missed_num2 > 0) {
                     return missed2
@@ -702,13 +718,13 @@
                 missed3 = ''
                 missed_num3 = 0
                 if (correctit3[0] == 0) {
-                    text3_1 = '<p>You missed the glyph for the car. You should have given Upwilaah this symbol:</p>' +
+                    text3_1 = '<p>You missed the glyph for the car. You should have given Upwilaah this symbol:</br></p>' +
                                 '<img height=100 width=100 src="/static/images/SUB.png" /></br>'
                     missed3 = missed3 + text3_1;
                     missed_num3++;
                 }
                 if (correctit3[1] == 0) {
-                    text3_2 = '<p>You missed the glyph for tumbling. You should have given Upwilaah this symbol:</p>' +
+                    text3_2 = '<p>You missed the glyph for tumbling. You should have given Upwilaah this symbol:</br></p>' +
                                 '<img height=100 width=100 src="/static/images/VRB.png" /></br>'
                     missed3 = missed3 + text3_2;
                     missed_num3++;
@@ -717,7 +733,7 @@
                 missed3 = missed3.replace('SUB', checkit3[0].Sub);
                 missed3 = missed3.replace('VRB', checkit3[0].Vrb);
 
-                missed3 = missed3 + '<p><b>Press the spacebar to continue.</b></p>'
+                missed3 = missed3 + '</br><p><b>Press the spacebar to continue.</b></p>'
 
                 if (missed_num3 > 0) {
                     return missed3
@@ -754,19 +770,19 @@
                 missed4 = ''
                 missed_num4 = 0
                 if (correctit4[0] == 0) {
-                    text4_1 = '<p>You missed the glyph for the girl. You should have given Upwilaah this symbol:</p>' +
+                    text4_1 = '<p>You missed the glyph for the girl. You should have given Upwilaah this symbol:</br></p>' +
                                 '<img height=100 width=100 src="/static/images/SUB.png" /></br>'
                     missed4 = missed4 + text4_1;
                     missed_num4++;
                 }
                 if (correctit4[1] == 0) {
-                    text4_2 = '<p>You missed the glyph for push. You should have given Upwilaah this symbol:</p>' +
+                    text4_2 = '<p>You missed the glyph for push. You should have given Upwilaah this symbol:</br></p>' +
                                 '<img height=100 width=100 src="/static/images/VRB.png" /></br>'
                     missed4 = missed4 + text4_2;
                     missed_num4++;
                 }
                 if (correctit4[2] == 0) {
-                    text4_3 = '<p>You missed the glyph for the ball. You should have given Upwilaah this symbol:</p>' +
+                    text4_3 = '<p>You missed the glyph for the ball. You should have given Upwilaah this symbol:</br></p>' +
                                 '<img height=100 width=100 src="/static/images/OBJ.png" /></br>'
                     missed4 = missed4 + text4_3;
                     missed_num4++;
@@ -776,7 +792,7 @@
                 missed4 = missed4.replace('OBJ', checkit4[0].Obj);
                 missed4 = missed4.replace('VRB', checkit4[0].Vrb);
 
-                missed4 = missed4 + '<p><b>Press the spacebar to continue.</b></p>'
+                missed4 = missed4 + '</br><p><b>Press the spacebar to continue.</b></p>'
 
                 if (missed_num4 > 0) {
                     return missed4
@@ -802,8 +818,8 @@
                 for (var k = 0; k < events_w_trans.length; k++) {
                     if (events_w_trans[k][2] == name) {
                         if (events_w_trans[k][1] == 1) {
-                            which_one = '/static/images/three.png'
-                        } else {which_one = '/static/images/two.png'}
+                            which_one = moreinstructions.replace('%%HOWMANY%%', '3')
+                        } else {which_one = moreinstructions.replace('%%HOWMANY%%', '2')}
                     };
                 };
                 return which_one
@@ -825,7 +841,11 @@
                         }
                 }
                 return info;
-            }};
+            },
+            on_finish: function () {
+                document.body.style.background = '#FFFFFF';
+            }
+        };
 
 //HERE THE PARTICIPANT GIVES US FEEDBACK ON THE STUDY
 //Does not refer to trial feedback//
