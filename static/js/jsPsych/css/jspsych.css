@@ -186,6 +186,7 @@ button:hover {
     margin-left: auto;
     margin-right: auto;
     border: 0px solid #444;
+
 }
 
 /*
@@ -250,13 +251,22 @@ button:hover {
  }
 
 
-.screen{
-position: relative;
-}
-.innerdiv {
-position: absolute;
-bottom: 0;
-right: 0;
+/*styling #hex*/
+
+/*custom font - Lato*/
+@import url("http://fonts.googleapis.com/css?family=Lato:100");
+/*basic reset*/
+* {margin: 0; padding: 0;}
+/*make the body occupy full height*/
+html, body {height: 100%;}
+
+#hex {
+    color: white; font: 64px/64px Lato; height: 64px;
+    /*Vertical centering*/
+    position: relative; 
+    top: -600px;
+    /*Horizontal centering*/
+    text-align: center;
 }
 
 

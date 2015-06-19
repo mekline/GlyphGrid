@@ -69,21 +69,7 @@
             }
 
 
-            timerHTML = '<div class="screen">' +
-                                '<script language="JavaScript">' +
-                                    'TargetDate = new Date();' +
-                                    'BackColor = "palegreen";' +
-                                    'ForeColor = "navy";' +
-                                    'CountActive = true;' +
-                                    'CountStepper = 1;' +
-                                    'LeadingZero = true;' +
-                                    'DisplayFormat = "%%M%%:%%S%%";' +
-                                    'FinishMessage = "";' +
-                                '</script>' +
-                            '<div class="innerdiv">' +
-                                '<script language="JavaScript" src="/static/js/countdown.js"></script>' +
-                            '</div>' +
-                        '</div>';
+            timerHTML = '<div id="hex" style="height:10px;"><script src="/static/js/countdown.js"></script></div>';
             
 
             if (trial.timer) {

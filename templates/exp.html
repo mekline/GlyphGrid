@@ -92,11 +92,11 @@
             events_w_trans.push([Tevents[i], istransitive[i]]) 
         };
 
-        var instrucHTML = "<h3><center>Meet our friend Upwilaah!</center></h3>" +
-                "<div class='center-content'><img height=150 width=150 src='/static/images/upwilaah.jpeg' /></div>" +
+        var instrucHTML = "<h3><center>Meet our friend Upwilaah!</center></h3></br>" +
+                "<div class='center-content'><img height=150 width=150 src='/static/images/upwilaah.jpeg' /></div></br>" +
                 "<p>Upwilaah is a very friendly alien and likes stories very much. Upwilaah's favorite story-spot " +
                 "is inside his box because it helps him avoid distractions. Unfortunately for us, Upwilaah does not " + 
-                "have any ears and can only communicate by reading and writing in his alien language which uses symbols like these:</p>" +
+                "have any ears and can only communicate by reading and writing in his alien language which uses symbols like these:</p></br>" +
                 "<div class='center-content'><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /><img height=100 width=100 src='/static/images/GGG.png' /></div>" +
                 "<p>Your task is to communicate with Upwilaah in his language, and tell him what happened " + 
                 "in a series of very short stories.</p>" + 
@@ -109,7 +109,7 @@
 
         var prepHTML2 = "<h3><center>PART 2</center></h3>" +
                 "<p></br>In this part, you will will be giving symbols to Upwilaah so that he can guess what is happening." + 
-                "<p></br>First you will practice. </br>In the first two practice screens you will see a picture. Give Upwilaah the one symbol that best describes the picture." +
+                "<p></br>First you will practice. </br></br>In the first two practice screens you will see a picture. Give Upwilaah the <b>one symbol</b> that best describes the picture." +
                 "<p></br>Press the letter <b>P</b> to continue to the practice pages.";
 
         var prepHTML3 = "<h3><center>More Practice</center></h3>" +
@@ -532,7 +532,7 @@
             eventpicside: 225,
             moreinstr: 'static/images/one.png',
             alien: '/static/images/upwilaah.jpeg',
-            timer: false,
+            timer: true,
             data: function () {
                 info = {};
                 info.glyph = NTestInfo.ptrialInfo[1].Rel_glyph;
@@ -549,7 +549,7 @@
             eventpicside: 225,
             moreinstr: 'static/images/one.png',
             alien: '/static/images/upwilaah.jpeg',
-            timer: false,
+            timer: true,
             data: function () {
                 info = {};
                 info.glyph = NTestInfo.ptrialInfo[0].Rel_glyph;
@@ -565,7 +565,7 @@
             eventclips: ['/static/movies/car-tumbling-none.mp4'],
             moreinstr: 'static/images/two.png',
             alien: '/static/images/upwilaah.jpeg',
-            timer: false,
+            timer: true,
             data: function () {
                 info = {};
                 info.isTestTrial = 0;
@@ -587,7 +587,7 @@
             eventclips: ['/static/movies/girl-pushing-ball.mp4'],
             moreinstr: 'static/images/three.png',
             alien: '/static/images/upwilaah.jpeg',
-            timer: false,
+            timer: true,
             data: function () {
                 info = {};
                 info.isTestTrial = 0;
@@ -795,7 +795,7 @@
             prompt: "<p>Watch this movie!</p>",
             eventclips: eventclippy,
             alien: '/static/images/upwilaah.jpeg',
-            timer: false,
+            timer: true,
             moreinstr: function() {
                 name = jsPsych.currentTrial().eventclips;
                 which_one = '';
