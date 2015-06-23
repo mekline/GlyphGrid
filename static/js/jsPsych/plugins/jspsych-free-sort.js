@@ -19,8 +19,8 @@
             for (var i = 0; i < trials.length; i++) {
                 trials[i] = {
                     "images": params.stimuli[i], // array of images to display
-                    "stim_height": params.stim_height || 85,
-                    "stim_width": params.stim_width || 85,
+                    "stim_height": params.stim_height || 86,
+                    "stim_width": params.stim_width || 86,
                     "timing_post_trial": (typeof params.timing_post_trial === 'undefined') ? 1000 : params.timing_post_trial,
                     "prompt": (typeof params.prompt === 'undefined') ? '' : params.prompt,
                     "prompt_location": params.prompt_location || "above",
@@ -92,6 +92,7 @@
 
             // store initial location data
             var init_locations = [];
+            var ids = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
 
             for (var i = 0; i < trial.images.length; i++) {
                 //var coords = glyph_coordinate(trial.sort_area_width - trial.stim_width, trial.sort_area_height - trial.stim_height);
@@ -106,9 +107,11 @@
 
                 $("#jspsych-free-sort-arena").append($('<img>', {
                     "src": trial.images[i],
+                    "id": ids[i],
                     "class": "jspsych-free-sort-draggable",
                     "css": {
                         "position": "absolute",
+                        'z-index': 1,
                         "top": coords.y,
                         "left": coords.x,
                         "height": 95,
@@ -116,12 +119,83 @@
                     }
                 }));
 
+
+                // this_glyph = '#' + ids[i];
+
+                // $(this_glyph).on('click',function() {
+                //       $(this_glyph).animate({
+                //             position: 'absolute',
+                //             left: 657,
+                //             top: 57,
+                //             'z-index': 1,
+                //             stack: this_glyph,
+                //       }, 500, function() {
+                //         // Animation complete.
+                //       });
+                // });
+
+
                 init_locations.push({
                     "src": trial.images[i],
                     "x": coords.x,
                     "y": coords.y
                 });
             }
+
+
+            var moves = [];
+
+            $('.jspsych-free-sort-draggable').draggable({
+                containment: "#jspsych-free-sort-arena",
+                scroll: false,
+                stack: ".jspsych-free-sort-draggable",
+                stop: function(event, ui) {
+                    moves.push({
+                        "src": event.target.src.split("/").slice(-1)[0],
+                        "x": ui.position.left,
+                        "y": ui.position.top
+                    });
+                }
+            });
+
+
+            this_glyph = '#A';
+
+            $(this_glyph).on('click',function() {
+                  $(this_glyph).animate({
+                        position: 'absolute',
+                        left: 657,
+                        top: 57,
+                        'z-index': 1,
+                        //stack: this_glyph,
+                  }, 500, function() {
+                    // Animation complete.
+                  });
+            });
+
+            this_glyph = '#B';
+
+            $(this_glyph).on('click',function() {
+                  $(this_glyph).animate({
+                        position: 'absolute',
+                        left: 657,
+                        top: 57,
+                        'z-index': 1,
+                        //stack: this_glyph,
+                  }, 500, function() {
+                    // Animation complete.
+                  });
+            });
+
+
+
+            for (var i = 0; i < trial.images.length; i++) {
+
+            }
+
+
+
+
 
             $("#jspsych-free-sort-arena").append($('<img>', {
                 "src": trial.eventpics,
@@ -150,6 +224,7 @@
                     "position": "absolute",
                     "top": 0,
                     "left": 600,
+                    "z-index": 0,
                     "height": 200,
                     "width": 200
                 }
@@ -169,20 +244,7 @@
             }));
 
 
-            var moves = [];
 
-            $('.jspsych-free-sort-draggable').draggable({
-                containment: "#jspsych-free-sort-arena",
-                scroll: false,
-                stack: ".jspsych-free-sort-draggable",
-                stop: function(event, ui) {
-                    moves.push({
-                        "src": event.target.src.split("/").slice(-1)[0],
-                        "x": ui.position.left,
-                        "y": ui.position.top
-                    });
-                }
-            });
 
             display_element.append($('<button>', {
                 "id": "jspsych-free-sort-done-btn",

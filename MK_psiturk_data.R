@@ -27,12 +27,16 @@ df.complete = subset(df.complete, status %in% c(3,4))
 df.complete$currentVersion.pilot1 = str_detect(df.complete$beginhit, "2015-03-24")
 df.complete$currentVersion.pilot2 = str_detect(df.complete$beginhit, "2015-03-25")
 df.complete$currentVersion.pilot3 = str_detect(df.complete$beginhit, "2015-05-27")
+df.complete$currentVersion.pilot4 = str_detect(df.complete$beginhit, "2015-06-21")
 
 #Run 1, 03/24/2015 - 03/25/2015
 #df.complete = df.complete[df.complete$currentVersion.pilot1 == TRUE | df.complete$currentVersion.pilot2 == TRUE,]
 
 #Run 2, 1/16/15
 df.complete = df.complete[df.complete$currentVersion.pilot3 == TRUE,]
+
+#To get Trial Times 06/21/2015
+#df.complete = df.complete[df.complete$currentVersion.pilot4 == TRUE,]
 
 nrow(df.complete)
 
