@@ -2,6 +2,9 @@
  * jspsych-free-sort
  * plugin for drag-and-drop sorting of a collection of images
  * Josh de Leeuw
+ *
+ *
+ *This version edited by: Miguel Salinas (masm@mit.edu)
  * 
  * documentation: https://github.com/jodeleeuw/jsPsych/wiki/jspsych-free-sort
  */
@@ -31,7 +34,8 @@
                     "moreinstr": (typeof params.moreinstr === 'undefined') ? '' : params.moreinstr,
                     "eventpics": (typeof params.eventpics === 'undefined') ? 'blank.gif' : params.eventpics[i],
                     "eventpicside": params.eventpicside || 0,
-                    "timer": params.timer || false
+                    "timer": params.timer || false,
+                    "dragorclick": (typeof params.dragorclick === 'undefined') ? 'drag' : params.moreinstr
                 };
             }
             return trials;
@@ -92,7 +96,6 @@
 
             // store initial location data
             var init_locations = [];
-            var ids = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
 
             for (var i = 0; i < trial.images.length; i++) {
                 //var coords = glyph_coordinate(trial.sort_area_width - trial.stim_width, trial.sort_area_height - trial.stim_height);
@@ -107,33 +110,16 @@
 
                 $("#jspsych-free-sort-arena").append($('<img>', {
                     "src": trial.images[i],
-                    "id": ids[i],
                     "class": "jspsych-free-sort-draggable",
                     "css": {
                         "position": "absolute",
-                        'z-index': 1,
                         "top": coords.y,
                         "left": coords.x,
+                        "z-index": 1,
                         "height": 95,
                         "width": 95
                     }
                 }));
-
-
-                // this_glyph = '#' + ids[i];
-
-                // $(this_glyph).on('click',function() {
-                //       $(this_glyph).animate({
-                //             position: 'absolute',
-                //             left: 657,
-                //             top: 57,
-                //             'z-index': 1,
-                //             stack: this_glyph,
-                //       }, 500, function() {
-                //         // Animation complete.
-                //       });
-                // });
-
 
                 init_locations.push({
                     "src": trial.images[i],
@@ -145,54 +131,43 @@
 
             var moves = [];
 
-            $('.jspsych-free-sort-draggable').draggable({
-                containment: "#jspsych-free-sort-arena",
-                scroll: false,
-                stack: ".jspsych-free-sort-draggable",
-                stop: function(event, ui) {
-                    moves.push({
-                        "src": event.target.src.split("/").slice(-1)[0],
-                        "x": ui.position.left,
-                        "y": ui.position.top
+            if (trial.dragorclick == 'drag' || trial.dragorclick == 'both') {
+                $('.jspsych-free-sort-draggable').draggable({
+                    containment: "#jspsych-free-sort-arena",
+                    scroll: false,
+                    stack: ".jspsych-free-sort-draggable",
+                    stop: function(event, ui) {
+                        moves.push({
+                            "src": event.target.src.split("/").slice(-1)[0],
+                            "x": ui.position.left,
+                            "y": ui.position.top
+                        });
+                    }
+                });
+            };
+
+
+            if (trial.dragorclick == 'click' || trial.dragorclick == 'both') {
+                $('.jspsych-free-sort-draggable').each(function() {
+                    $(this).on('click',function() {
+                        $(this).animate({
+                            left: 657,
+                            top: 57,
+                            "z-index": 1,
+                            stack: ".jspsych-free-sort-draggable"
+                          }, {
+                          duration: 500,
+                          complete: function(event, ui) {
+                                moves.push({
+                                    "src": $(this).attr('src').split("/").slice(-1)[0],
+                                    "x": $(this).position().left,
+                                    "y": $(this).position().top
+                                });
+                            }
+                        });
                     });
-                }
-            });
-
-
-            this_glyph = '#A';
-
-            $(this_glyph).on('click',function() {
-                  $(this_glyph).animate({
-                        position: 'absolute',
-                        left: 657,
-                        top: 57,
-                        'z-index': 1,
-                        //stack: this_glyph,
-                  }, 500, function() {
-                    // Animation complete.
-                  });
-            });
-
-            this_glyph = '#B';
-
-            $(this_glyph).on('click',function() {
-                  $(this_glyph).animate({
-                        position: 'absolute',
-                        left: 657,
-                        top: 57,
-                        'z-index': 1,
-                        //stack: this_glyph,
-                  }, 500, function() {
-                    // Animation complete.
-                  });
-            });
-
-
-
-            for (var i = 0; i < trial.images.length; i++) {
-
-            }
-
+                });
+            };
 
 
 
@@ -242,7 +217,6 @@
                     "border": 0
                 }
             }));
-
 
 
 
