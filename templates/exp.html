@@ -534,7 +534,7 @@
             eventpicside: 225,
             moreinstr: moreinstructions.replace('%%HOWMANY%%', '1'),
             alien: '/static/images/upwilaah.jpeg',
-            timer: true,
+            timer: false,
             data: function () {
                 info = {};
                 info.glyph = NTestInfo.ptrialInfo[1].Rel_glyph;
@@ -554,7 +554,7 @@
             eventpicside: 225,
             moreinstr: moreinstructions.replace('%%HOWMANY%%', '1'),
             alien: '/static/images/upwilaah.jpeg',
-            timer: true,
+            timer: false,
             data: function () {
                 info = {};
                 info.glyph = NTestInfo.ptrialInfo[0].Rel_glyph;
@@ -573,7 +573,7 @@
             eventclips: ['/static/movies/car-tumbling-none.mp4'],
             moreinstr: moreinstructions.replace('%%HOWMANY%%', '2'),
             alien: '/static/images/upwilaah.jpeg',
-            timer: true,
+            timer: false,
             data: function () {
                 info = {};
                 info.isTestTrial = 0;
@@ -599,7 +599,7 @@
             eventclips: ['/static/movies/girl-pushing-ball.mp4'],
             moreinstr: moreinstructions.replace('%%HOWMANY%%', '3'),
             alien: '/static/images/upwilaah.jpeg',
-            timer: true,
+            timer: false,
             data: function () {
                 info = {};
                 info.isTestTrial = 0;
@@ -811,7 +811,8 @@
             prompt: "<p>Watch this movie!</p>",
             eventclips: eventclippy,
             alien: '/static/images/upwilaah.jpeg',
-            timer: true,
+            timer: false,
+            //dragorclick: 'click',
             moreinstr: function() {
                 name = jsPsych.currentTrial().eventclips;
                 which_one = '';

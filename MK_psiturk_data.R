@@ -28,15 +28,19 @@ df.complete$currentVersion.pilot1 = str_detect(df.complete$beginhit, "2015-03-24
 df.complete$currentVersion.pilot2 = str_detect(df.complete$beginhit, "2015-03-25")
 df.complete$currentVersion.pilot3 = str_detect(df.complete$beginhit, "2015-05-27")
 df.complete$currentVersion.pilot4 = str_detect(df.complete$beginhit, "2015-06-21")
+df.complete$currentVersion.pilot5 = str_detect(df.complete$beginhit, "2015-06-24 15:32:10.316064")
 
 #Run 1, 03/24/2015 - 03/25/2015
 #df.complete = df.complete[df.complete$currentVersion.pilot1 == TRUE | df.complete$currentVersion.pilot2 == TRUE,]
 
-#Run 2, 1/16/15
+#Run 2, 05/27/15
 df.complete = df.complete[df.complete$currentVersion.pilot3 == TRUE,]
 
 #To get Trial Times 06/21/2015
 #df.complete = df.complete[df.complete$currentVersion.pilot4 == TRUE,]
+
+#To get Trial Times 06/24/2015 CLICK -- Melanie
+#df.complete = df.complete[df.complete$currentVersion.pilot5 == TRUE,]
 
 nrow(df.complete)
 
@@ -373,6 +377,34 @@ df.long$CleanOrder = mapply(raw_to_clean, df.long$ShortRawOrder)
 ### GET WHETHER A COMPLETE RESPONSES WAS PRODUCED WITH THIS NEW ORDER ###
 df.long$CleanComplete = mapply(complete_answer, ShortOrder = df.long$CleanOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
 
+### PRODUCE A WORD ORDER INCLUDING RESPONSES WITH ONLY 1 MISTAKE###
+with_one_mistake = function(raworder, cleanorder, ccomplete, transitive) {
+  ##rawsplit = unlist(strsplit(raworder, split=''))
+  to_return = ''
+  if (ccomplete == 1) {
+    to_return = cleanorder
+  } else if (str_detect(cleanorder, 'G')) {
+    to_return = cleanorder
+  } else if (str_detect(raworder, 'Y')) {
+    to_return = 'BadResponse'
+  } else if (transitive == 1 && nchar(raworder) != 3) {
+      to_return = 'BadResponse'
+  } else if (transitive == 0 && nchar(raworder) != 2) {
+      to_return = 'BadResponse'
+  } else {
+      to_return = raworder
+  }
+  
+  return(to_return)
+}  
+
+df.long$WithAlmost = mapply(with_one_mistake, raworder = df.long$ShortRawOrder, cleanorder = df.long$CleanOrder, ccomplete = df.long$CleanComplete, transitive = df.long$IsTransitive)
+
+
+### TRANSLATE WithAlmost INTO A LOGICAL COLUMN. 'BadResponse' IS 0, AND EVERYTING ELSE IS 1 ###
+df.long$UsableOneMistk = as.numeric(!str_detect(df.long$WithAlmost, "BadResponse"))
+
+
 
 ### CHECK WHETHER PARTICIPANT WAS EXPOSED TO A WORD ORDER ###
 ### AND GOT BOTH PRACTICE IMAGE TRIALS CORRECT ###
@@ -424,15 +456,24 @@ df.long$Animacy = sapply(df.long$stimulus, FUN=animacy, animate_events = animate
 
 
 ### CHECK IS RESPONSE IS V-lat or V-med ###
-isVLat = function (shortorder, iscomplete, istrans) {
-  if (istrans & iscomplete) { 
-    if (unlist(strsplit(shortorder, ''))[2]=="V"){
+isVLat = function (shortclean, iscomplete, istrans) {
+  if (as.logical(istrans) && as.logical(iscomplete)) { 
+    if (str_detect(shortclean, 'V')) {
+      if (unlist(strsplit(shortclean, ''))[2]=="V"){
+        return(0)
+      } else {return(1)}
+    } else if (unlist(strsplit(shortclean, ''))[2]=="X") {
       return(0)
     } else {return(1)}
   } else {return(0)}
 }
 
-df.long$isVLat = mapply(isVLat, shortorder = df.long$CleanOrder, iscomplete = df.long$CleanComplete, istrans = df.long$IsTransitive, USE.NAMES = FALSE)
+### CHECK FOR VERB MEDIAL, AND IF TRUE, RETURN 0 FOR THE SHORT CLEAN ORDER ###
+df.long$CleanVLat = mapply(isVLat, shortclean = df.long$CleanOrder, iscomplete = df.long$CleanComplete, istrans = df.long$IsTransitive, USE.NAMES = FALSE)
+
+
+### CHECK FOR VERB MEDIAL, AND IF TRUE, RETURN 0 FOR THE SHORT CLEAN ORDER ###
+df.long$UsableVLat = mapply(isVLat, shortclean = df.long$WithAlmost, iscomplete = df.long$UsableOneMistk, istrans = df.long$IsTransitive, USE.NAMES = FALSE)
 
 
 ### PRODUCE A CSV WITHIN THE GLYPHGRID FOLDER
@@ -453,7 +494,8 @@ df.long.testtrials = df.long.no.cheat[df.long.no.cheat$isTestTrial == 1,]
 df.long.transitives = df.long.testtrials[df.long.testtrials$IsTransitive == 1,]
 
 ### OF THOSE, NOW GRAB COMPLETE RESPONSES ###
-df.long.usables = df.long.transitives[df.long.transitives$CleanComplete == 1,]
+df.long.usables = df.long.transitives[df.long.transitives$UsableOneMistk == 1,]
+df.long.absolute = df.long.transitives[df.long.transitives$CleanComplete == 1,]
 
 
 
@@ -461,12 +503,14 @@ df.long.usables = df.long.transitives[df.long.transitives$CleanComplete == 1,]
 raw.complete = mean(df.long$RawComplete)
 clean.complete = mean(df.long$CleanComplete)
 trans.complete = mean(df.long.transitives$CleanComplete)
-percent.Vlat = mean(df.long.usables$isVLat)
+percent.Vlat.Clean = mean(df.long.usables$CleanVLat)
+percent.Vlat.Usable = mean(df.long.usables$UsableVLat)
 
 
-summary1 = df.long.usables %>% group_by(Animacy) %>% summarise(Vlat = mean(isVLat), how_many=sum(IsTransitive))
-summary2 = df.long.transitives %>% group_by(Animacy) %>% summarise(Vlat = mean(isVLat), how_many=sum(IsTransitive))
-summary3 = df.long %>% group_by(Animacy) %>% summarise(Vlat = mean(isVLat), how_many=sum(IsTransitive))
+summary1 = df.long.usables %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
+summary2 = df.long.transitives %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
+summary3 = df.long %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
+summary4 = df.long.absolute %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
 
 time.summary1 = df.long %>% group_by(participant) %>% summarise(AvgTime = mean(t.time), how_many=sum(IsTransitive))
 time.summary2 = df.long.transitives %>% group_by(participant) %>% summarise(AvgTime = mean(t.time), how_many=sum(IsTransitive))

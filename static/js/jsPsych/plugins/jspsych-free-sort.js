@@ -131,23 +131,23 @@
 
             var moves = [];
 
-            if (trial.dragorclick == 'drag' || trial.dragorclick == 'both') {
-                $('.jspsych-free-sort-draggable').draggable({
-                    containment: "#jspsych-free-sort-arena",
-                    scroll: false,
-                    stack: ".jspsych-free-sort-draggable",
-                    stop: function(event, ui) {
-                        moves.push({
-                            "src": event.target.src.split("/").slice(-1)[0],
-                            "x": ui.position.left,
-                            "y": ui.position.top
-                        });
-                    }
-                });
-            };
+            // //if (trial.dragorclick == 'drag' || trial.dragorclick == 'both') {
+            //     $('.jspsych-free-sort-draggable').draggable({
+            //         containment: "#jspsych-free-sort-arena",
+            //         scroll: false,
+            //         stack: ".jspsych-free-sort-draggable",
+            //         stop: function(event, ui) {
+            //             moves.push({
+            //                 "src": event.target.src.split("/").slice(-1)[0],
+            //                 "x": ui.position.left,
+            //                 "y": ui.position.top
+            //             });
+            //         }
+            //     });
+            // //};
 
 
-            if (trial.dragorclick == 'click' || trial.dragorclick == 'both') {
+            //if (trial.dragorclick == 'click' || trial.dragorclick == 'both') {
                 $('.jspsych-free-sort-draggable').each(function() {
                     $(this).on('click',function() {
                         $(this).animate({
@@ -167,7 +167,7 @@
                         });
                     });
                 });
-            };
+           // };
 
 
 
