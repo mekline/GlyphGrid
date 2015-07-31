@@ -122,14 +122,14 @@
                 "<p></br>First watch the movie. </br></br>After the movie is over, give Upwilaah the symbols that best <b>describe what happened in the movie</b>. Upwilaah will tell you how many symbols you need per movie." +
                 "<p></br>Press the letter <b>T</b> to continue to the movies.";
 
-        var moreinstructions = "<p>Drag and drop the appropriate symbol so that Upwilaah knows what you are looking at. </br>Then Press Done. <b>Upwilaah wants %%HOWMANY%% symbols.</b></p>";
+        var moreinstructions = "<p>Click on the appropriate symbols so that Upwilaah knows what you are looking at. </br>Then Press Done. <b>Upwilaah wants %%HOWMANY%% symbols.</b></p>";
 
 
 
         /*This is a table for the learning block*/
-        var tableHTML = '<table align="center" border="0" cellpadding="10" cellspacing="0">' +
+        var tableHTML = '<table width="100%" align="center" border="0" cellpadding="10" cellspacing="0">' +
                         '<tbody><tr align="center">ROW</tr><tr align="center">ROW</tr><tr align="center">ROW</tr><tr align="center">ROW</tr></tbody></table>';
-        var cell = '<td><img height=100 width=100 src="/static/images/XXYX.png" /><p>MEANING</p></td><td>  </td>';
+        var cell = '<td></br><img height=100 width=100 src="/static/images/XXYX.png" /><p>MEANING</br></p></td><td>  </td>';
         for (var j = 0; j < 4; j++) {
             tableHTML = tableHTML.replace('ROW', '<td></td>CELLCELLCELLCELL');
             for (var i = 0; i < 4; i++) {
@@ -309,7 +309,7 @@
 
         var prompt = [];
         for (var i = 0; i < choices.length; i++) {
-            prompt_text = '<br>Choices:  <br>XXX - Press "1"   <br>XXX - Press "2"   <br>XXX - Press "3"';
+            prompt_text = '<br>Choices:  <br><b>XXX</b> - Press "1"   <br><b>XXX</b> - Press "2"   <br><b>XXX</b> - Press "3"';
             for (var j = 0; j < choices[i].length; j++) {
                 prompt_text = prompt_text.replace('XXX', choices[i][j]);
             }
@@ -448,7 +448,7 @@
                 if (num_of_retakes == 0) {
                         what_it_says = "<p>Learn these symbols so that you can communicate with Upwilaah! <b>Take as long as you need</b>, and really " +
                        "try to memorize the symbols. There will be a quiz after this page. You will have to pass " + 
-                       "the quiz in order to continue to the rest of the experiment. </br><b>Press the letter T to take the quiz.</b></p>" +
+                       "the quiz in order to continue to the rest of the experiment. </br><b>Press the letter T to take the quiz.</b></p></br>" +
                        "<div class='center-content'>" + tableHTML + "</div>";
                    } else {
                         what_it_says = "<p>You did not get enough correct answers on the quiz to continue. " + 
@@ -573,7 +573,7 @@
             eventclips: ['/static/movies/car-tumbling-none.mp4'],
             moreinstr: moreinstructions.replace('%%HOWMANY%%', '2'),
             alien: '/static/images/upwilaah.jpeg',
-            timer: false,
+            timer: true,
             data: function () {
                 info = {};
                 info.isTestTrial = 0;
@@ -599,7 +599,7 @@
             eventclips: ['/static/movies/girl-pushing-ball.mp4'],
             moreinstr: moreinstructions.replace('%%HOWMANY%%', '3'),
             alien: '/static/images/upwilaah.jpeg',
-            timer: false,
+            timer: true,
             data: function () {
                 info = {};
                 info.isTestTrial = 0;
@@ -811,7 +811,7 @@
             prompt: "<p>Watch this movie!</p>",
             eventclips: eventclippy,
             alien: '/static/images/upwilaah.jpeg',
-            timer: false,
+            timer: true,
             //dragorclick: 'click',
             moreinstr: function() {
                 name = jsPsych.currentTrial().eventclips;

@@ -29,18 +29,22 @@ df.complete$currentVersion.pilot2 = str_detect(df.complete$beginhit, "2015-03-25
 df.complete$currentVersion.pilot3 = str_detect(df.complete$beginhit, "2015-05-27")
 df.complete$currentVersion.pilot4 = str_detect(df.complete$beginhit, "2015-06-21")
 df.complete$currentVersion.pilot5 = str_detect(df.complete$beginhit, "2015-06-24 15:32:10.316064")
+df.complete$currentVersion.pilot6 = str_detect(df.complete$beginhit, "2015-07-27")|str_detect(df.complete$beginhit, "2015-07-29")|str_detect(df.complete$beginhit, "2015-07-30")
 
 #Run 1, 03/24/2015 - 03/25/2015
 #df.complete = df.complete[df.complete$currentVersion.pilot1 == TRUE | df.complete$currentVersion.pilot2 == TRUE,]
 
 #Run 2, 05/27/15
-df.complete = df.complete[df.complete$currentVersion.pilot3 == TRUE,]
+#df.complete = df.complete[df.complete$currentVersion.pilot3 == TRUE,]
 
 #To get Trial Times 06/21/2015
 #df.complete = df.complete[df.complete$currentVersion.pilot4 == TRUE,]
 
 #To get Trial Times 06/24/2015 CLICK -- Melanie
 #df.complete = df.complete[df.complete$currentVersion.pilot5 == TRUE,]
+
+#Data with timer and CLICK option. Not DRAG option.
+df.complete = df.complete[df.complete$currentVersion.pilot6 == TRUE,]
 
 nrow(df.complete)
 
@@ -51,7 +55,7 @@ nrow(df.complete)
 # Structure data ----------------------------------------------------------
 #Note: Compile in wide form: 1 row/participant; each trial gets a series of column names, formatted XYFIELD_#
 #Also, no extra underscores in the column names, this breaks wideToLong
-#df.wide = data.frame(NULL)
+df.wide = data.frame(NULL)
 df.wide = data.frame(matrix(nrow=nrow(df.complete),ncol=4))
 colnames(df.wide) = c("participant","workerId","browser","beginhit") #will dynamically add columns from datastring below
 
@@ -73,7 +77,7 @@ for (i in 1:nrow(df.wide)){
     mylength = 0
   }
   print(mylength)
-  if (mylength>=51){
+  if (mylength==51){
     df.wide$participant[i] = i
     df.wide$workerId[i] = a$workerId
     df.wide$browser[i] = df.complete$browser[i]
@@ -88,10 +92,10 @@ for (i in 1:nrow(df.wide)){
     }
     free_sorts[a$workerId] = list(partic_free)
     categorized[a$workerId] = list(partic_catg)
-  }
+  } else {df.wide[i,] = 'EXCLUDED' }
   #And grab the info we need from the last 'trial' (feedback)
   if (is.null(a$data[[mylength-1]]$trialdata$responses)){df.wide$feedback[i] = "none"
-  }else{
+  } else {
     df.wide$feedback[i] = a$data[[mylength-1]]$trialdata$responses
   }
 }
@@ -127,7 +131,7 @@ for (i in 1:length(free_sorts)) {
 
 for (i in 1:nrow(df.wide)){
   counter = 1
-  if (df.wide$participant[i] != 'EXCLUDED'){
+  if (!str_detect(df.wide$participant[i], 'EXCLUDED')){
     a = free_sorts[[df.wide$workerId[i]]]
     mylength = length(free_sorts[[df.wide$workerId[i]]])
   } else{
@@ -319,6 +323,7 @@ df.long <- df.long[order(df.long$participant),]
 long.names = names(df.long)
 long.names = long.names[-which(long.names %in% "id")]
 df.long = df.long[long.names]
+df.long = df.long[df.long$participant !="EXCLUDED",]
 
 
 
@@ -335,7 +340,7 @@ df.long$ShortRawOrder = as.character(as.factor(unlist(short_order)))
 
 
 
-##LABEL IS STIMULUS AS TRANSITIVE OR NOT##
+##LABEL STIMULUS AS TRANSITIVE OR NOT##
 df.long$IsTransitive = as.numeric(!str_detect(df.long$glyphs, 'none') & !str_detect(df.long$stimulus, 'PracticeImage'))
 
 
@@ -499,6 +504,8 @@ df.long.absolute = df.long.transitives[df.long.transitives$CleanComplete == 1,]
 
 
 
+
+
 ###GET SOME BASIC %'s HERE ABOUT RESPONSES###
 raw.complete = mean(df.long$RawComplete)
 clean.complete = mean(df.long$CleanComplete)
@@ -512,10 +519,11 @@ summary2 = df.long.transitives %>% group_by(Animacy) %>% summarise(CleanVlat = m
 summary3 = df.long %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
 summary4 = df.long.absolute %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
 
-time.summary1 = df.long %>% group_by(participant) %>% summarise(AvgTime = mean(t.time), how_many=sum(IsTransitive))
-time.summary2 = df.long.transitives %>% group_by(participant) %>% summarise(AvgTime = mean(t.time), how_many=sum(IsTransitive))
+time.summary1 = df.long %>% group_by(participant) %>% summarise(AvgTime = mean(as.numeric(t.time)), how_many=sum(IsTransitive))
+time.summary2 = df.long.transitives %>% group_by(participant) %>% summarise(AvgTime = mean(as.numeric(t.time)), how_many=sum(IsTransitive))
 
-
+some.summary1 = df.long.transitives %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
+some.summary2 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
 
 directory = getwd()
 write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
