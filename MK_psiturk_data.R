@@ -30,6 +30,8 @@ df.complete$currentVersion.pilot3 = str_detect(df.complete$beginhit, "2015-05-27
 df.complete$currentVersion.pilot4 = str_detect(df.complete$beginhit, "2015-06-21")
 df.complete$currentVersion.pilot5 = str_detect(df.complete$beginhit, "2015-06-24 15:32:10.316064")
 df.complete$currentVersion.pilot6 = str_detect(df.complete$beginhit, "2015-07-27")|str_detect(df.complete$beginhit, "2015-07-29")|str_detect(df.complete$beginhit, "2015-07-30")
+df.complete$currentVersion.Run1.1 = str_detect(df.complete$beginhit, "2015-07-31")
+df.complete$currentVersion.Run1.2 = str_detect(df.complete$beginhit, "2015-08-01")
 
 #Run 1, 03/24/2015 - 03/25/2015
 #df.complete = df.complete[df.complete$currentVersion.pilot1 == TRUE | df.complete$currentVersion.pilot2 == TRUE,]
@@ -44,7 +46,10 @@ df.complete$currentVersion.pilot6 = str_detect(df.complete$beginhit, "2015-07-27
 #df.complete = df.complete[df.complete$currentVersion.pilot5 == TRUE,]
 
 #Data with timer and CLICK option. Not DRAG option.
-df.complete = df.complete[df.complete$currentVersion.pilot6 == TRUE,]
+#df.complete = df.complete[df.complete$currentVersion.pilot6 == TRUE,]
+
+#FIRST RUN! (yay) Will include particpants ran on different days
+df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE,]
 
 nrow(df.complete)
 
@@ -110,12 +115,12 @@ df.wide$LastQuizScore = 'NoInputYet'
 
 for (i in 1:length(names(categorized))) {
   myquizlength = length(categorized[[names(categorized)[i]]])
-  df.wide$NumQuizTries[i] = as.numeric(myquizlength/16)
+  df.wide$NumQuizTries[which(df.wide$workerId %in% names(categorized)[i])] = as.double(myquizlength/16)
   tot_score = numeric()
   for (j in (myquizlength-15):myquizlength) {
     tot_score = c(tot_score, categorized[[names(categorized)[i]]][[j]]$correct)
   }
-  df.wide$LastQuizScore[i] = as.numeric(mean(tot_score))
+  df.wide$LastQuizScore[which(df.wide$workerId %in% names(categorized)[i])] = as.double(mean(tot_score))
 }
 
 
@@ -319,11 +324,11 @@ df.long <- reshape(df.wide,
 
 
 ##SORT AND CLEAN DF.LONG##
-df.long <- df.long[order(df.long$participant),]
 long.names = names(df.long)
 long.names = long.names[-which(long.names %in% "id")]
 df.long = df.long[long.names]
 df.long = df.long[df.long$participant !="EXCLUDED",]
+df.long <- df.long[order(df.long$participant),]
 
 
 
