@@ -486,11 +486,6 @@ df.long$CleanVLat = mapply(isVLat, shortclean = df.long$CleanOrder, iscomplete =
 df.long$UsableVLat = mapply(isVLat, shortclean = df.long$WithAlmost, iscomplete = df.long$UsableOneMistk, istrans = df.long$IsTransitive, USE.NAMES = FALSE)
 
 
-### PRODUCE A CSV WITHIN THE GLYPHGRID FOLDER
-directory = getwd()
-write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
-
-
 
 
 
@@ -514,9 +509,13 @@ df.long.absolute = df.long.transitives[df.long.transitives$CleanComplete == 1,]
 ###GET SOME BASIC %'s HERE ABOUT RESPONSES###
 raw.complete = mean(df.long$RawComplete)
 clean.complete = mean(df.long$CleanComplete)
-trans.complete = mean(df.long.transitives$CleanComplete)
+usable.complete = mean(df.long$UsableOneMistk)
+trans.complete.clean = mean(df.long.transitives$CleanComplete)
+trans.complete.raw = mean(df.long.transitives$RawComplete)
+trans.complete.usable = mean(df.long.transitives$UsableOneMistk)
 percent.Vlat.Clean = mean(df.long.usables$CleanVLat)
 percent.Vlat.Usable = mean(df.long.usables$UsableVLat)
+percent.passes.practice = mean(df.long$PassesPractice)
 
 
 summary1 = df.long.usables %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
@@ -531,10 +530,13 @@ some.summary1 = df.long.transitives %>% group_by(participant, Animacy) %>% summa
 some.summary2 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
 
 directory = getwd()
-write.csv(df.wide, file = paste0(directory, "/dfwide_full.csv"))
 write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
 write.csv(df.long.transitives, file = paste0(directory, "/dflong_transitives.csv"))
 write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
+
+
+#DF.WIDE HAS RAW DATA AND SHOWS WHICH PARTICIPANTS WERE EXCLUDED AS WELL
+write.csv(df.wide, file = paste0(directory, "/dfwide_full.csv"))
 
 
 
