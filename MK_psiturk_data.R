@@ -32,6 +32,8 @@ df.complete$currentVersion.pilot5 = str_detect(df.complete$beginhit, "2015-06-24
 df.complete$currentVersion.pilot6 = str_detect(df.complete$beginhit, "2015-07-27")|str_detect(df.complete$beginhit, "2015-07-29")|str_detect(df.complete$beginhit, "2015-07-30")
 df.complete$currentVersion.Run1.1 = str_detect(df.complete$beginhit, "2015-07-31")
 df.complete$currentVersion.Run1.2 = str_detect(df.complete$beginhit, "2015-08-01")
+df.complete$currentVersion.Run1.3 = str_detect(df.complete$beginhit, "2015-08-02")
+
 
 #Run 1, 03/24/2015 - 03/25/2015
 #df.complete = df.complete[df.complete$currentVersion.pilot1 == TRUE | df.complete$currentVersion.pilot2 == TRUE,]
@@ -49,7 +51,7 @@ df.complete$currentVersion.Run1.2 = str_detect(df.complete$beginhit, "2015-08-01
 #df.complete = df.complete[df.complete$currentVersion.pilot6 == TRUE,]
 
 #FIRST RUN! (yay) Will include particpants ran on different days
-df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE,]
+df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE,]
 
 nrow(df.complete)
 
@@ -528,6 +530,7 @@ time.summary2 = df.long.transitives %>% group_by(participant) %>% summarise(AvgT
 
 some.summary1 = df.long.transitives %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
 some.summary2 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
+some.summary3 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
 
 directory = getwd()
 write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
