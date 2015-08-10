@@ -532,6 +532,7 @@ some.summary1 = df.long.transitives %>% group_by(participant, Animacy) %>% summa
 some.summary2 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
 some.summary3 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
 
+
 directory = getwd()
 write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
 write.csv(df.long.transitives, file = paste0(directory, "/dflong_transitives.csv"))
