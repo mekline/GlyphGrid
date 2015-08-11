@@ -494,6 +494,9 @@ df.long$UsableVLat = mapply(isVLat, shortclean = df.long$WithAlmost, iscomplete 
 ### GRAB ROWS FROM PARTICIPANTS THAT DID NOT CHEAT ###
 df.long.no.cheat = df.long[df.long$cheated == 0,]
 
+### MAKE TABLE OF PARTICIPANTS THAT DID CHEAT ###
+df.long.cheaters = df.long[df.long$cheated == 1,]
+
 ### GRAB ROWS THAT ARE TEST TRIALS ###
 df.long.testtrials = df.long.no.cheat[df.long.no.cheat$isTestTrial == 1,]
 
@@ -520,19 +523,75 @@ percent.Vlat.Usable = mean(df.long.usables$UsableVLat)
 percent.passes.practice = mean(df.long$PassesPractice)
 
 
+#GET OVERALL PERCENTAGES FROM DIFFERENT TABLES#
 summary1 = df.long.usables %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
 summary2 = df.long.transitives %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
 summary3 = df.long %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
 summary4 = df.long.absolute %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
 
+#PROVIDES TIME AVERAGES FOR ALL TRIALS, AND ONLY-TRANSITIVE TRIALS#
 time.summary1 = df.long %>% group_by(participant) %>% summarise(AvgTime = mean(as.numeric(t.time)), how_many=sum(IsTransitive))
 time.summary2 = df.long.transitives %>% group_by(participant) %>% summarise(AvgTime = mean(as.numeric(t.time)), how_many=sum(IsTransitive))
 
-some.summary1 = df.long.transitives %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
-some.summary2 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
-some.summary3 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
+#PROVIDES NUMBERS FOR EACH PARTICIPANT - USED BY 
+indv.summary1 = df.long.transitives %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
+indv.summary2 = df.long.transitives %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
+indv.summary3 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
+indv.summary4 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
+indv.summary5 = df.long %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
+indv.summary6 = df.long %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
+indv.summary7 = df.long.cheaters %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
+indv.summary8 = df.long.cheaters %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
+
+## THIS PRODUCES 'EFFECT.TABLE' WHICH TAKES ONE OF THE BEFORE 'INDV.SUMMARY' TABLES AND
+## DETERMINES WHICH PARTICIPANTS PRODUCED THE EFFECT ##
+## EFFECT.SUMMARY PROVIDES SUMS OF EFFECT.TABLE
+check.table = indv.summary4
+participant_nums = sort(as.numeric(unique(check.table$participant)))
+Effect.Table = data.frame(matrix(nrow=length(participant_nums)))
+colnames(Effect.Table) = 'participant'
+Effect.Table$participant = participant_nums
+Effect.Table$U.SOV.Only = Effect.Table$U.Effect = Effect.Table$U.Anti.Effect = Effect.Table$U.No.Direction = Effect.Table$C.SOV.Only = Effect.Table$C.Effect = Effect.Table$C.Anti.Effect = Effect.Table$C.No.Direction = NA
+for (i in 1:length(participant_nums)) {
+  temp_tab = check.table[check.table$participant==participant_nums[i],]
+  where.inanimate = which(temp_tab$Animacy %in% 'inanimate')
+  if (sum(temp_tab$CleanVLat)==0 & sum(temp_tab$CleanVLat)==0) {
+    Effect.Table[Effect.Table$participant==participant_nums[i],]$U.No.Direction = 1
+    Effect.Table[Effect.Table$participant==participant_nums[i],]$U.SOV.Only = 1
+    Effect.Table[Effect.Table$participant==participant_nums[i],]$C.No.Direction = 1
+    Effect.Table[Effect.Table$participant==participant_nums[i],]$C.SOV.Only = 1
+    print(i)
+  } else {
+    if (sum(temp_tab$CleanVLat)!=0) {
+      if (temp_tab$CleanVLat[where.inanimate] > sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
+        Effect.Table[Effect.Table$participant==participant_nums[i],]$C.Effect = 1
+      } else if (temp_tab$CleanVLat[where.inanimate] < sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
+        Effect.Table[Effect.Table$participant==participant_nums[i],]$C.Anti.Effect = 1
+      } else {Effect.Table[Effect.Table$participant==participant_nums[i],]$C.No.Direction = 1}
+    } else {
+      Effect.Table[Effect.Table$participant==participant_nums[i],]$C.No.Direction = 1
+      Effect.Table[Effect.Table$participant==participant_nums[i],]$C.SOV.Only = 1
+    }
+    if (sum(temp_tab$UsableVLat)!=0) {
+      if (temp_tab$UsableVLat[where.inanimate] > sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
+        Effect.Table[Effect.Table$participant==participant_nums[i],]$U.Effect = 1
+      } else if (temp_tab$UsableVLat[where.inanimate] < sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
+        Effect.Table[Effect.Table$participant==participant_nums[i],]$U.Anti.Effect = 1
+      } else {Effect.Table[Effect.Table$participant==participant_nums[i],]$U.No.Direction = 1}
+    } else {
+      Effect.Table[Effect.Table$participant==participant_nums[i],]$U.No.Direction = 1
+      Effect.Table[Effect.Table$participant==participant_nums[i],]$U.SOV.Only = 1
+    }
+  }
+}
+Effect.Table[is.na(Effect.Table)] <- 0
+Effect.Summary = colSums(Effect.Table)
+Effect.Summary['participant'] = nrow(Effect.Table)
+Effect.Summary = data.frame(Effect.Summary)
 
 
+
+## PRODUCES CSV FILES WITHIN THE DIRECTORY FOR VIEWING ##
 directory = getwd()
 write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
 write.csv(df.long.transitives, file = paste0(directory, "/dflong_transitives.csv"))
@@ -541,6 +600,10 @@ write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
 
 #DF.WIDE HAS RAW DATA AND SHOWS WHICH PARTICIPANTS WERE EXCLUDED AS WELL
 write.csv(df.wide, file = paste0(directory, "/dfwide_full.csv"))
+
+
+
+
 
 
 
