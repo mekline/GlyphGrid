@@ -30,13 +30,16 @@ df.complete$currentVersion.pilot2 = str_detect(df.complete$beginhit, "2015-03-25
 df.complete$currentVersion.pilot3 = str_detect(df.complete$beginhit, "2015-05-27")
 df.complete$currentVersion.pilot4 = str_detect(df.complete$beginhit, "2015-06-21")
 df.complete$currentVersion.pilot5 = str_detect(df.complete$beginhit, "2015-06-24 15:32:10.316064")
-df.complete$currentVersion.pilot6 = str_detect(df.complete$beginhit, "2015-07-27")|str_detect(df.complete$beginhit, "2015-07-29")|str_detect(df.complete$beginhit, "2015-07-30")
+df.complete$currentVersion.pilot6.1 = str_detect(df.complete$beginhit, "2015-07-27")
+df.complete$currentVersion.pilot6.2 = str_detect(df.complete$beginhit, "2015-07-29")
+df.complete$currentVersion.pilot6.3 = str_detect(df.complete$beginhit, "2015-07-30")
 
 ##HERE ARE ALL THE LARGER SAMPLES##
 df.complete$currentVersion.Run1.1 = str_detect(df.complete$beginhit, "2015-07-31")
 df.complete$currentVersion.Run1.2 = str_detect(df.complete$beginhit, "2015-08-01")
 df.complete$currentVersion.Run1.3 = str_detect(df.complete$beginhit, "2015-08-02")
 df.complete$currentVersion.Run1.4 = str_detect(df.complete$beginhit, "2015-08-11")
+df.complete$currentVersion.Run1.5 = str_detect(df.complete$beginhit, "2015-08-12")
 
 
 #Run 1, 03/24/2015 - 03/25/2015
@@ -52,10 +55,10 @@ df.complete$currentVersion.Run1.4 = str_detect(df.complete$beginhit, "2015-08-11
 #df.complete = df.complete[df.complete$currentVersion.pilot5 == TRUE,]
 
 #Data with timer and CLICK option. Not DRAG option.
-#df.complete = df.complete[df.complete$currentVersion.pilot6 == TRUE,]
+#df.complete = df.complete[df.complete$currentVersion.pilot6.1 == TRUE|df.complete$currentVersion.pilot6.2 == TRUE|df.complete$currentVersion.pilot6.3 == TRUE,]
 
 #FIRST RUN! (yay) Will include particpants ran on different days
-df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE|df.complete$currentVersion.Run1.4 == TRUE,]
+df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE|df.complete$currentVersion.Run1.4 == TRUE|df.complete$currentVersion.Run1.5 == TRUE,]
 
 nrow(df.complete)
 
@@ -88,7 +91,7 @@ for (i in 1:nrow(df.wide)){
     mylength = 0
   }
   print(mylength)
-  if (mylength==51){
+  if (mylength>=51){
     df.wide$participant[i] = i
     df.wide$workerId[i] = a$workerId
     df.wide$browser[i] = df.complete$browser[i]
@@ -103,7 +106,10 @@ for (i in 1:nrow(df.wide)){
     }
     free_sorts[a$workerId] = list(partic_free)
     categorized[a$workerId] = list(partic_catg)
-  } else {df.wide[i,] = 'EXCLUDED' }
+  } else {
+      df.wide[i,] = 'EXCLUDED'
+      df.wide$workerId[i] = a$workerId
+    }
   #And grab the info we need from the last 'trial' (feedback)
   if (is.null(a$data[[mylength-1]]$trialdata$responses)){df.wide$feedback[i] = "none"
   } else {
@@ -130,58 +136,68 @@ for (i in 1:length(names(categorized))) {
 }
 
 
-##LABEL PARTICIPANTS THAT HAD TOO MANY TRIALS, AND EXCLUDE##
+##LABEL PARTICIPANTS THAT HAD TOO MANY OR TOO FEW TRIALS, AND EXCLUDE##
 ##OTHERWISE GRAB EACH TRIALS DATA##
 worker_ids = names(free_sorts)
-for (i in 1:length(free_sorts)) {
+for (i in 1:length(worker_ids)) {
   if (length(free_sorts[[worker_ids[i]]]) != 22) {
-   df.wide[i,] = 'EXCLUDED' 
-   df.wide$workerId[i] = 'TOO MANY TRIALS'
+   grabbed_row = which(df.wide$workerId %in% worker_ids[i])
+   df.wide[grabbed_row,] = 'EXCLUDED' 
+   df.wide$participant[grabbed_row] = as.numeric(grabbed_row)
+   df.wide$workerId[grabbed_row] = worker_ids[i]
+   df.wide$beginhit[grabbed_row] = 'TOO MANY TRIALS'
   }
 }
 
 for (i in 1:nrow(df.wide)){
   counter = 1
-  if (!str_detect(df.wide$participant[i], 'EXCLUDED')){
+  if (!str_detect(df.wide$browser[i], 'EXCLUDED')){
     a = free_sorts[[df.wide$workerId[i]]]
     mylength = length(free_sorts[[df.wide$workerId[i]]])
+    
+    
+    for (j in mylength:1) {
+      if(j == mylength) {max_g_i = free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global}
+      if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$glyph)){
+        trial_num = (28 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
+        df.wide[[paste("glyph_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$glyph
+        df.wide[[paste("Stimulus_",trial_num, sep="")]][i] = "PracticeImage"
+      }
+      if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moviefile)){
+        trial_num = (26 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
+        df.wide[[paste("Stimulus_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moviefile
+      }
+      if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$isTestTrial)){
+        if(free_sorts[[df.wide$workerId[i]]][[j]]$isTestTrial == 1) {
+          df.wide[[paste("isTestTrial_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$isTestTrial
+        }}
+      if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moves)){
+        df.wide[[paste("moves_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moves
+      }
+      if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Sub)){
+        df.wide[[paste("S_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Sub
+      }
+      if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Vrb)){
+        df.wide[[paste("V_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Vrb
+      }
+      if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Obj)){
+        df.wide[[paste("O_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Obj
+      }
+      if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$rt)){
+        df.wide[[paste("rt_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$rt
+      }
+    }
+    
   } else{
     a = data.frame(NULL)
     mylength = 0
-    df.wide[i,] = 'EXCLUDED' 
-    df.wide$workerId[i] = 'TOO MANY TRIALS'
+    grabbed_row = which(df.wide$workerId %in% worker_ids[i])
+    df.wide[grabbed_row,] = 'EXCLUDED' 
+    df.wide$participant[grabbed_row] = as.numeric(grabbed_row)
+    df.wide$workerId[grabbed_row] = worker_ids[i]
+    df.wide$beginhit[grabbed_row] = 'TOO MANY TRIALS'
   }
-  for (j in mylength:1) {
-  if(j == mylength) {max_g_i = free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global}
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$glyph)){
-    trial_num = (28 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
-    df.wide[[paste("glyph_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$glyph
-    df.wide[[paste("Stimulus_",trial_num, sep="")]][i] = "PracticeImage"
-  }
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moviefile)){
-    trial_num = (26 - (max_g_i - free_sorts[[df.wide$workerId[i]]][[j]]$trial_index_global))
-    df.wide[[paste("Stimulus_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moviefile
-  }
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$isTestTrial)){
-    if(free_sorts[[df.wide$workerId[i]]][[j]]$isTestTrial == 1) {
-       df.wide[[paste("isTestTrial_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$isTestTrial
-  }}
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$moves)){
-    df.wide[[paste("moves_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$moves
-  }
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Sub)){
-    df.wide[[paste("S_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Sub
-  }
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Vrb)){
-    df.wide[[paste("V_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Vrb
-  }
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$Obj)){
-    df.wide[[paste("O_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$Obj
-  }
-  if(!is.null(free_sorts[[df.wide$workerId[i]]][[j]]$rt)){
-    df.wide[[paste("rt_",trial_num, sep="")]][i] = free_sorts[[df.wide$workerId[i]]][[j]]$rt
-  }
-  }
+  
 } #End of this participant
 
 
@@ -210,7 +226,7 @@ for (i in 1:length(col.nums)){
 
 ###GET RAW WORD ORDER###
 for (j in 1:nrow(df.wide)){
-  if (df.wide$participant[j] != "EXCLUDED"){  
+  if (df.wide$browser[j] != "EXCLUDED"){  
       for (k in 1:length(col.nums)) {
         if (df.wide[paste('Stimulus_', col.nums[k], sep = "")][j,] == "PracticeImage") {
           check_m = df.wide[paste(names[1], col.nums[k], sep = "")][j,]
@@ -257,6 +273,18 @@ for (j in 1:nrow(df.wide)){
     df.wide[paste('RawOrd_', col.nums[k], sep = "")][j,] = word_order  
     }
   }  
+}
+
+
+###CLEAN UP EXCLUSION ROWS
+for (i in 1:nrow(df.wide)) {
+  if (df.wide$browser[i] == 'EXCLUDED') {
+    grabbed_row = i
+    df.wide[grabbed_row,] = 'EXCLUDED' 
+    df.wide$participant[grabbed_row] = as.numeric(grabbed_row)
+    df.wide$workerId[grabbed_row] = worker_ids[i]
+    df.wide$beginhit[grabbed_row] = 'TOO MANY TRIALS'
+  }
 }
 
 
@@ -333,7 +361,7 @@ df.long <- reshape(df.wide,
 long.names = names(df.long)
 long.names = long.names[-which(long.names %in% "id")]
 df.long = df.long[long.names]
-df.long = df.long[df.long$participant !="EXCLUDED",]
+df.long = df.long[df.long$browser !="EXCLUDED",]
 df.long <- df.long[order(df.long$participant),]
 
 
@@ -427,25 +455,27 @@ df.long$UsableOneMistk = as.numeric(!str_detect(df.long$WithAlmost, "BadResponse
 df.long$PassesPractice = 0
 
 for (i in 1:length(worker_ids)) {
-  pract_temp = df.long[df.long$workerId == worker_ids[i] & df.long$isTestTrial == 0,]
-  pract_score = numeric()
-  for (j in 1:nrow(pract_temp)) {
-    if (!str_detect(pract_temp$CleanOrder[j], "NONE")) {
-      if (pract_temp$stimulus[j] == "PracticeImage") {
-        pract_score = c(pract_score, str_detect(pract_temp$CleanOrder[j], "G"))
-      } else {
-          if (as.logical(pract_temp$CleanComplete[j])) {
-            pract_score = c(pract_score, 1)
-          } else if (as.logical((nchar(pract_temp$CleanOrder[j]) >= 1)) & !as.logical(pract_temp$IsTransitive[j])) {
-            pract_score = c(pract_score, 1)
-          } else if (as.logical((nchar(pract_temp$CleanOrder[j]) > 1))) {
-            pract_score = c(pract_score, 1)
-          } else {pract_score = c(pract_score, 0)}
-        }
-      } else {pract_score = c(pract_score, 0)}
-  }
-  if (mean(pract_score) == 1) {
-    df.long$PassesPractice[which(df.long$workerId == worker_ids[i])] = 1
+  if (worker_ids[i] %in% df.long$workerId) {
+    pract_temp = df.long[df.long$workerId == worker_ids[i] & df.long$isTestTrial == 0,]
+    pract_score = numeric()
+    for (j in 1:nrow(pract_temp)) {
+      if (!str_detect(pract_temp$CleanOrder[j], "NONE")) {
+        if (pract_temp$stimulus[j] == "PracticeImage") {
+          pract_score = c(pract_score, str_detect(pract_temp$CleanOrder[j], "G"))
+        } else {
+            if (as.logical(pract_temp$CleanComplete[j])) {
+              pract_score = c(pract_score, 1)
+            } else if (as.logical((nchar(pract_temp$CleanOrder[j]) >= 1)) & !as.logical(pract_temp$IsTransitive[j])) {
+              pract_score = c(pract_score, 1)
+            } else if (as.logical((nchar(pract_temp$CleanOrder[j]) > 1))) {
+              pract_score = c(pract_score, 1)
+            } else {pract_score = c(pract_score, 0)}
+          }
+        } else {pract_score = c(pract_score, 0)}
+    }
+    if (mean(pract_score) == 1) {
+      df.long$PassesPractice[which(df.long$workerId == worker_ids[i])] = 1
+    }
   }
 }
 
