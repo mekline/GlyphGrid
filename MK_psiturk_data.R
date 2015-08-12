@@ -22,17 +22,21 @@ dbDisconnect(con)
 #filter out incompletes (using dplyr methods)
 df.complete = subset(df.complete, status %in% c(3,4)) 
 
-#nrow(df.complete) includes alll subjects ever plus all debug attempts!
+#nrow(df.complete) includes all subjects ever plus all debug attempts!
 #filter to a particular day (if I haven't set codeversions). OR together multiple days if needed
+##HERE ARE ALL THE PILOT RUNS##
 df.complete$currentVersion.pilot1 = str_detect(df.complete$beginhit, "2015-03-24")
 df.complete$currentVersion.pilot2 = str_detect(df.complete$beginhit, "2015-03-25")
 df.complete$currentVersion.pilot3 = str_detect(df.complete$beginhit, "2015-05-27")
 df.complete$currentVersion.pilot4 = str_detect(df.complete$beginhit, "2015-06-21")
 df.complete$currentVersion.pilot5 = str_detect(df.complete$beginhit, "2015-06-24 15:32:10.316064")
 df.complete$currentVersion.pilot6 = str_detect(df.complete$beginhit, "2015-07-27")|str_detect(df.complete$beginhit, "2015-07-29")|str_detect(df.complete$beginhit, "2015-07-30")
+
+##HERE ARE ALL THE LARGER SAMPLES##
 df.complete$currentVersion.Run1.1 = str_detect(df.complete$beginhit, "2015-07-31")
 df.complete$currentVersion.Run1.2 = str_detect(df.complete$beginhit, "2015-08-01")
 df.complete$currentVersion.Run1.3 = str_detect(df.complete$beginhit, "2015-08-02")
+df.complete$currentVersion.Run1.4 = str_detect(df.complete$beginhit, "2015-08-11")
 
 
 #Run 1, 03/24/2015 - 03/25/2015
@@ -51,7 +55,7 @@ df.complete$currentVersion.Run1.3 = str_detect(df.complete$beginhit, "2015-08-02
 #df.complete = df.complete[df.complete$currentVersion.pilot6 == TRUE,]
 
 #FIRST RUN! (yay) Will include particpants ran on different days
-df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE,]
+df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE|df.complete$currentVersion.Run1.4 == TRUE,]
 
 nrow(df.complete)
 
@@ -560,7 +564,6 @@ for (i in 1:length(participant_nums)) {
     Effect.Table[Effect.Table$participant==participant_nums[i],]$U.SOV.Only = 1
     Effect.Table[Effect.Table$participant==participant_nums[i],]$C.No.Direction = 1
     Effect.Table[Effect.Table$participant==participant_nums[i],]$C.SOV.Only = 1
-    print(i)
   } else {
     if (sum(temp_tab$CleanVLat)!=0) {
       if (temp_tab$CleanVLat[where.inanimate] > sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
