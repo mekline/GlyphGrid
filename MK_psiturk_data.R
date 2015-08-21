@@ -1,5 +1,6 @@
-# Packages ----------------------------------------------------------------
-
+## MIGUEL SALINAS (masm@mit.edu)
+## CODE SKELETON PROVIDED BY MELISSA KLEIN (mekline@mit.edu)
+## LOAD R-PACKAGES ----------------------------------------------------------------
 rm(list=ls())
 library(lsr)
 library(dplyr)
@@ -9,32 +10,34 @@ library(stringr)
 library(ggplot2)
 library(Hmisc)
 
+## CREATE HELPER FUNCTIONS FOR ANALYSIS
 mean.na.rm <- function(x) { mean(x,na.rm=T) }
 sum.na.rm <- function(x) { sum(x,na.rm=T) }
 stderr <- function(x) sqrt(var(x)/length(x))
 
-# Read data ---------------------------------------------------------------
 
+# READ DATA  ---------------------------------------------------------------
+# DATA TAKEN FROM particpants.db WITHIN THE DIRECTORY #
 con = dbConnect(SQLite(),dbname = "/Users/masm/Desktop/GlyphGrid/participants.db");
-df.complete = dbReadTable(con,"glyphs") #change the name of the database here (mine was called "almost")
+df.complete = dbReadTable(con,"glyphs") 
 dbDisconnect(con)
 
-#filter out incompletes (using dplyr methods)
+# FILTER OUT MTURK HITS THAT WERE NOT FULLY COMPLETED (USING DPLYR METHODS)
 df.complete = subset(df.complete, status %in% c(3,4)) 
 
 #nrow(df.complete) includes all subjects ever plus all debug attempts!
-#filter to a particular day (if I haven't set codeversions). OR together multiple days if needed
-##HERE ARE ALL THE PILOT RUNS##
-df.complete$currentVersion.pilot1 = str_detect(df.complete$beginhit, "2015-03-24")
-df.complete$currentVersion.pilot2 = str_detect(df.complete$beginhit, "2015-03-25")
-df.complete$currentVersion.pilot3 = str_detect(df.complete$beginhit, "2015-05-27")
-df.complete$currentVersion.pilot4 = str_detect(df.complete$beginhit, "2015-06-21")
-df.complete$currentVersion.pilot5 = str_detect(df.complete$beginhit, "2015-06-24 15:32:10.316064")
-df.complete$currentVersion.pilot6.1 = str_detect(df.complete$beginhit, "2015-07-27")
-df.complete$currentVersion.pilot6.2 = str_detect(df.complete$beginhit, "2015-07-29")
-df.complete$currentVersion.pilot6.3 = str_detect(df.complete$beginhit, "2015-07-30")
+#filter to a particular day (if I haven't set codeversions).
+##HERE ARE ALL THE PILOT RUNS -- SOME RUNS WERE DONE IN CHUNKS ON DIFFERENT DAYS##
+df.complete$currentVersion.pilot1.1 = str_detect(df.complete$beginhit, "2015-03-24")
+df.complete$currentVersion.pilot1.2 = str_detect(df.complete$beginhit, "2015-03-25")
+df.complete$currentVersion.pilot2 = str_detect(df.complete$beginhit, "2015-05-27")
+df.complete$currentVersion.pilot3 = str_detect(df.complete$beginhit, "2015-06-21")
+df.complete$currentVersion.pilot4 = str_detect(df.complete$beginhit, "2015-06-24 15:32:10.316064")
+df.complete$currentVersion.pilot5.1 = str_detect(df.complete$beginhit, "2015-07-27")
+df.complete$currentVersion.pilot5.2 = str_detect(df.complete$beginhit, "2015-07-29")
+df.complete$currentVersion.pilot5.3 = str_detect(df.complete$beginhit, "2015-07-30")
 
-##HERE ARE ALL THE LARGER SAMPLES##
+##HERE ARE ALL THE LARGER SAMPLES ### THERE WERE 175 PARTICIPANTS RUN ON 5 DAYS
 df.complete$currentVersion.Run1.1 = str_detect(df.complete$beginhit, "2015-07-31")
 df.complete$currentVersion.Run1.2 = str_detect(df.complete$beginhit, "2015-08-01")
 df.complete$currentVersion.Run1.3 = str_detect(df.complete$beginhit, "2015-08-02")
@@ -42,41 +45,46 @@ df.complete$currentVersion.Run1.4 = str_detect(df.complete$beginhit, "2015-08-11
 df.complete$currentVersion.Run1.5 = str_detect(df.complete$beginhit, "2015-08-12")
 
 
-#Run 1, 03/24/2015 - 03/25/2015
-#df.complete = df.complete[df.complete$currentVersion.pilot1 == TRUE | df.complete$currentVersion.pilot2 == TRUE,]
+#PILOT 1, 03/24/2015 - 03/25/2015
+#df.complete = df.complete[df.complete$currentVersion.pilot1.1 == TRUE | df.complete$currentVersion.pilot1.2 == TRUE,]
 
-#Run 2, 05/27/15
+#PILOT 2, 05/27/2015
+#df.complete = df.complete[df.complete$currentVersion.pilot2 == TRUE,]
+
+#PILOT 3, 06/21/2015
 #df.complete = df.complete[df.complete$currentVersion.pilot3 == TRUE,]
 
-#To get Trial Times 06/21/2015
+#To get Trial Times 06/24/2015 CLICK -- ONLY ONE PARTICIPANT RUN FOR GETTING TRIAL TIME ESTIMATES (MELANIE)
 #df.complete = df.complete[df.complete$currentVersion.pilot4 == TRUE,]
 
-#To get Trial Times 06/24/2015 CLICK -- Melanie
-#df.complete = df.complete[df.complete$currentVersion.pilot5 == TRUE,]
+#PILOT 4, 07/27/2015 - TRIALS RUN WITH WORKING TIMER. ALSO, THE DRAG OPTION WAS REPLACED BY THE CLICK OPTION.
+#df.complete = df.complete[df.complete$currentVersion.pilot5.1 == TRUE|df.complete$currentVersion.pilot5.2 == TRUE|df.complete$currentVersion.pilot5.3 == TRUE,]
 
-#Data with timer and CLICK option. Not DRAG option.
-#df.complete = df.complete[df.complete$currentVersion.pilot6.1 == TRUE|df.complete$currentVersion.pilot6.2 == TRUE|df.complete$currentVersion.pilot6.3 == TRUE,]
-
-#FIRST RUN! (yay) Will include particpants ran on different days
+#FIRST LARGE SAMPLE! WILL INCLUDE PARTICIPANTS RUN FROM 1.1 TO 1.5
 df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE|df.complete$currentVersion.Run1.4 == TRUE|df.complete$currentVersion.Run1.5 == TRUE,]
 
 nrow(df.complete)
 
-#filter out 'debug' participants!
+#FILTER OUT 'debug' PARTICIPANTS!
 df.complete = filter(df.complete, !str_detect(df.complete$workerid,"debug"))
 nrow(df.complete)
 
-# Structure data ----------------------------------------------------------
-#Note: Compile in wide form: 1 row/participant; each trial gets a series of column names, formatted XYFIELD_#
-#Also, no extra underscores in the column names, this breaks wideToLong
+# STRUCTURE DATA ----------------------------------------------------------
+#NOTE: COMPILE IN WIDE FORM: 1 ROW/PARTICIPANT; EACH TRIAL GETS A SERIES OF COLUMN NAMES, FORMATTED XYFIELD_#
+#ALSO, NO EXTRA UNDERSCORES IN THE COLUMN NAMES, THIS BREAKS wideToLong
 df.wide = data.frame(NULL)
 df.wide = data.frame(matrix(nrow=nrow(df.complete),ncol=4))
-colnames(df.wide) = c("participant","workerId","browser","beginhit") #will dynamically add columns from datastring below
+colnames(df.wide) = c("participant","workerId","browser","beginhit") #DYNAMICALLY ADDS COLUMNS FROM THE DATASTRING BELOW
 
 
-#PLACA DATA OF SPECIFIC TRIAL TYPES INTO LISTS#
+#ORGANIZE DATA -------------------------------------------------------------
+#GLOBAL INDECES ARE NUMBERS CORRESPONDING TO THE PAGE NUMBER THAT THE PARTICIPANT SAW
 global_indeces = c()
+#free_sorts WILL INCLUDE TRIALS OF TYPE 'free-sort' ONLY - THERE SHOULD BE 22 PER PARTICIPANT
+#18 OF THESE ARE ACTUAL TEST TRIALS
 free_sorts = list()
+#categorized WILL INCLUDE TRIALS OF TYPE 'categorized' WHICH ARE USED TO QUIZ THE PARTICIPANT'S MEMORIZATION OF THE GLYPHS
+#THESE TRIALS ARE RUN IN GROUPS OF 16. PARTICIPANT CAN TAKE THE QUIZ AS MANY TIMES AS NEEDED
 categorized = list()
 
 
@@ -555,6 +563,8 @@ trans.complete.usable = mean(df.long.transitives$UsableOneMistk)
 percent.Vlat.Clean = mean(df.long.usables$CleanVLat)
 percent.Vlat.Usable = mean(df.long.usables$UsableVLat)
 percent.passes.practice = mean(df.long$PassesPractice)
+    df.long$cheated = as.numeric(df.long$cheated)
+percent_cheaters = mean(df.long$cheated)
 
 
 #GET OVERALL PERCENTAGES FROM DIFFERENT TABLES#
@@ -585,35 +595,35 @@ participant_nums = sort(as.numeric(unique(check.table$participant)))
 Effect.Table = data.frame(matrix(nrow=length(participant_nums)))
 colnames(Effect.Table) = 'participant'
 Effect.Table$participant = participant_nums
-Effect.Table$U.SOV.Only = Effect.Table$U.Effect = Effect.Table$U.Anti.Effect = Effect.Table$U.No.Direction = Effect.Table$C.SOV.Only = Effect.Table$C.Effect = Effect.Table$C.Anti.Effect = Effect.Table$C.No.Direction = NA
+Effect.Table$U.SVO.Only = Effect.Table$U.Effect = Effect.Table$U.Anti.Effect = Effect.Table$U.No.Direction = Effect.Table$C.SVO.Only = Effect.Table$C.Effect = Effect.Table$C.Anti.Effect = Effect.Table$C.No.Direction = NA
 for (i in 1:length(participant_nums)) {
   temp_tab = check.table[check.table$participant==participant_nums[i],]
   where.inanimate = which(temp_tab$Animacy %in% 'inanimate')
   if (sum(temp_tab$CleanVLat)==0 & sum(temp_tab$CleanVLat)==0) {
-    Effect.Table[Effect.Table$participant==participant_nums[i],]$U.No.Direction = 1
-    Effect.Table[Effect.Table$participant==participant_nums[i],]$U.SOV.Only = 1
-    Effect.Table[Effect.Table$participant==participant_nums[i],]$C.No.Direction = 1
-    Effect.Table[Effect.Table$participant==participant_nums[i],]$C.SOV.Only = 1
+    Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1
+    Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.SVO.Only = 1
+    Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1
+    Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.SVO.Only = 1
   } else {
     if (sum(temp_tab$CleanVLat)!=0) {
       if (temp_tab$CleanVLat[where.inanimate] > sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
-        Effect.Table[Effect.Table$participant==participant_nums[i],]$C.Effect = 1
+        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.Effect = 1
       } else if (temp_tab$CleanVLat[where.inanimate] < sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
-        Effect.Table[Effect.Table$participant==participant_nums[i],]$C.Anti.Effect = 1
-      } else {Effect.Table[Effect.Table$participant==participant_nums[i],]$C.No.Direction = 1}
+        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.Anti.Effect = 1
+      } else {Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1}
     } else {
-      Effect.Table[Effect.Table$participant==participant_nums[i],]$C.No.Direction = 1
-      Effect.Table[Effect.Table$participant==participant_nums[i],]$C.SOV.Only = 1
+      Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1
+      Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.SVO.Only = 1
     }
     if (sum(temp_tab$UsableVLat)!=0) {
       if (temp_tab$UsableVLat[where.inanimate] > sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
-        Effect.Table[Effect.Table$participant==participant_nums[i],]$U.Effect = 1
+        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.Effect = 1
       } else if (temp_tab$UsableVLat[where.inanimate] < sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
-        Effect.Table[Effect.Table$participant==participant_nums[i],]$U.Anti.Effect = 1
-      } else {Effect.Table[Effect.Table$participant==participant_nums[i],]$U.No.Direction = 1}
+        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.Anti.Effect = 1
+      } else {Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1}
     } else {
-      Effect.Table[Effect.Table$participant==participant_nums[i],]$U.No.Direction = 1
-      Effect.Table[Effect.Table$participant==participant_nums[i],]$U.SOV.Only = 1
+      Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1
+      Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.SVO.Only = 1
     }
   }
 }
