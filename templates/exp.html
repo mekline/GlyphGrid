@@ -115,15 +115,22 @@
 
         var prepHTML3 = "<h3><center>More Practice</center></h3>" +
                 "<p></br>In these practice screens you will be watching some short movies." + 
-                "<p></br>First watch the movie. </br></br>After the movie is over, give Upwilaah the symbols that best <u>describe what happened in the movie</u>. Upwilaah will tell you how many symbols you need per movie." +
+                "<p></br>First watch the movie. After the movie is over, the screen will turn green. " + 
+                    "</br></br>Give Upwilaah the symbols that best <u>describe what happened in the movie</u>.  " + 
+                    "Upwilaah will tell you how many symbols you need per movie. </br></br>Try to give Upwilaah " + 
+                    "all the symbols as fast as you can. " +
+                    "If you take too long, Upwilaah will get bored and the screen will turn red." +
                 "<p></br><b>Press the spacebar to continue.</b>";
 
         var prepHTML4 = "<h3><center>PART 2</center></h3>" +
                 "<p></br>In this part, you will be watching more short movies." + 
-                "<p></br>First watch the movie. </br></br>After the movie is over, give Upwilaah the symbols that best <b>describe what happened in the movie</b>. Upwilaah will tell you how many symbols you need per movie." +
+                "<p></br>First watch the movie. </br>After the movie is over, give Upwilaah the symbols that best " +
+                "<b>describe what happened in the movie</b>. Upwilaah will tell you how many " +
+                "symbols you need per movie. </br></br>Again, try to " +
+                "give Upwilaah the symbols as fast as possible so that he doesn't get bored." +
                 "<p></br>Press the letter <b>T</b> to continue to the movies.";
 
-        var moreinstructions = "<p>Click on the appropriate symbols so that Upwilaah knows what you are looking at. </br>Then Press Done. <b>Upwilaah wants %%HOWMANY%%.</b></p>";
+        var moreinstructions = "<p>Click on the appropriate symbols so that Upwilaah knows what you are looking at. </br>Then press DONE. <b>Upwilaah wants %%HOWMANY%%.</b></p>";
 
 
 
@@ -284,7 +291,7 @@
         picture_html = '<img height=100 width=100 src="/static/images/XXYX.png" />';
         for(var j=0;j<glyphs.length;j++) {
             quiz_question = '<center>Which of these means: <b>GLYPHWORD</b></center>' +
-                            '<center><p>Press the letter appropriate letter to submit your answer.</p></center>';
+                            '<center><p>Press the appropriate letter to submit your answer.</p></center>';
             quiz_question = quiz_question.replace('GLYPHWORD', TestInfo.glyphass[glyphs[j]]);
             categorized_new.push(quiz_question);
             text = picture_html.replace('XXYX', glyphs[j]);
@@ -666,6 +673,7 @@ var learning_continue = {
             text_answer: text_answers_new,
             timing_stim: -1,
             is_html: true,
+            correct_text: "<center><h3></br></br>CORRECT</h3></center>",
             incorrect_text: "<center></br></br>Incorrect. The correct answer is:        %ANS%.</center>",
             prompt: prompt_new
         };    
@@ -1127,9 +1135,7 @@ var learning_continue = {
 
         experiment_blocks.push(prep_screen1);
 
-        //experiment_blocks.push(exposure_chunk);
-
-        experiment_blocks.push(quiz_chunk);
+        //experiment_blocks.push(quiz_chunk);
 
         experiment_blocks.push(prep_screen2);
 

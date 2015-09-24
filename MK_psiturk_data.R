@@ -36,6 +36,7 @@ df.complete$currentVersion.pilot4 = str_detect(df.complete$beginhit, "2015-06-24
 df.complete$currentVersion.pilot5.1 = str_detect(df.complete$beginhit, "2015-07-27")
 df.complete$currentVersion.pilot5.2 = str_detect(df.complete$beginhit, "2015-07-29")
 df.complete$currentVersion.pilot5.3 = str_detect(df.complete$beginhit, "2015-07-30")
+df.complete$currentVersion.pilot6 = str_detect(df.complete$beginhit, "2015-09-23 22:33:42.206700")
 
 ##HERE ARE ALL THE LARGER SAMPLES ### THERE WERE 175 PARTICIPANTS RUN ON 5 DAYS
 df.complete$currentVersion.Run1.1 = str_detect(df.complete$beginhit, "2015-07-31")
@@ -61,12 +62,16 @@ df.complete$currentVersion.Run1.5 = str_detect(df.complete$beginhit, "2015-08-12
 #df.complete = df.complete[df.complete$currentVersion.pilot5.1 == TRUE|df.complete$currentVersion.pilot5.2 == TRUE|df.complete$currentVersion.pilot5.3 == TRUE,]
 
 #FIRST LARGE SAMPLE! WILL INCLUDE PARTICIPANTS RUN FROM 1.1 TO 1.5
-df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE|df.complete$currentVersion.Run1.4 == TRUE|df.complete$currentVersion.Run1.5 == TRUE,]
+#df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE|df.complete$currentVersion.Run1.4 == TRUE|df.complete$currentVersion.Run1.5 == TRUE,]
+
+#To get Trial Times 09/23/2015 CLICK -- ONLY ONE PARTICIPANT RUN FOR GETTING TRIAL TIME ESTIMATES (LAURA)
+df.complete = df.complete[df.complete$currentVersion.pilot6 == TRUE,]
+
 
 nrow(df.complete)
 
 #FILTER OUT 'debug' PARTICIPANTS!
-df.complete = filter(df.complete, !str_detect(df.complete$workerid,"debug"))
+#df.complete = filter(df.complete, !str_detect(df.complete$workerid,"debug"))
 nrow(df.complete)
 
 # STRUCTURE DATA ----------------------------------------------------------

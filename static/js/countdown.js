@@ -7,9 +7,9 @@ function displayTime() {
   //set background color
   if (s < 5) {
   document.body.style.background = '#FFFFFF';
-  } else if (s<17) {
+  } else if (s<12) {
   document.body.style.background = '#00CC00';
-  } else if (s<22) {
+  } else if (s<17) {
   document.body.style.background = '#FF9933';
   } else { document.body.style.background = '#CC3300'}
   //set time
