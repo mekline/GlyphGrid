@@ -37,6 +37,8 @@ df.complete$currentVersion.pilot5.1 = str_detect(df.complete$beginhit, "2015-07-
 df.complete$currentVersion.pilot5.2 = str_detect(df.complete$beginhit, "2015-07-29")
 df.complete$currentVersion.pilot5.3 = str_detect(df.complete$beginhit, "2015-07-30")
 df.complete$currentVersion.pilot6 = str_detect(df.complete$beginhit, "2015-09-23 22:33:42.206700")
+df.complete$currentVersion.pilot7.1 = str_detect(df.complete$beginhit, "2015-09-23")
+df.complete$currentVersion.pilot7.2 = str_detect(df.complete$beginhit, "2015-09-24")
 
 ##HERE ARE ALL THE LARGER SAMPLES ### THERE WERE 175 PARTICIPANTS RUN ON 5 DAYS
 df.complete$currentVersion.Run1.1 = str_detect(df.complete$beginhit, "2015-07-31")
@@ -65,13 +67,16 @@ df.complete$currentVersion.Run1.5 = str_detect(df.complete$beginhit, "2015-08-12
 #df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE|df.complete$currentVersion.Run1.4 == TRUE|df.complete$currentVersion.Run1.5 == TRUE,]
 
 #To get Trial Times 09/23/2015 CLICK -- ONLY ONE PARTICIPANT RUN FOR GETTING TRIAL TIME ESTIMATES (LAURA)
-df.complete = df.complete[df.complete$currentVersion.pilot6 == TRUE,]
+#df.complete = df.complete[df.complete$currentVersion.pilot6 == TRUE,]
+
+#PILOT 7, 09/23/2015 - TRIALS RUN WITH WORKING TIMER. ALSO, THE DRAG OPTION WAS REPLACED BY THE CLICK OPTION.
+df.complete = df.complete[df.complete$currentVersion.pilot7.1 == TRUE|df.complete$currentVersion.pilot7.2 == TRUE,]
 
 
 nrow(df.complete)
 
 #FILTER OUT 'debug' PARTICIPANTS!
-#df.complete = filter(df.complete, !str_detect(df.complete$workerid,"debug"))
+df.complete = filter(df.complete, !str_detect(df.complete$workerid,"debug"))
 nrow(df.complete)
 
 # STRUCTURE DATA ----------------------------------------------------------
