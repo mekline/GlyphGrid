@@ -528,6 +528,7 @@
 //DEFINE VARIABLES THAT WILL BE USED TO CONTROL TRIAL FLOW
 //NUM OF RETAKES DOES NOT WORK, BUT BREAKS IF TAKEN OUT - IDK 
 var num_of_retakes = 0;
+var last_quiz_score = 0;
 
 //TABLE CONTAINING ALL GLYPHS (SHUFFLED) FOR MEMORIZATION
         var learning_block = {
@@ -558,7 +559,7 @@ var num_of_retakes = 0;
         var learning_flow_prep = {
             type: "text",
             text: function () {
-                if (num_of_retakes == 0) {
+                if (true) {
                         what_it_says = "</br><p>You are about to see 16 symbols, each with their meaning. Learn these symbols so that you " +
                         "can communicate with Upwilaah! Really " +
                        "try to memorize the symbols. There will be a quiz after this part. You will have to pass " + 
@@ -621,7 +622,45 @@ var num_of_retakes = 0;
             data:{
                 isTestTrial:0
             }
-        };     
+        }; 
+
+//QUIZ FEEDBACK BLOCK
+        var quiz_feedback = {
+            type: "text",
+            text: function () {
+                quiz_data = jsPsych.data.getLastChunkData();
+                var sum_score = 0;
+                for(var i=(quiz_data.length - 16); i < quiz_data.length; i++){
+                    sum_score += quiz_data[i].correct;
+                }
+                var avg_score = sum_score / 16;
+                var score_percent = avg_score*100;
+                last_quiz_score = avg_score;
+  
+                if (num_of_retakes == 0) {
+                    if (avg_score > 0.95) {
+                        what_it_says = "<p>You got all the meanings right! To make sure you'll be able to use the symbols correctly during the communication task, make sure to choose the correct meanings during the second round of the quiz. </p></br>" +
+                       "<p>Press the number <b>0</b> to see the symbols again.</p></br></br><p>Press the number <b>1</b> to continue to the quiz.</p>";
+                   } else {
+                        what_it_says = "<p>You got " + score_percent + "% correct! To make sure you'll be able to use the symbols correctly, you need to get all the meanings correct in order to move on to the communication game.  Make sure to choose the correct meanings during the second round of the quiz.</p></br>" +
+                       "<p>Press the number <b>0</b> to see the symbols again.</p></br></br><p>Press the number <b>1</b> to continue to the quiz.</p>";
+                   }
+                } else {
+                    if (avg_score > 0.95) {
+                        what_it_says = "<p>You got all the meanings right! You may now continue to the Part 2 of the experiment." +
+                       "</br><p><b>Press the number 1 to continue.</b></p>";
+                   } else if {
+                        what_it_says = "<p>You got " + score_percent + "% correct! To make sure you'll be able to use the symbols correctly, you need to get all the meanings correct in order to move on to the communication game.  Make sure to choose the correct meanings during the next round of the quiz.</p></br>" +
+                       "<p>Press the number <b>0</b> to see the symbols again.</p></br></br><p>Press the number <b>1</b> to continue to the quiz.</p>";
+                   } 
+                }
+                   return what_it_says;
+                },
+            cont_key: [48, 49],
+            data:{
+                isTestTrial:0
+            }
+        }; 
 
 /*All other blocks and defined here*/
 
@@ -1065,25 +1104,82 @@ var learning_continue = {
 //         }
 
 
+//THIS CHUNK ENCASES THE ACTUAL QUIZ FOR FEEDBACK
+        var actual_quiz_chunk = {
+            chunk_type: 'linear',
+            timeline: [categorization_new]
+        };
+
+//THIS BLOCK GIVES FEEDBACK ABOUT THE QUIZ
+
+
+
+
+
 //THIS CHUNK GROUPS THE LEARNING TABLE AND THE ACTUAL QUIZ
-        var quiz_chunk = {
+        var categorization_chunk = {
             chunk_type: 'while',
-            timeline: [learning_flow_prep, exposure_chunk, categorization_new],
+            timeline: [actual_quiz_chunk, quiz_feedback],
             continue_function: function(data){
                 // check to see if the average RT was under 1s
                 // var current_chunk_id = jsPsych.currentChunkID();
                 // var dataaa = jsPsych.data.getTrialsFromChunk(current_chunk_id);
-                var sum_score = 0;
-                for(var i=(data.length - 16); i < data.length; i++){
-                    sum_score += data[i].correct;
-                }
-                var avg_score = sum_score / 16;
-                if(avg_score > 0.94){
-                    // end the loop
-                    return false;
+                // var sum_score = 0;
+                // for(var i=(data.length - 16); i < data.length; i++){
+                //     sum_score += data[i].correct;
+                // }
+                // var avg_score = sum_score / 16;
+                var check_press = 0;
+                check_press = jsPsych.data.getLastTrialData().key_press;
+                num_of_retakes += 1;
+                if (num_of_retakes < 2){
+                    if(check_press == 48){
+                        // end the loop
+                        return false;
+                    } else {
+                        return true;
+                    }
                 } else {
-                    num_of_retakes += 1;
+                    if(last_quiz_score > 0.94){
+                        // end the loop
+                        return false;
+                    } else if(check_press == 48){
+                        // end the loop
+                        return false;
+                    } else {
+                        return true;
+                    }
+                }
+            }
+        };
+
+
+
+
+//THIS CHUNK GROUPS THE LEARNING TABLE AND THE ACTUAL QUIZ
+        var quiz_chunk = {
+            chunk_type: 'while',
+            timeline: [learning_flow_prep, exposure_chunk, categorization_chunk],
+            continue_function: function(data){
+                // check to see if the average RT was under 1s
+                // var current_chunk_id = jsPsych.currentChunkID();
+                // var dataaa = jsPsych.data.getTrialsFromChunk(current_chunk_id);
+                // var sum_score = 0;
+                // for(var i=(data.length - 16); i < data.length; i++){
+                //     sum_score += data[i].correct;
+                // }
+                // var avg_score = sum_score / 16;
+
+                if(num_of_retakes < 2){
+                    // continue the loop
                     return true;
+                } else {
+                    if (last_quiz_score < 0.95) {
+                        return true;
+                    } else {
+                        //end the loop
+                        return false;
+                    }
                 }
             }
         }
