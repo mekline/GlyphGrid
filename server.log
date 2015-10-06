@@ -4885,3 +4885,102 @@ Traceback (most recent call last):
   File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
     raise TemplateNotFound(template)
 TemplateNotFound: blank.gif
+2015-10-05 19:28:44,390 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-05 19:28:44,426 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-05 19:28:44,545 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-05 19:28:44,617 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-05 19:28:44,649 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-05 19:28:44,719 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-05 19:28:44,735 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-05 19:28:44,736 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-05 19:28:44,751 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-05 19:57:04,942 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/experiment.py", line 665, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-10-05 19:57:44,714 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/experiment.py", line 665, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-10-05 19:58:03,138 Exception on /blank.gif [GET]
+Traceback (most recent call last):
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1381, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1475, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/Library/Python/2.7/site-packages/flask/app.py", line 1461, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/experiment.py", line 665, in regularpage
+    return render_template(pagename)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 127, in render_template
+    return _render(ctx.app.jinja_env.get_or_select_template(template_name_or_list),
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 830, in get_or_select_template
+    return self.get_template(template_name_or_list, parent, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 791, in get_template
+    return self._load_template(name, self.make_globals(globals))
+  File "/Library/Python/2.7/site-packages/jinja2/environment.py", line 765, in _load_template
+    template = self.loader.load(self, name, globals)
+  File "/Library/Python/2.7/site-packages/jinja2/loaders.py", line 113, in load
+    source, filename, uptodate = self.get_source(environment, name)
+  File "/Library/Python/2.7/site-packages/flask/templating.py", line 64, in get_source
+    raise TemplateNotFound(template)
+TemplateNotFound: blank.gif
+2015-10-06 00:24:29,910 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-06 00:24:29,949 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-06 00:24:30,029 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-06 00:24:30,039 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-06 00:24:30,128 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-06 00:24:30,131 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-06 00:24:30,142 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-06 00:24:30,153 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2015-10-06 00:24:30,163 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js

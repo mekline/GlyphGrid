@@ -564,7 +564,7 @@ var last_quiz_score = 0;
                         "can communicate with Upwilaah! Really " +
                        "try to memorize the symbols. There will be a quiz after this part. You will have to pass " + 
                        "the quiz in order to continue to the rest of the experiment." +
-                       "</br><b>Press the letter T to see the symbols.</b></p></br>"
+                       "</br></br><b>Press the letter T to see the symbols.</b></p></br>"
                    } else {
                         what_it_says = "<p>You did not get enough correct answers on the quiz to continue. " + 
                             "Take some time to look at the symbols once more. You will take the quiz again after " +
@@ -648,8 +648,8 @@ var last_quiz_score = 0;
                 } else {
                     if (avg_score > 0.95) {
                         what_it_says = "<p>You got all the meanings right! You may now continue to the Part 2 of the experiment." +
-                       "</br><p><b>Press the number 1 to continue.</b></p>";
-                   } else if {
+                       "</br></br><p><b>Press the number 1 to continue.</b></p>";
+                   } else {
                         what_it_says = "<p>You got " + score_percent + "% correct! To make sure you'll be able to use the symbols correctly, you need to get all the meanings correct in order to move on to the communication game.  Make sure to choose the correct meanings during the next round of the quiz.</p></br>" +
                        "<p>Press the number <b>0</b> to see the symbols again.</p></br></br><p>Press the number <b>1</b> to continue to the quiz.</p>";
                    } 
@@ -1159,7 +1159,7 @@ var learning_continue = {
 //THIS CHUNK GROUPS THE LEARNING TABLE AND THE ACTUAL QUIZ
         var quiz_chunk = {
             chunk_type: 'while',
-            timeline: [learning_flow_prep, exposure_chunk, categorization_chunk],
+            timeline: [exposure_chunk, categorization_chunk],
             continue_function: function(data){
                 // check to see if the average RT was under 1s
                 // var current_chunk_id = jsPsych.currentChunkID();
@@ -1230,6 +1230,8 @@ var learning_continue = {
         experiment_blocks.push(intro_chunk);
 
         experiment_blocks.push(prep_screen1);
+
+        experiment_blocks.push(learning_flow_prep);
 
         experiment_blocks.push(quiz_chunk);
 
