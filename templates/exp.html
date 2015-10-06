@@ -996,6 +996,54 @@ var learning_continue = {
         }
 
 
+//THIS PIECE OF CODE PLACES EACH OF THE TRIALS IN INDIVIDUAL DICTIONARIES
+        var free_sort_dict = {};
+        for (var i = 0; i < glyphtrials.length; i++) {
+            free_sort_dict['sort_block_' + i] = {};
+            free_sort_dict['sort_block_' + i].type = 'free-sort';
+            free_sort_dict['sort_block_' + i].stimuli = [glyphtrials[i]];
+            free_sort_dict['sort_block_' + i].prompt = "<p>Watch this movie!</p>";
+            free_sort_dict['sort_block_' + i].eventclips = [eventclippy[i]];
+            free_sort_dict['sort_block_' + i].alien = '/static/images/upwilaah.jpeg';
+            free_sort_dict['sort_block_' + i].timer = true;
+            free_sort_dict['sort_block_' + i].moreinstr = function() {
+                                                    name = jsPsych.currentTrial().eventclips;
+                                                    which_one = '';
+                                                    for (var k = 0; k < events_w_trans.length; k++) {
+                                                        if (events_w_trans[k][2] == name) {
+                                                            if (events_w_trans[k][1] == 1) {
+                                                                which_one = moreinstructions.replace('%%HOWMANY%%', '3 symbols')
+                                                            } else {which_one = moreinstructions.replace('%%HOWMANY%%', '2 symbols')}
+                                                        };
+                                                    };
+                                                    return which_one
+                                                };
+            free_sort_dict['sort_block_' + i].data = function() { 
+                                                    info = {};
+                                                    info.isTestTrial = 1;
+                                                    clip_name = jsPsych.currentTrial().eventclips;
+                                                    clip_name = clip_name.split("/")[3];
+                                                    info.moviefile = clip_name;
+                                                    stim = info.moviefile.split(".")[0];
+                                                    trial_num = TestInfo.trialOrder.indexOf(stim);
+                                                    for (var i=0;i<TestInfo.trialInfo.length;i++) {
+                                                            if (NTestInfo.trialInfo[i].stimName == stim) {
+                                                                for (var j=0;j<PoS.length;j++) {
+                                                                   info[PoS[j]] = NTestInfo.trialInfo[i].Rel_glyph[PoS[j]]; 
+                                                                }
+                                                                
+                                                            }
+                                                    }
+                                                    return info;
+                                                };                                    
+            free_sort_dict['sort_block_' + i].on_finish = function () {
+                                                    document.body.style.background = '#FFFFFF';
+                                                };
+
+        };
+
+
+
 
 
 //BLOCK CONTAINING THE 18 TEST TRIALS THAT WE OBSERVE
@@ -1255,7 +1303,9 @@ var learning_continue = {
 
         experiment_blocks.push(practice_videos[1][1]);
 
-        experiment_blocks.push(sort_chunk);
+        for (var i = 0; i < glyphtrials.length; i++) {
+            experiment_blocks.push(free_sort_dict['sort_block_' + i]);
+        };
 
         experiment_blocks.push(ending_chunk);
 
