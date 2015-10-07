@@ -118,16 +118,15 @@
                 "<p></br>First watch the movie. After the movie is over, the screen will turn green. " + 
                     "</br></br>Give Upwilaah the symbols that best <u>describe what happened in the movie</u>.  " + 
                     "Upwilaah will tell you how many symbols you need per movie. </br></br>Try to give Upwilaah " + 
-                    "all the symbols as fast as you can. " +
-                    "If you take too long, Upwilaah will get bored and the screen will turn red." +
+                    "all the symbols as fast as you can.</br>" +
+                    "</br>Your goal is to answer accurately and quickly. The screen will turn green when it's time for you to answer, and then it will turn orange and red if too much time is passing. Try to keep the screen green throughout the task." +
                 "<p></br><b>Press the spacebar to continue.</b>";
 
         var prepHTML4 = "<h3><center>PART 2</center></h3>" +
                 "<p></br>In this part, you will be watching more short movies." + 
                 "<p></br>First watch the movie. </br>After the movie is over, give Upwilaah the symbols that best " +
                 "<b>describe what happened in the movie</b>. Upwilaah will tell you how many " +
-                "symbols you need per movie. </br></br>Again, try to " +
-                "give Upwilaah the symbols as fast as possible so that he doesn't get bored." +
+                "symbols you need per movie. </br></br>Remember - your goal is to answer accurately and quickly. The screen will turn green when it's time for you to answer, and then it will turn orange and red if too much time is passing. Try to keep the screen green throughout the task." +
                 "<p></br>Press the letter <b>T</b> to continue to the movies.";
 
         var moreinstructions = "<p>Click on the appropriate symbols so that Upwilaah knows what you are looking at. </br>Then press DONE. <b>Upwilaah wants %%HOWMANY%%.</b></p>";
@@ -540,7 +539,7 @@ var last_quiz_score = 0;
                 if (num_of_retakes == 0) {
                         what_it_says = "<p>Learn these symbols so that you can communicate with Upwilaah! <b>Take as long as you need</b>, and really " +
                        "try to memorize the symbols. There will be a quiz after this page. You will have to pass " + 
-                       "the quiz in order to continue to the rest of the experiment. </br><b>Press the letter T to take the quiz.</b></p></br>" +
+                       "the quiz in order to continue to the rest of the experiment. This is a memory game - please don't write down or record the symbols, really try and remember them!</br><b>Press the letter T to take the quiz.</b></p></br>" +
                        "<div class='center-content'>" + tableHTML + "</div>";
                    } else {
                         what_it_says = "<p>You did not get enough correct answers on the quiz to continue. " + 
@@ -707,81 +706,86 @@ var learning_continue = {
         };    
 
 
-
-new_choices = function (choices, prompt, quiztableHTML, user_presses, order, keyans_stuff, letters) {
-    for (var i = 0; i < choices.length; i++) {
-                            shuffle(choices[i]);
-                            //choices_new.push(glyphs.slice());
-                            get_keychoice = choices[i].indexOf(order[i]);
-                            keyans_stuff[i] = user_presses[get_keychoice];
-                            var temp_table = quiztableHTML;
-                            for (var j = 0; j < choices[i].length; j++) {
-                                temp_table = temp_table.replace('XXYX', choices[i][j]);
-                                temp_table = temp_table.replace('CHOICE', letters[j]);
-                            };
-                            prompt[i] = temp_choice_table;
+// THIS FUNCTION TRIED TO MAKE THE QUIZ SPIT OUT DIFFERENT CHOICES EVERY TIME
+// THIS FUNCTION DID NOT WORK THOUGH
+// new_choices = function (choices, prompt, quiztableHTML, user_presses, order, keyans_stuff, letters) {
+//     for (var i = 0; i < choices.length; i++) {
+//                             shuffle(choices[i]);
+//                             //choices_new.push(glyphs.slice());
+//                             get_keychoice = choices[i].indexOf(order[i]);
+//                             keyans_stuff[i] = user_presses[get_keychoice];
+//                             var temp_table = quiztableHTML;
+//                             for (var j = 0; j < choices[i].length; j++) {
+//                                 temp_table = temp_table.replace('XXYX', choices[i][j]);
+//                                 temp_table = temp_table.replace('CHOICE', letters[j]);
+//                             };
+//                             prompt[i] = temp_choice_table;
                         
-                };
-    return [prompt, keyans_stuff];
-};
+//                 };
+//     return [prompt, keyans_stuff];
+// };
+
+        var categorization_dict = {};
+            for (var i = 0; i < prompt_new.length*5; i++) {
+                
+
+                if (i>0 & i%prompt_new.length==0) {
+                            var choices_new = [];
+                            var keyans_new = [];
+                            var prompt_new = [];
+                            for (var j = 0; j < categorized.length; j++) {
+                                shuffle(glyphs);
+                                choices_new.push(glyphs.slice());
+                                get_keychoice = glyphs.indexOf(quiz_glyph_order[j]);
+                                keyans_new.push(user_choices_new[get_keychoice]);
+                                var temp_choice_table = quiztable_HTML;
+                                for (var k = 0; k < glyphs.length; k++) {
+                                    temp_choice_table = temp_choice_table.replace('XXYX', glyphs[k]);
+                                    temp_choice_table = temp_choice_table.replace('CHOICE', letter_choices[k]);
+                                };
+                                prompt_new.push(temp_choice_table);
+                            };
+                        };
+                categorization_dict['categ_block_' + i] = {};
+                categorization_dict['categ_block_' + i].prompt = prompt_new[i%prompt_new.length];
+                categorization_dict['categ_block_' + i].key_answer = keyans_new[i%prompt_new.length];
+                // categorization_dict['categ_block_' + i].choices = user_choices_new;
+                // categorization_dict['categ_block_' + i].text_answer: text_answers_new[i%16];
+                // categorization_dict['categ_block_' + i].timing_stim = -1;
+                // categorization_dict['categ_block_' + i] = {};
+                // categorization_dict['categ_block_' + i].type = 'categorize';
+                // categorization_dict['categ_block_' + i].stimuli = [categorized_new[i%16]];
+            };
 
 
 
-
-//THIS IS THE CODE FOR THE NEW QUIZ
+//THIS IS THE CODE FOR THE NEW QUIZ BLOCK
         var categorization_new = {
             type: 'categorize',
             stimuli: categorized_new,
-            prompt: new_choices(choices_new, prompt_new, quiztable_HTML, user_choices_new, quiz_glyph_order, keyans_new, letter_choices)[0],
-
-            // function() {
-            //              choices_new = [];
-            //              keyans_new = [];
-            //              prompt_new = [];
-            //             for (var i = 0; i < glyphs.length; i++) {
-            //                 //choices_new[i] = shuffle(choices_new[i]).slice();
-            //                 shuffle(glyphs);
-            //                 choices_new.push(glyphs.slice());
-            //                 get_keychoice = glyphs.indexOf(quiz_glyph_order[i]);
-            //                 keyans_new.push(user_choices_new[get_keychoice]);
-            //                 var temp_choice_table = quiztable_HTML;
-            //                 for (var j = 0; j < glyphs.length; j++) {
-            //                     temp_choice_table = temp_choice_table.replace('XXYX', choices_new[i][j]);
-            //                     temp_choice_table = temp_choice_table.replace('CHOICE', letter_choices[j]);
-            //                 };
-            //                 prompt_new[i] = temp_choice_table;
-                        
-            //     };
-            //     console.log(choices_new);
-            //     console.log(keyans_new)
-            //     return prompt_new;
-            // },
-            key_answer: new_choices(choices_new, prompt_new, quiztable_HTML, user_choices_new, quiz_glyph_order, keyans_new, letter_choices)[1],
-            // function() {
-            //             // var choices_new = [];
-            //             keyans_new = [];
-            //             // var prompt_new = [];
-            //             for (var i = 0; i < choices_new.length; i++) {
-            //                 //shuffle(choices_new[i]);
-            //                 //choices_new.push(glyphs.slice());
-            //                 get_keychoice = choices_new[i].indexOf(quiz_glyph_order[i]);
-            //                 keyans_new[i] = user_choices_new[get_keychoice];
-            //                 //var temp_choice_table = quiztable_HTML;
-            //                 // for (var j = 0; j < glyphs.length; j++) {
-            //                 //     temp_choice_table = temp_choice_table.replace('XXYX', choices_new[i][j]);
-            //                 //     temp_choice_table = temp_choice_table.replace('CHOICE', letter_choices[j]);
-            //                 // };
-            //                 // prompt_new[i] = temp_choice_table;
-            //             };
-            //     console.log(keyans_new);
-            //     return keyans_new;
-            // },
+            prompt: function () {
+                prompt_array = [];
+                start_at = (num_of_retakes*prompt_new.length)%80;
+                for (var i = start_at; i < start_at+prompt_new.length; i++) {
+                    prompt_array.push(categorization_dict['categ_block_' + i].prompt);
+                };
+                return prompt_array;
+            },
+            key_answer: function () {
+                keyanswer_array = [];
+                start_at = (num_of_retakes*keyans_new.length)%80;
+                for (var i = start_at; i < start_at+keyans_new.length; i++) {
+                    keyanswer_array.push(categorization_dict['categ_block_' + i].key_answer);
+                };
+                return keyanswer_array;
+            },
             choices: user_choices_new,
             text_answer: text_answers_new,
             timing_stim: -1,
             is_html: true,
             correct_text: "<center><h3></br></br>CORRECT</h3></center>",
             incorrect_text: "<center></br></br>Incorrect. The correct answer is:        %ANS%.</center>",
+            randomize_order: true
         };    
 
 
@@ -1161,7 +1165,7 @@ new_choices = function (choices, prompt, quiztableHTML, user_presses, order, key
 //Does not refer to trial feedback//
         var feedback_block = {
             type: 'survey-text',
-            questions: [["<p><b>NOTE: Please answer the following questions honestly.</b> Your <u>payment will NOT be affected</u> by how you answer these questions.</p><p></br>In this study, we are interested in how people describe different types of events, given a new way of describing them. This will help us to understand how we use language.</p> <p>Do you have any feedback about the task, or comments on how you thought about the answers you gave? Enter your comments below.</p>", "<p>Did you copy down the symbols on a sheet of paper?</p>", "Did you take a screen shot or take a picture of the screen to help you during the task?</p>", "<p>Did you memorize the glyphs?</p>"]],
+            questions: [["<p><b>NOTE: Please answer the following questions honestly.</b> Your <u>payment will NOT be affected</u> by how you answer these questions.</p><p></br>This is a scientific psychology study, we are interested in how people describe different types of events, given a new way of describing them. This will help us to understand how we use language.</p> </br><p>Do you have any feedback about the task, or comments on how you thought about the answers you gave? Enter your comments below.</p>", "<p>Did you copy down the symbols on a sheet of paper?</p>", "Did you take a screen shot or take a picture of the screen to help you during the task?</p>", "<p>Did you memorize and remember the symbols on your own?</p>"]],
             data:{
                 isTestTrial:0
             }
@@ -1369,6 +1373,8 @@ new_choices = function (choices, prompt, quiztableHTML, user_presses, order, key
         experiment_blocks.push(pract_chunk4);
 
         experiment_blocks.push(practice_videos[1][1]);
+
+        experiment_blocks.push(prep_screen4);
 
         for (var i = 0; i < glyphtrials.length; i++) {
             experiment_blocks.push(free_sort_dict['sort_block_' + i]);
