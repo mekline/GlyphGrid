@@ -385,6 +385,9 @@
             prompt_new.push(temp_choice_table);
         };
 
+        console.log(keyans_new);
+        console.log(choices_new);
+
 
 
 
@@ -703,18 +706,82 @@ var learning_continue = {
             prompt: prompt
         };    
 
+
+
+new_choices = function (choices, prompt, quiztableHTML, user_presses, order, keyans_stuff, letters) {
+    for (var i = 0; i < choices.length; i++) {
+                            shuffle(choices[i]);
+                            //choices_new.push(glyphs.slice());
+                            get_keychoice = choices[i].indexOf(order[i]);
+                            keyans_stuff[i] = user_presses[get_keychoice];
+                            var temp_table = quiztableHTML;
+                            for (var j = 0; j < choices[i].length; j++) {
+                                temp_table = temp_table.replace('XXYX', choices[i][j]);
+                                temp_table = temp_table.replace('CHOICE', letters[j]);
+                            };
+                            prompt[i] = temp_choice_table;
+                        
+                };
+    return [prompt, keyans_stuff];
+};
+
+
+
+
 //THIS IS THE CODE FOR THE NEW QUIZ
         var categorization_new = {
             type: 'categorize',
             stimuli: categorized_new,
-            key_answer: keyans_new,
+            prompt: new_choices(choices_new, prompt_new, quiztable_HTML, user_choices_new, quiz_glyph_order, keyans_new, letter_choices)[0],
+
+            // function() {
+            //              choices_new = [];
+            //              keyans_new = [];
+            //              prompt_new = [];
+            //             for (var i = 0; i < glyphs.length; i++) {
+            //                 //choices_new[i] = shuffle(choices_new[i]).slice();
+            //                 shuffle(glyphs);
+            //                 choices_new.push(glyphs.slice());
+            //                 get_keychoice = glyphs.indexOf(quiz_glyph_order[i]);
+            //                 keyans_new.push(user_choices_new[get_keychoice]);
+            //                 var temp_choice_table = quiztable_HTML;
+            //                 for (var j = 0; j < glyphs.length; j++) {
+            //                     temp_choice_table = temp_choice_table.replace('XXYX', choices_new[i][j]);
+            //                     temp_choice_table = temp_choice_table.replace('CHOICE', letter_choices[j]);
+            //                 };
+            //                 prompt_new[i] = temp_choice_table;
+                        
+            //     };
+            //     console.log(choices_new);
+            //     console.log(keyans_new)
+            //     return prompt_new;
+            // },
+            key_answer: new_choices(choices_new, prompt_new, quiztable_HTML, user_choices_new, quiz_glyph_order, keyans_new, letter_choices)[1],
+            // function() {
+            //             // var choices_new = [];
+            //             keyans_new = [];
+            //             // var prompt_new = [];
+            //             for (var i = 0; i < choices_new.length; i++) {
+            //                 //shuffle(choices_new[i]);
+            //                 //choices_new.push(glyphs.slice());
+            //                 get_keychoice = choices_new[i].indexOf(quiz_glyph_order[i]);
+            //                 keyans_new[i] = user_choices_new[get_keychoice];
+            //                 //var temp_choice_table = quiztable_HTML;
+            //                 // for (var j = 0; j < glyphs.length; j++) {
+            //                 //     temp_choice_table = temp_choice_table.replace('XXYX', choices_new[i][j]);
+            //                 //     temp_choice_table = temp_choice_table.replace('CHOICE', letter_choices[j]);
+            //                 // };
+            //                 // prompt_new[i] = temp_choice_table;
+            //             };
+            //     console.log(keyans_new);
+            //     return keyans_new;
+            // },
             choices: user_choices_new,
             text_answer: text_answers_new,
             timing_stim: -1,
             is_html: true,
             correct_text: "<center><h3></br></br>CORRECT</h3></center>",
             incorrect_text: "<center></br></br>Incorrect. The correct answer is:        %ANS%.</center>",
-            prompt: prompt_new
         };    
 
 
@@ -1230,7 +1297,7 @@ var learning_continue = {
                     }
                 }
             }
-        }
+        };
 
 //RANDOMIZE THE PRACTICE BLOCKS WITH 
 //THEIR APPROPRIATE FEEDBACK BLOCKS

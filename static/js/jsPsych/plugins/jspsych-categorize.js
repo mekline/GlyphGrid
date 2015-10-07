@@ -12,7 +12,7 @@
 
 		plugin.create = function(params) {
 
-			params = jsPsych.pluginAPI.enforceArray(params, ['choices', 'stimuli', 'key_answer', 'text_answer', 'data']);
+			params = jsPsych.pluginAPI.enforceArray(params, ['choices', 'stimuli', 'text_answer', 'data', 'key_answer']);
 
 			var trials = [];
 			for (var i = 0; i < params.stimuli.length; i++) {
@@ -30,7 +30,7 @@
 				trials[i].show_stim_with_feedback = (typeof params.show_stim_with_feedback === 'undefined') ? true : params.show_stim_with_feedback;
 				trials[i].is_html = (typeof params.is_html === 'undefined') ? false : params.is_html;
 				trials[i].force_correct_button_press = (typeof params.force_correct_button_press === 'undefined') ? false : params.force_correct_button_press;
-				trials[i].prompt = (typeof params.prompt === 'undefined') ? '' : params.prompt[i];
+				trials[i].prompt = (typeof params.prompt === 'undefined') ? "" : params.prompt[i];
 			}
 			return trials;
 		};
