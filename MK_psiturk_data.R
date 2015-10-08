@@ -39,8 +39,9 @@ df.complete$currentVersion.pilot5.3 = str_detect(df.complete$beginhit, "2015-07-
 df.complete$currentVersion.pilot6 = str_detect(df.complete$beginhit, "2015-09-23 22:33:42.206700")
 df.complete$currentVersion.pilot7.1 = str_detect(df.complete$beginhit, "2015-09-23")
 df.complete$currentVersion.pilot7.2 = str_detect(df.complete$beginhit, "2015-09-24")
+df.complete$currentVersion.pilot8 = str_detect(df.complete$beginhit, "2015-10-07")
 
-##HERE ARE ALL THE LARGER SAMPLES ### THERE WERE 175 PARTICIPANTS RUN ON 5 DAYS
+##HERE ARE ALL THE LARGER SAMPLES ### THERE WERE 175 PARTICIPANTS RUN THROUGHOUT 5 DAYS
 df.complete$currentVersion.Run1.1 = str_detect(df.complete$beginhit, "2015-07-31")
 df.complete$currentVersion.Run1.2 = str_detect(df.complete$beginhit, "2015-08-01")
 df.complete$currentVersion.Run1.3 = str_detect(df.complete$beginhit, "2015-08-02")
@@ -70,7 +71,10 @@ df.complete$currentVersion.Run1.5 = str_detect(df.complete$beginhit, "2015-08-12
 #df.complete = df.complete[df.complete$currentVersion.pilot6 == TRUE,]
 
 #PILOT 7, 09/23/2015 - TRIALS RUN WITH WORKING TIMER. ALSO, THE DRAG OPTION WAS REPLACED BY THE CLICK OPTION.
-df.complete = df.complete[df.complete$currentVersion.pilot7.1 == TRUE|df.complete$currentVersion.pilot7.2 == TRUE,]
+#df.complete = df.complete[df.complete$currentVersion.pilot7.1 == TRUE|df.complete$currentVersion.pilot7.2 == TRUE,]
+
+#PILOT 8, 10/07/2015 - PARTICIPANTS MUST TAKE THE QUIZ TWO TIMES
+df.complete = df.complete[df.complete$currentVersion.pilot8 == TRUE,]
 
 
 nrow(df.complete)
