@@ -41,12 +41,20 @@ df.complete$currentVersion.pilot7.1 = str_detect(df.complete$beginhit, "2015-09-
 df.complete$currentVersion.pilot7.2 = str_detect(df.complete$beginhit, "2015-09-24")
 df.complete$currentVersion.pilot8 = str_detect(df.complete$beginhit, "2015-10-07")
 
-##HERE ARE ALL THE LARGER SAMPLES ### THERE WERE 175 PARTICIPANTS RUN THROUGHOUT 5 DAYS
+##HERE ARE ALL THE LARGER SAMPLES 
+### RUN#1 - THERE WERE 175 PARTICIPANTS RUN THROUGHOUT 5 DAYS
 df.complete$currentVersion.Run1.1 = str_detect(df.complete$beginhit, "2015-07-31")
 df.complete$currentVersion.Run1.2 = str_detect(df.complete$beginhit, "2015-08-01")
 df.complete$currentVersion.Run1.3 = str_detect(df.complete$beginhit, "2015-08-02")
 df.complete$currentVersion.Run1.4 = str_detect(df.complete$beginhit, "2015-08-11")
 df.complete$currentVersion.Run1.5 = str_detect(df.complete$beginhit, "2015-08-12")
+
+### RUN#2 - THERE WERE 130 PARTICIPANTS RUN THROUGHOUT 5 DAYS
+df.complete$currentVersion.Run2.1 = str_detect(df.complete$beginhit, "2015-10-08")
+df.complete$currentVersion.Run2.2 = str_detect(df.complete$beginhit, "2015-10-09")
+df.complete$currentVersion.Run2.3 = str_detect(df.complete$beginhit, "2015-10-10")
+df.complete$currentVersion.Run2.4 = str_detect(df.complete$beginhit, "2015-10-13")
+df.complete$currentVersion.Run2.5 = str_detect(df.complete$beginhit, "2015-10-14")
 
 
 #PILOT 1, 03/24/2015 - 03/25/2015
@@ -74,7 +82,10 @@ df.complete$currentVersion.Run1.5 = str_detect(df.complete$beginhit, "2015-08-12
 #df.complete = df.complete[df.complete$currentVersion.pilot7.1 == TRUE|df.complete$currentVersion.pilot7.2 == TRUE,]
 
 #PILOT 8, 10/07/2015 - PARTICIPANTS MUST TAKE THE QUIZ TWO TIMES
-df.complete = df.complete[df.complete$currentVersion.pilot8 == TRUE,]
+#df.complete = df.complete[df.complete$currentVersion.pilot8 == TRUE,]
+
+#FIRST LARGE SAMPLE! WILL INCLUDE PARTICIPANTS RUN FROM 2.1 TO 2.5
+df.complete = df.complete[df.complete$currentVersion.Run2.1 == TRUE|df.complete$currentVersion.Run2.2 == TRUE|df.complete$currentVersion.Run2.3 == TRUE|df.complete$currentVersion.Run2.4 == TRUE|df.complete$currentVersion.Run2.5 == TRUE,]
 
 
 nrow(df.complete)
@@ -604,7 +615,7 @@ indv.summary8 = df.long.cheaters %>% group_by(participant, Animacy) %>% summaris
 ## THIS PRODUCES 'EFFECT.TABLE' WHICH TAKES ONE OF THE BEFORE 'INDV.SUMMARY' TABLES AND
 ## DETERMINES WHICH PARTICIPANTS PRODUCED THE EFFECT ##
 ## EFFECT.SUMMARY PROVIDES SUMS OF EFFECT.TABLE
-check.table = indv.summary4
+check.table = indv.summary5
 participant_nums = sort(as.numeric(unique(check.table$participant)))
 Effect.Table = data.frame(matrix(nrow=length(participant_nums)))
 colnames(Effect.Table) = 'participant'
