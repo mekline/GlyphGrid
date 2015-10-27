@@ -55,6 +55,7 @@ df.complete$currentVersion.Run2.2 = str_detect(df.complete$beginhit, "2015-10-09
 df.complete$currentVersion.Run2.3 = str_detect(df.complete$beginhit, "2015-10-10")
 df.complete$currentVersion.Run2.4 = str_detect(df.complete$beginhit, "2015-10-13")
 df.complete$currentVersion.Run2.5 = str_detect(df.complete$beginhit, "2015-10-14")
+df.complete$currentVersion.Run2.6 = str_detect(df.complete$beginhit, "2015-10-15")
 
 
 #PILOT 1, 03/24/2015 - 03/25/2015
@@ -72,9 +73,6 @@ df.complete$currentVersion.Run2.5 = str_detect(df.complete$beginhit, "2015-10-14
 #PILOT 4, 07/27/2015 - TRIALS RUN WITH WORKING TIMER. ALSO, THE DRAG OPTION WAS REPLACED BY THE CLICK OPTION.
 #df.complete = df.complete[df.complete$currentVersion.pilot5.1 == TRUE|df.complete$currentVersion.pilot5.2 == TRUE|df.complete$currentVersion.pilot5.3 == TRUE,]
 
-#FIRST LARGE SAMPLE! WILL INCLUDE PARTICIPANTS RUN FROM 1.1 TO 1.5
-#df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE|df.complete$currentVersion.Run1.4 == TRUE|df.complete$currentVersion.Run1.5 == TRUE,]
-
 #To get Trial Times 09/23/2015 CLICK -- ONLY ONE PARTICIPANT RUN FOR GETTING TRIAL TIME ESTIMATES (LAURA)
 #df.complete = df.complete[df.complete$currentVersion.pilot6 == TRUE,]
 
@@ -84,8 +82,11 @@ df.complete$currentVersion.Run2.5 = str_detect(df.complete$beginhit, "2015-10-14
 #PILOT 8, 10/07/2015 - PARTICIPANTS MUST TAKE THE QUIZ TWO TIMES
 #df.complete = df.complete[df.complete$currentVersion.pilot8 == TRUE,]
 
-#FIRST LARGE SAMPLE! WILL INCLUDE PARTICIPANTS RUN FROM 2.1 TO 2.5
-df.complete = df.complete[df.complete$currentVersion.Run2.1 == TRUE|df.complete$currentVersion.Run2.2 == TRUE|df.complete$currentVersion.Run2.3 == TRUE|df.complete$currentVersion.Run2.4 == TRUE|df.complete$currentVersion.Run2.5 == TRUE,]
+#FIRST LARGE SAMPLE! WILL INCLUDE PARTICIPANTS RUN FROM 1.1 TO 1.5
+#df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE|df.complete$currentVersion.Run1.4 == TRUE|df.complete$currentVersion.Run1.5 == TRUE,]
+
+#SECOND LARGE SAMPLE! WILL INCLUDE PARTICIPANTS RUN FROM 2.1 TO 2.6
+df.complete = df.complete[df.complete$currentVersion.Run2.1 == TRUE|df.complete$currentVersion.Run2.2 == TRUE|df.complete$currentVersion.Run2.3 == TRUE|df.complete$currentVersion.Run2.4 == TRUE|df.complete$currentVersion.Run2.5 == TRUE|df.complete$currentVersion.Run2.6 == TRUE,]
 
 
 nrow(df.complete)
@@ -451,7 +452,7 @@ raw_to_clean = function(raworder) {
 df.long$CleanOrder = mapply(raw_to_clean, df.long$ShortRawOrder)
 
 
-### GET WHETHER A COMPLETE RESPONSES WAS PRODUCED WITH THIS NEW ORDER ###
+### GET WHETHER A COMPLETE RESPONSE WAS PRODUCED WITH THIS NEW ORDER ###
 df.long$CleanComplete = mapply(complete_answer, ShortOrder = df.long$CleanOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
 
 ### PRODUCE A WORD ORDER INCLUDING RESPONSES WITH ONLY 1 MISTAKE###
@@ -514,6 +515,7 @@ for (i in 1:length(worker_ids)) {
 
 
 
+
 ### LABEL ANIMACY OF STIMULI ###
 #it_events = c("girl-tumbling-none", "boy-rolling-none", "car-rolling-none", "ball-rolling-none") 
 animates = c("fireman-pushing-boy", "fireman-kicking-girl", "girl-elbowing-oldlady", "girl-kissing-boy", "girl-throwing-oldlady", "boy-lifting-girl",  "oldlady-rubbing-fireman")
@@ -561,11 +563,14 @@ df.long$UsableVLat = mapply(isVLat, shortclean = df.long$WithAlmost, iscomplete 
 ### GRAB ROWS FROM PARTICIPANTS THAT DID NOT CHEAT ###
 df.long.no.cheat = df.long[df.long$cheated == 0,]
 
+### GRAB ROWS FROM PARTICPANTS THAT WERE NOT EXPOSED TO A WORD ORDER###
+df.long.pass.practice = df.long.no.cheat[df.long.no.cheat$PassesPractice==1,]
+
 ### MAKE TABLE OF PARTICIPANTS THAT DID CHEAT ###
 df.long.cheaters = df.long[df.long$cheated == 1,]
 
 ### GRAB ROWS THAT ARE TEST TRIALS ###
-df.long.testtrials = df.long.no.cheat[df.long.no.cheat$isTestTrial == 1,]
+df.long.testtrials = df.long.pass.practice[df.long.pass.practice$isTestTrial == 1,]
 
 ### OF THOSE, NOW GRAB TRANSITIVE STIMULI ###
 df.long.transitives = df.long.testtrials[df.long.testtrials$IsTransitive == 1,]
@@ -615,47 +620,67 @@ indv.summary8 = df.long.cheaters %>% group_by(participant, Animacy) %>% summaris
 ## THIS PRODUCES 'EFFECT.TABLE' WHICH TAKES ONE OF THE BEFORE 'INDV.SUMMARY' TABLES AND
 ## DETERMINES WHICH PARTICIPANTS PRODUCED THE EFFECT ##
 ## EFFECT.SUMMARY PROVIDES SUMS OF EFFECT.TABLE
-check.table = indv.summary5
-participant_nums = sort(as.numeric(unique(check.table$participant)))
-Effect.Table = data.frame(matrix(nrow=length(participant_nums)))
-colnames(Effect.Table) = 'participant'
-Effect.Table$participant = participant_nums
-Effect.Table$U.SVO.Only = Effect.Table$U.Effect = Effect.Table$U.Anti.Effect = Effect.Table$U.No.Direction = Effect.Table$C.SVO.Only = Effect.Table$C.Effect = Effect.Table$C.Anti.Effect = Effect.Table$C.No.Direction = NA
-for (i in 1:length(participant_nums)) {
-  temp_tab = check.table[check.table$participant==participant_nums[i],]
-  where.inanimate = which(temp_tab$Animacy %in% 'inanimate')
-  if (sum(temp_tab$CleanVLat)==0 & sum(temp_tab$CleanVLat)==0) {
-    Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1
-    Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.SVO.Only = 1
-    Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1
-    Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.SVO.Only = 1
-  } else {
-    if (sum(temp_tab$CleanVLat)!=0) {
-      if (temp_tab$CleanVLat[where.inanimate] > sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
-        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.Effect = 1
-      } else if (temp_tab$CleanVLat[where.inanimate] < sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
-        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.Anti.Effect = 1
-      } else {Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1}
-    } else {
-      Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1
-      Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.SVO.Only = 1
+check.effect = function(check.table) {
+    #check.table = indv.summary4
+    participant_nums = sort(as.numeric(unique(check.table$participant)))
+    Effect.Table = data.frame(matrix(nrow=length(participant_nums)))
+    colnames(Effect.Table) = 'participant'
+    Effect.Table$participant = participant_nums
+    Effect.Table$U.SVO.Only = Effect.Table$U.Effect = Effect.Table$U.Anti.Effect = Effect.Table$U.No.Direction = Effect.Table$C.SVO.Only = Effect.Table$C.Effect = Effect.Table$C.Anti.Effect = Effect.Table$C.No.Direction = NA
+    for (i in 1:length(participant_nums)) {
+      temp_tab = check.table[check.table$participant==participant_nums[i],]
+      where.inanimate = which(temp_tab$Animacy %in% 'inanimate')
+      if (sum(temp_tab$CleanVLat)==0 & sum(temp_tab$CleanVLat)==0) {
+        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1
+        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.SVO.Only = 1
+        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1
+        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.SVO.Only = 1
+      } else {
+        if (sum(temp_tab$CleanVLat)!=0) {
+          if (temp_tab$CleanVLat[where.inanimate] > sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
+            Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.Effect = 1
+          } else if (temp_tab$CleanVLat[where.inanimate] < sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
+            Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.Anti.Effect = 1
+          } else {Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1}
+        } else {
+          Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1
+          Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.SVO.Only = 1
+        }
+        if (sum(temp_tab$UsableVLat)!=0) {
+          if (temp_tab$UsableVLat[where.inanimate] > sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
+            Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.Effect = 1
+          } else if (temp_tab$UsableVLat[where.inanimate] < sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
+            Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.Anti.Effect = 1
+          } else {Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1}
+        } else {
+          Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1
+          Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.SVO.Only = 1
+        }
+      }
     }
-    if (sum(temp_tab$UsableVLat)!=0) {
-      if (temp_tab$UsableVLat[where.inanimate] > sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
-        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.Effect = 1
-      } else if (temp_tab$UsableVLat[where.inanimate] < sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
-        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.Anti.Effect = 1
-      } else {Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1}
-    } else {
-      Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1
-      Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.SVO.Only = 1
-    }
-  }
+    Effect.Table[is.na(Effect.Table)] <- 0
+    return(Effect.Table)
 }
-Effect.Table[is.na(Effect.Table)] <- 0
-Effect.Summary = colSums(Effect.Table)
-Effect.Summary['participant'] = nrow(Effect.Table)
-Effect.Summary = data.frame(Effect.Summary)
+
+
+create.summary = function(input.table){
+    Effect.Summary = data.frame(NULL)
+    Effect.Summary = data.frame(matrix(nrow=1,ncol=9))
+    colnames(Effect.Summary) = c("participants","C.NoDirection","C.AntiEffect","C.Effect","C.AllSVO","U.NoDirection","U.AntiEffect","U.Effect","U.AllSVO")
+    Effect.Summary$participants[1] = nrow(input.table)
+    Effect.Summary$C.NoDirection[1] = sum(input.table$C.No.Direction)
+    Effect.Summary$C.AntiEffect[1] = sum(input.table$C.Anti.Effect)
+    Effect.Summary$C.Effect[1] = sum(input.table$C.Effect)
+    Effect.Summary$C.AllSVO[1] = sum(input.table$C.SVO.Only)
+    Effect.Summary$U.NoDirection[1] = sum(input.table$U.No.Direction)
+    Effect.Summary$U.AntiEffect[1] = sum(input.table$U.Anti.Effect)
+    Effect.Summary$U.Effect[1] = sum(input.table$U.Effect)
+    Effect.Summary$U.AllSVO[1] = sum(input.table$U.SVO.Only)
+    return(Effect.Summary)
+}
+
+Effect.Table1 = check.effect(indv.summary4)
+Summary.Table1 = create.summary(Effect.Table1)
 
 
 
@@ -664,6 +689,7 @@ directory = getwd()
 write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
 write.csv(df.long.transitives, file = paste0(directory, "/dflong_transitives.csv"))
 write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
+write.csv(Summary.Table1, file = paste0(directory, "/ParticipantsSummary.csv"))
 
 
 #DF.WIDE HAS RAW DATA AND SHOWS WHICH PARTICIPANTS WERE EXCLUDED AS WELL
