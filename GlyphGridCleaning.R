@@ -1,3 +1,6 @@
+## Lines 1-405 were used to clean the big hairy JSON output of the experiment script into a csv
+## with raw word orders of cards that participants passed. 
+##
 ## MIGUEL SALINAS (masm@mit.edu)
 ## CODE SKELETON PROVIDED BY MELISSA KLEIN (mekline@mit.edu)
 ## LOAD R-PACKAGES ----------------------------------------------------------------
@@ -18,7 +21,7 @@ stderr <- function(x) sqrt(var(x)/length(x))
 
 # READ DATA  ---------------------------------------------------------------
 # DATA TAKEN FROM particpants.db WITHIN THE DIRECTORY #
-con = dbConnect(SQLite(),dbname = "/Users/masm/Desktop/GlyphGrid/participants.db");
+con = dbConnect(SQLite(),dbname = "experiment script/participants.db");
 df.complete = dbReadTable(con,"glyphs") 
 dbDisconnect(con)
 
@@ -28,6 +31,8 @@ df.complete = subset(df.complete, status %in% c(3,4))
 #nrow(df.complete) includes all subjects ever plus all debug attempts!
 #filter to a particular day (if I haven't set codeversions).
 ##HERE ARE ALL THE PILOT RUNS -- SOME RUNS WERE DONE IN CHUNKS ON DIFFERENT DAYS##
+##PILOTS includes: developing basic script, getting ppl to use clicker, getting them to
+##do so quickly, calibrating the timer. 
 df.complete$currentVersion.pilot1.1 = str_detect(df.complete$beginhit, "2015-03-24")
 df.complete$currentVersion.pilot1.2 = str_detect(df.complete$beginhit, "2015-03-25")
 df.complete$currentVersion.pilot2 = str_detect(df.complete$beginhit, "2015-05-27")
@@ -86,12 +91,15 @@ df.complete$currentVersion.Run2.6 = str_detect(df.complete$beginhit, "2015-10-15
 #df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE|df.complete$currentVersion.Run1.4 == TRUE|df.complete$currentVersion.Run1.5 == TRUE,]
 
 #SECOND LARGE SAMPLE! WILL INCLUDE PARTICIPANTS RUN FROM 2.1 TO 2.6
-df.complete = df.complete[df.complete$currentVersion.Run2.1 == TRUE|df.complete$currentVersion.Run2.2 == TRUE|df.complete$currentVersion.Run2.3 == TRUE|df.complete$currentVersion.Run2.4 == TRUE|df.complete$currentVersion.Run2.5 == TRUE|df.complete$currentVersion.Run2.6 == TRUE,]
+#df.complete = df.complete[df.complete$currentVersion.Run2.1 == TRUE|df.complete$currentVersion.Run2.2 == TRUE|df.complete$currentVersion.Run2.3 == TRUE|df.complete$currentVersion.Run2.4 == TRUE|df.complete$currentVersion.Run2.5 == TRUE|df.complete$currentVersion.Run2.6 == TRUE,]
+
+#BOTH LARGE SAMPLES, 1.1-2.6
+df.complete = df.complete[df.complete$currentVersion.Run1.1 == TRUE|df.complete$currentVersion.Run1.2 == TRUE|df.complete$currentVersion.Run1.3 == TRUE|df.complete$currentVersion.Run1.4 == TRUE|df.complete$currentVersion.Run1.5 == TRUE|df.complete$currentVersion.Run2.1 == TRUE|df.complete$currentVersion.Run2.2 == TRUE|df.complete$currentVersion.Run2.3 == TRUE|df.complete$currentVersion.Run2.4 == TRUE|df.complete$currentVersion.Run2.5 == TRUE|df.complete$currentVersion.Run2.6 == TRUE,]
 
 
 nrow(df.complete)
 
-#FILTER OUT 'debug' PARTICIPANTS!
+#FILTER OUT any remaining 'debug' PARTICIPANTS!
 df.complete = filter(df.complete, !str_detect(df.complete$workerid,"debug"))
 nrow(df.complete)
 
@@ -151,7 +159,11 @@ for (i in 1:nrow(df.wide)){
   }
 }
 
-#### CHECK TO SEE IF PARTICIPANT CHEATED ####
+
+#Check we didn't lose anyone there
+nrow(df.wide)
+
+#### CHECK TO SEE IF PARTICIPANT CHEATED (IE did they say they cheated when we asked) ####
 df.wide$cheated = as.numeric(grepl('Q1\":\"y', df.wide$feedback, ignore.case=TRUE) | grepl('Q2\":\"y', df.wide$feedback, ignore.case=TRUE))
 
 
@@ -341,7 +353,8 @@ for (i in 1:length(col.nums)) {
 
 #df.wide <- data.frame(matrix(unlist(df.wide), nrow=nrow(df.wide), byrow=T))
 
-
+#Make sure nobody got lost! should be 292 still
+nrow(df.wide)
 
 ###REFORMAT FROM WIDE TO LONG###
 moves_list = c()
@@ -388,9 +401,15 @@ df.long <- reshape(df.wide,
                    direction = "long")
 
 
+#Check!
+length(unique(df.long$participant))
 
+write.csv(df.long, file="alldata.csv", row.names = FALSE)
 
+###############Below analyses conducted by masm.  For final analysis, we are printing the
+###############clean-formatted dataset out at this point and then moving the rest to GlyphGridAnalysis
 
+#####################
 ##SORT AND CLEAN DF.LONG##
 long.names = names(df.long)
 long.names = long.names[-which(long.names %in% "id")]

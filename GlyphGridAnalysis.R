@@ -10,7 +10,8 @@ stderr <- function(x) sqrt(var(x)/length(x))
 
 
 
-#Read in the two data files and combine them!
+#Read in the cleaned data file (alldata), extracted from JSON output of the psiturk script. 
+#See GlyphGridCleaning.R for details
 
 mydata <- read.csv('dflong_full.csv', header=T)
 mydata <- subset(mydata, select=-c(X))
@@ -154,17 +155,7 @@ percent.subject.first = mean(mydata$Subject.First)
 
 #Keep only data that has a codeable response!
 mydata <- mydata[!is.na(mydata$Patient.Before.Action),]
-#mydata <- mydata[mydata$Type.of.Action == "Transitive",]
-#mydata <- mydata[mydata$Object.Type == "Object" | mydata$Object.Type == "Person" ,]
 
-############# write.csv(mydata, paste0(directory, '/MyData.csv'))
-
-#Make the variables human-readable!!
-# mydata$Word.Order.Coded <- "SVO"
-# mydata[mydata$Patient.Before.Action == TRUE,]$Word.Order.Coded <- "SOV"
-# 
-# mydata[mydata$Spatial.Cue == 1,]$Spatial.Cue <- "Spatial.Present"
-# mydata[mydata$Spatial.Cue == 0,]$Spatial.Cue <- "Spatial.Absent"
 #################################################################
 ## REPORT DESCRIPTIVES
 sum.na.rm <- function(x) { sum(x,na.rm=T) }
@@ -179,9 +170,6 @@ word.order.counts = table(mydata$Usable.Fixed, mydata$Animacy, exclude = c('NoOb
 #Report counts of Word Order Type
 order.type.counts = table(mydata$Order.Type, mydata$Animacy, exclude = c('NoObject', 'PracticeImage'))
 
-
-#justVLat <- mydata[mydata$Order.Type != "VMed",]
-#table(justVLat$Spatial.Cue, justSOV$Object.Type, justSOV$Instructions)
 
 #Make scores for each participant
 mydata$ChoseVLat <- 0
