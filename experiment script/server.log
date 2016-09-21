@@ -6932,3 +6932,43 @@ TemplateNotFound: blank.gif
 2015-10-14 15:50:47,259 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
 2015-10-14 15:50:47,296 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
 2015-10-14 15:50:47,296 /Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/PsiTurk-2.1.2-py2.7.egg/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:23:35,146 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:23:35,400 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:23:35,588 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:23:35,679 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:23:35,679 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:23:35,691 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:23:35,692 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:23:35,707 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:23:35,725 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:24:09,021 Exception on /ad [GET]
+Traceback (most recent call last):
+  File "/Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/flask/app.py", line 1379, in handle_user_exception
+    return handler(e)
+  File "/Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/experiment.py", line 103, in handle_exp_error
+    "%s (%s) %s", e.value, e.errornum, str(dict(request.args)))
+NameError: global name 'e' is not defined
+2016-09-21 16:24:19,847 Exception on /ad [GET]
+Traceback (most recent call last):
+  File "/Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/flask/app.py", line 1817, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/flask/app.py", line 1477, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/flask/app.py", line 1379, in handle_user_exception
+    return handler(e)
+  File "/Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/experiment.py", line 103, in handle_exp_error
+    "%s (%s) %s", e.value, e.errornum, str(dict(request.args)))
+NameError: global name 'e' is not defined
+2016-09-21 16:25:25,312 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:25:25,383 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:25:25,562 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:25:25,681 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:25:25,772 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:25:25,772 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:25:25,782 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:25:25,801 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js
+2016-09-21 16:25:25,806 /Users/mekline/Library/Enthought/Canopy_64bit/User/lib/python2.7/site-packages/psiturk/psiturk_js/psiturk.js

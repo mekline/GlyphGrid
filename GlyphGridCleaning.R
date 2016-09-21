@@ -2,7 +2,7 @@
 ## with raw word orders of cards that participants passed. 
 ##
 ## MIGUEL SALINAS (masm@mit.edu)
-## CODE SKELETON PROVIDED BY MELISSA KLEIN (mekline@mit.edu)
+## CODE SKELETON PROVIDED BY MELISSA KLINE (mekline@mit.edu)
 ## LOAD R-PACKAGES ----------------------------------------------------------------
 rm(list=ls())
 library(lsr)
