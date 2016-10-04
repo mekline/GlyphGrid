@@ -182,12 +182,12 @@ mydata <- mydata %>%
 
 #save the main & 'strict' rows, and narrow down to the columns relevant for each of those analyses
 
-vars <- c('participant','trial.number', 'stimnum', 'StimCategory', 'simpleOrderStrict')
+vars <- c('participant','trial.number', 'stimnum', 'StimCategory', 'simpleOrderStrict', 'RawOrder')
 strictdata <- mydata %>%
   filter(includeStrict) %>%
   dplyr::select(one_of(vars))
 
-vars <- c('participant','trial.number', 'stimnum', 'StimCategory', 'simpleOrderGenerous')
+vars <- c('participant','trial.number', 'stimnum', 'StimCategory', 'simpleOrderGenerous','RawOrder')
 mydata <- mydata %>%
   filter(includeGenerous) %>%
   dplyr::select(one_of(vars))
@@ -228,7 +228,21 @@ ParticipantScores$ObjectType <- factor(ParticipantScores$ObjectType)
 #Table for mean VLat scores, just taking a peak.
 with(ParticipantScores, tapply(ChoseVLat, list(ObjectType), mean, na.rm=TRUE), drop=TRUE)
 
+#Repeating the word order counts, let's look at people who produced a non-SVO order at some
+#point in the proceedings. 
+mydata$participant <- as.factor(mydata$participant)
+nonSVO <- aggregate(ParticipantScores$ChoseVLat, by=list(ParticipantScores$participant), sum)
+names(nonSVO)<- c("participant","nonSVO")
+mydata <- merge(mydata, nonSVO)
 
+mixers <- filter(mydata, nonSVO>0)
+mixer.order.counts = table(mixers$simpleOrderGenerous, mixers$StimCategory)
+
+word.order.counts #from above, all participants
+mixer.order.counts
+
+length(unique(mydata$participant))
+length(unique(mixers$participant))
 #########
 # GRAPHS
 #########
