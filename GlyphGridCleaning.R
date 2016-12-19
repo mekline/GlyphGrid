@@ -181,6 +181,8 @@ for (i in 1:length(names(categorized))) {
   df.wide$LastQuizScore[which(df.wide$workerId %in% names(categorized)[i])] = as.double(mean(tot_score))
 }
 
+median(as.numeric(as.character(df.wide$NumQuizTries)))
+
 
 ##LABEL PARTICIPANTS THAT HAD TOO MANY OR TOO FEW TRIALS, AND EXCLUDE##
 ##OTHERWISE GRAB EACH TRIALS DATA##

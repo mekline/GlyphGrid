@@ -21,13 +21,14 @@ stderr <- function(x) sqrt(var(x)/length(x))
 #At this point, we have the *sequence* of cards people moved, S, V, O or X for other.
 #We need to condense them for analysis, but we'll keep raw orders around for comparison. 
 
-# total of 59 addtl ppl are excluded from analysis because their data 
+# total of 59 addtl ppl records are excluded from analysis because their data 
 #couldn't be parsed from the json string (indicating missed clicks/screen refresh type issues)
+#We start with 289 ppl here. 
 
 mydata <- read.csv('alldata.csv', header=T)
 
 mydata = mydata %>%
-  filter(browser != "EXCLUDED") %>%
+  filter(browser != "EXCLUDED") %>% #Tried to do the exp on a tablet, 3 ppl
   filter(isTestTrial == 1) %>%
   arrange(participant)
 
@@ -178,6 +179,7 @@ mydata$includePerfect <- mydata$includeStrict & (mydata$simpleOrderStrict == myd
 #find & filter out participants who should be excluded because they reported cheating
 mydata <- mydata %>%
   filter(cheated == 0) %>%
+  filter(simpleOrderGenerous != 'UNFIXABLE') %>%
   filter(StimCategory != "Intransitive") #take just transitives!
 
 #save the main & 'strict' rows, and narrow down to the columns relevant for each of those analyses
@@ -237,16 +239,26 @@ mydata <- merge(mydata, nonSVO)
 
 mixers <- filter(mydata, nonSVO>0)
 mixer.order.counts = table(mixers$simpleOrderGenerous, mixers$StimCategory)
+word.order.counts = table(mydata$simpleOrderGenerous, mydata$StimCategory)
 
 word.order.counts #from above, all participants
 mixer.order.counts
 
 length(unique(mydata$participant))
 length(unique(mixers$participant))
+
+
+mixerParticipantScores <- aggregate(mixers$ChoseVLat, by=list(mixers$participant, mixers$StimCategory), mean.na.rm)
+names(mixerParticipantScores) <- c("participant", "ObjectType", "ChoseVLat")
+mixerParticipantScores$ObjectType <- factor(mixerParticipantScores$ObjectType)
+
+#Simple histogram of orders
+table(mydata$simpleOrderGenerous)
 #########
 # GRAPHS
 #########
 
+ParticipantScores <- mixerParticipantScores
 
 #Bootstrapped confidence intervals 
 library(bootstrap)
@@ -258,8 +270,6 @@ quantile(inanimate.boot.mean$thetastar, c(0.025, 0.975))
 
 GraphScores <- aggregate(ParticipantScores$ChoseVLat, by=list(ParticipantScores$ObjectType), mean.na.rm)
 names(GraphScores) <- c("ObjectType", "ChoseVLat")
-GraphScores <- arrange(GraphScores, desc(ObjectType))
-
 
 GraphScores$errorLow = 0
 GraphScores$errorHigh = 0
@@ -271,11 +281,14 @@ GraphScores[GraphScores$ObjectType == "Inanimate",]$errorHigh = quantile(inanima
 GraphScores$ObLabel <- ""
 GraphScores[GraphScores$ObjectType == "Inanimate",]$ObLabel <- "Inanimate patient"
 GraphScores[GraphScores$ObjectType == "Animate",]$ObLabel <- "Animate patient"
+GraphScores <- filter(GraphScores, ObjectType != "Intransitive")
 
 library(RColorBrewer)
 my.cols <- brewer.pal(9, "Purples")
 my.cols <- c(my.cols[6], my.cols[3])
 
+#Fix for recalcitrant column ordering
+GraphScores$ObLabel <- factor(GraphScores$ObLabel, levels = c("Inanimate patient", "Animate patient"))
 
 ggplot(data=GraphScores, aes(x=ObLabel, y=ChoseVLat, fill=ObLabel)) + 
   geom_bar(position=position_dodge(), stat="identity") +
@@ -284,9 +297,9 @@ ggplot(data=GraphScores, aes(x=ObLabel, y=ChoseVLat, fill=ObLabel)) +
   coord_cartesian(ylim=c(0,1)) +
   scale_y_continuous(breaks = seq(0, 1, 0.1))+
   xlab('') +
-  ylab('proportion VNM orders (inc. SOV)') +
+  ylab('proportion of SOV-type symbol orders') +
   theme_bw() +
-  theme(legend.position='none')
+  theme(legend.position = "none")
 
 ggsave('glyphgrid.jpg')
   
@@ -303,4 +316,10 @@ mydata$StimCategory <- as.factor(mydata$StimCategory)
 #doesn't converge, start dropping slopes...
 m1 <- glmer(ChoseVLat ~ StimCategory + (StimCategory|participant) + (1|stimnum), data=mydata, family="binomial")
 m0 <- glmer(ChoseVLat ~ 1 + (StimCategory|participant) + (1|stimnum), data=mydata, family="binomial")
+anova(m1,m0)
+
+mixers$StimCategory <- as.factor(mixers$StimCategory)
+
+m1 <- glmer(ChoseVLat ~ StimCategory + (StimCategory|participant) + (1|stimnum), data=mixers, family="binomial")
+m0 <- glmer(ChoseVLat ~ 1 + (StimCategory|participant) + (1|stimnum), data=mixers, family="binomial")
 anova(m1,m0)
