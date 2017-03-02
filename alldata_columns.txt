@@ -1,0 +1,31 @@
+What are all those columns?
+
+participant - unique subject ID
+
+browser - the browser they used. (Note: EXCLUDED here and in all other columns = a participant whose json blob was corrupted in one way or another.)
+
+beginhit - time started
+
+feedback - json blob of free response text
+
+cheated - whether they admitted cheating on 1 of 3 questions (e.g. 'did you write any of the symbols down?')
+
+NumQuizTries - how many rounds they took to learn the symbol vocabulary
+
+LastQuizScore - how they did the last time through
+
+trial.number - the trial number!
+
+stimulus - filename of the movie; unique item identifier
+
+t.time - time to finish in milliseconds
+
+glyphs - the correct answers/relevant glyphs the subject should be moving. Each participant had glyphs g1-g16 randomly assigned to meanings. For a particular item, we need to know which glyphs are the S, O, and V.  Ex: S:g1 O:g5 V:g13  Glyphs 1, 5, and 13 are the relevant ones. 
+
+moves - the raw data: each time the participant moved a glyph, we get its identity and final position, e.g. [{"src":"g1.png","x":657,"y":57},{"src":"g13.png","x":657,"y":57},{"src":"g14.png","x":657,"y":57},{"src":"g13.png","x":657,"y":57}] means they moved g1, g13, g14, then g13 again. 
+
+isTestTrial - for dropping the practice trials
+
+RawOrder - identity of moved referents, translated into a useful format: SOV means what you think it does; SVX means they moved, S, V, then some wrong glyph; SXY means they moved S, a wrong glyph, then a different wrong glyph. 
+
+id - unique subject identifier, again 
