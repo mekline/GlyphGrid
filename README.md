@@ -16,7 +16,11 @@ Code used to run the experiment on Amazon Mechanical Turk. These scripts were cr
 
 ## GlyphGridAnalysis.R, GlyphGridCleaning.R
 
-The R files; reproduces the entire analysis pipeline from the raw data. The raw data is a big ball of json inside the experiment script directory; running GlyphGridCleaning.R reproduces the tidy data in alldata.csv.  GlyphGridAnalysis.R reads from that file and creates all reported stats & graphs. 
+The R files; reproduces the entire analysis pipeline from the raw data. The raw data is a big ball of json inside the experiment script directory; running GlyphGridCleaning.R reproduces the tidy data in alldata.csv.  
+
+GlyphGridAnalysis.R reads from that file and creates all reported stats & graphs. Lines 0 - 175 read in the raw data and produce the final word orders we analyze (simplifying strings like SVOV). For this task we use the *first* three unique glyphs people passed because this reflects their initial choices; unlike the gesture task people had no way to indicate a 'start over', and once e.g. the Subject glyph had been passed it could not be re-passed (ala gesture referent repetition.)  
+
+Look how much easier to read this is than Study 1. Hooray for the [tidyverse][https://blog.rstudio.org/2016/09/15/tidyverse-1-0-0/]!
 
 ## initial summaries produced by masm/
 

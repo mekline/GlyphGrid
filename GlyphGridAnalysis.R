@@ -2,6 +2,8 @@
 #This produces all analyses for the glyphgrid study. It starts with the alldata.csv
 #which is cleaned/extracted from the raw JSON produced by the experiment; 
 #see GlyphGridCleaning.R for those details.
+#
+#(In between study 1 and 2 I learned dplyr/tidyr and life was better)
 
 rm(list = ls())
 directory = getwd()
@@ -33,7 +35,7 @@ mydata = mydata %>%
   arrange(participant)
 
 
-# Re-add stimulus info, since it didn't print from the exp
+# Re-add the stimulus info, since it didn't travel to the exp output
 mydata$stimnum <- as.numeric(mydata$stimulus)
 
 animate_stim <- c('girl-elbowing-oldlady.mp4','oldlady-rubbing-fireman.mp4','fireman-pushing-boy.mp4','girl-kissing-boy.mp4','girl-throwing-oldlady.mp4','fireman-kicking-girl.mp4','boy-lifting-girl.mp4')
@@ -61,7 +63,7 @@ mydata$StimCategory <- mapply(labelcat, mydata$stimulus)
 
 #Now programmatically turn the raw sequence of card moves to a three-letter description of what
 #they did.  We are interested in the 1st 3 symbols moved, either S, V, or O. When participants
-#moved 2 categories plus a mistake, we will analyzed a 'relaxed' version as well, assuming they
+#moved 2 categories plus a mistake, we will analyzed a 'relaxed' version as well, by assuming they
 #meant that X to be the missing element. 
 
 ##Get the first instance of each symbol people gave during each trial, this is the order we'll use
@@ -166,11 +168,12 @@ mydata$includePerfect <- mydata$includeStrict & (mydata$simpleOrderStrict == myd
 #condensation (i.e. we got 3/2 'real' glyphs taking the first instance of each) but who did
 #not match their ORIGINAL long order.  
 #There are 64 such instances out of the 4,000ish total responses; some are esoteric word 
-#orders like SVOV, but many are things like SSOV which indicate they 'dropped' a symbol on the way
+#orders like SVOV, but many are things like SSOV which indicate they 'dropped' a symbol 
+#on the way to putting in the alien's booth
 
 
 ###
-# Analysis plan!  We have 2 sets of responses: 'readable' responses allowing for people
+# Analysis!  We have 2 sets of responses: 'readable' responses allowing for people
 # to make 1 screwup (allows us to include the most data, which we'll see is a problem),
 # and then a stricter one.  We focus on the 'readable' one since it required throwing away
 # less data
@@ -179,7 +182,7 @@ mydata$includePerfect <- mydata$includeStrict & (mydata$simpleOrderStrict == myd
 #find & filter out participants who should be excluded because they reported cheating
 mydata <- mydata %>%
   filter(cheated == 0) %>%
-  filter(simpleOrderGenerous != 'UNFIXABLE') %>%
+  filter(simpleOrderGenerous != 'UNFIXABLE') %>% #we don't even know what that sequence of cards you moved could be
   filter(StimCategory != "Intransitive") #take just transitives!
 
 #save the main & 'strict' rows, and narrow down to the columns relevant for each of those analyses
@@ -230,7 +233,7 @@ ParticipantScores$ObjectType <- factor(ParticipantScores$ObjectType)
 #Table for mean VLat scores, just taking a peak.
 with(ParticipantScores, tapply(ChoseVLat, list(ObjectType), mean, na.rm=TRUE), drop=TRUE)
 
-#Repeating the word order counts, let's look at people who produced a non-SVO order at some
+#Repeating the word order counts, let's look at people who produced a non-SVO order ('mixers') at some
 #point in the proceedings. 
 mydata$participant <- as.factor(mydata$participant)
 nonSVO <- aggregate(ParticipantScores$ChoseVLat, by=list(ParticipantScores$participant), sum)
@@ -312,14 +315,12 @@ ggsave('glyphgrid.jpg')
 
 mydata$StimCategory <- as.factor(mydata$StimCategory)
 
-#m1 <- glmer(ChoseVLat ~ StimCategory + (StimCategory|participant) + (StimCategory|stimnum), data=mydata, family="binomial")
-#doesn't converge, start dropping slopes...
-m1 <- glmer(ChoseVLat ~ StimCategory + (StimCategory|participant) + (1|stimnum), data=mydata, family="binomial")
-m0 <- glmer(ChoseVLat ~ 1 + (StimCategory|participant) + (1|stimnum), data=mydata, family="binomial")
+m1 <- glmer(ChoseVLat ~ StimCategory + (StimCategory|participant) + (StimCategory|stimnum), data=mydata, family="binomial")
+m0 <- glmer(ChoseVLat ~ 1 + (StimCategory|participant) + (StimCategory|stimnum), data=mydata, family="binomial")
 anova(m1,m0)
 
 mixers$StimCategory <- as.factor(mixers$StimCategory)
 
-m1 <- glmer(ChoseVLat ~ StimCategory + (StimCategory|participant) + (1|stimnum), data=mixers, family="binomial")
-m0 <- glmer(ChoseVLat ~ 1 + (StimCategory|participant) + (1|stimnum), data=mixers, family="binomial")
-anova(m1,m0)
+m1 <- glmer(ChoseVLat ~ StimCategory + (StimCategory|participant) + (StimCategory|stimnum), data=mixers, family="binomial")
+m0 <- glmer(ChoseVLat ~ 1 + (StimCategory|participant) + (StimCategory|stimnum), data=mixers, family="binomial")
+anova(m1,m0) #It's a significant effect in the wrong direction!
