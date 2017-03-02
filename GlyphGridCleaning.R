@@ -411,516 +411,516 @@ write.csv(df.long, file="alldata.csv", row.names = FALSE)
 ###############Below analyses conducted by masm.  For final analysis, we are printing the
 ###############clean-formatted dataset out at this point and then moving the rest to GlyphGridAnalysis
 
-#####################
-##SORT AND CLEAN DF.LONG##
-long.names = names(df.long)
-long.names = long.names[-which(long.names %in% "id")]
-df.long = df.long[long.names]
-df.long = df.long[df.long$browser !="EXCLUDED",]
-df.long <- df.long[order(df.long$participant),]
-
-
-
-##GET RAW SHORT ORDER WITH MISTAKES##
-long_split = strsplit(df.long$RawOrder, '')
-short_order = list()
-for (i in 1:length(long_split)){
-  if(df.long$RawOrder[i]!="NONE"){
-    short_order[[i]] = paste(unique(long_split[[i]]), collapse='')
-  } else {short_order[[i]] = "NONE"}
-}
-
-df.long$ShortRawOrder = as.character(as.factor(unlist(short_order)))
-
-
-
-##LABEL STIMULUS AS TRANSITIVE OR NOT##
-df.long$IsTransitive = as.numeric(!str_detect(df.long$glyphs, 'none') & !str_detect(df.long$stimulus, 'PracticeImage'))
-
-
-## LABEL WHETHER PARTICIPANT GAVE A COMPLETE RESPONSE FOR THAT STIMULUS RAW RAW RAW RAW ####
-complete_answer = function(ShortOrder, IsTransitive) {
-  complete = numeric()
-  if (ShortOrder != 'NONE') {
-  if (IsTransitive == 1 & nchar(ShortOrder) >= 3) {
-    complete = 1
-  } else if (IsTransitive == 0 & nchar(ShortOrder) == 2) {
-    complete = 1
-  } else if (ShortOrder == 'G') {
-    complete = 1 
-  } else {complete = 0}
-  } else {complete = 0}
-  return(complete)
-}
-
-df.long$RawComplete = mapply(complete_answer, ShortOrder = df.long$ShortRawOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
-
-
-### PRODUCE A CLEAN WORD ORDER WITH ONLY SOV's ###
-raw_to_clean = function(raworder) {
-  rawsplit = unlist(strsplit(raworder, split=''))
-  cleanorder = character()
-  if (mean(str_detect(rawsplit, 'N')) > 0) {
-    cleanorder = "NONE"
-  } else if (mean(str_detect(rawsplit, 'G')) > 0) {
-    cleanorder = raworder
-  } else {
-    cleanorder = paste0(rawsplit[which(rawsplit %in% "S" | rawsplit %in% "O" | rawsplit %in% "V")], collapse='')
-  }
-  return(cleanorder)
-}  
-
-df.long$CleanOrder = mapply(raw_to_clean, df.long$ShortRawOrder)
-
-
-### GET WHETHER A COMPLETE RESPONSE WAS PRODUCED WITH THIS NEW ORDER ###
-df.long$CleanComplete = mapply(complete_answer, ShortOrder = df.long$CleanOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
-
-### PRODUCE A WORD ORDER INCLUDING RESPONSES WITH ONLY 1 MISTAKE###
-with_one_mistake = function(raworder, cleanorder, ccomplete, transitive) {
-  ##rawsplit = unlist(strsplit(raworder, split=''))
-  to_return = ''
-  if (ccomplete == 1) {
-    to_return = cleanorder
-  } else if (str_detect(cleanorder, 'G')) {
-    to_return = cleanorder
-  } else if (str_detect(raworder, 'Y')) {
-    to_return = 'BadResponse'
-  } else if (transitive == 1 && nchar(raworder) != 3) {
-      to_return = 'BadResponse'
-  } else if (transitive == 0 && nchar(raworder) != 2) {
-      to_return = 'BadResponse'
-  } else {
-      to_return = raworder
-  }
-  
-  return(to_return)
-}  
-
-df.long$WithAlmost = mapply(with_one_mistake, raworder = df.long$ShortRawOrder, cleanorder = df.long$CleanOrder, ccomplete = df.long$CleanComplete, transitive = df.long$IsTransitive)
-
-
-### TRANSLATE WithAlmost INTO A LOGICAL COLUMN. 'BadResponse' IS 0, AND EVERYTING ELSE IS 1 ###
-df.long$UsableOneMistk = as.numeric(!str_detect(df.long$WithAlmost, "BadResponse"))
-
-
-
-### CHECK WHETHER PARTICIPANT WAS EXPOSED TO A WORD ORDER ###
-### AND GOT BOTH PRACTICE IMAGE TRIALS CORRECT ###
-df.long$PassesPractice = 0
-
-for (i in 1:length(worker_ids)) {
-  if (worker_ids[i] %in% df.long$workerId) {
-    pract_temp = df.long[df.long$workerId == worker_ids[i] & df.long$isTestTrial == 0,]
-    pract_score = numeric()
-    for (j in 1:nrow(pract_temp)) {
-      if (!str_detect(pract_temp$CleanOrder[j], "NONE")) {
-        if (pract_temp$stimulus[j] == "PracticeImage") {
-          pract_score = c(pract_score, str_detect(pract_temp$CleanOrder[j], "G"))
-        } else {
-            if (as.logical(pract_temp$CleanComplete[j])) {
-              pract_score = c(pract_score, 1)
-            } else if (as.logical((nchar(pract_temp$CleanOrder[j]) >= 1)) & !as.logical(pract_temp$IsTransitive[j])) {
-              pract_score = c(pract_score, 1)
-            } else if (as.logical((nchar(pract_temp$CleanOrder[j]) > 1))) {
-              pract_score = c(pract_score, 1)
-            } else {pract_score = c(pract_score, 0)}
-          }
-        } else {pract_score = c(pract_score, 0)}
-    }
-    if (mean(pract_score) == 1) {
-      df.long$PassesPractice[which(df.long$workerId == worker_ids[i])] = 1
-    }
-  }
-}
-
-
-
-
-### LABEL ANIMACY OF STIMULI ###
-#it_events = c("girl-tumbling-none", "boy-rolling-none", "car-rolling-none", "ball-rolling-none") 
-animates = c("fireman-pushing-boy", "fireman-kicking-girl", "girl-elbowing-oldlady", "girl-kissing-boy", "girl-throwing-oldlady", "boy-lifting-girl",  "oldlady-rubbing-fireman")
-#inanimates = c("fireman-lifting-car", "fireman-throwing-ball", "oldlady-kissing-ball", "oldlady-elbowing-heart", "girl-rubbing-heart", "boy-kicking-ball", "girl-pushing-car")
-#all_events = c(it_events, animates, inanimates)
-
-animacy = function (video, animate_events) {
-  if (mean(str_detect(video, 'none')) > 0) {
-    tr.anim = 'NoObject'
-  } else if (mean(str_detect(video, 'PracticeImage')) > 0) {
-      tr.anim = 'PracticeImage'
-    } else if (mean(str_detect(video, animate_events)) > 0){
-      tr.anim = 'animate'
-  } else {tr.anim = 'inanimate'}
-  return(tr.anim)
-}
-
-df.long$Animacy = sapply(df.long$stimulus, FUN=animacy, animate_events = animates, USE.NAMES = FALSE)
-
-
-### CHECK IS RESPONSE IS V-lat or V-med ###
-isVLat = function (shortclean, iscomplete, istrans) {
-  if (as.logical(istrans) && as.logical(iscomplete)) { 
-    if (str_detect(shortclean, 'V')) {
-      if (unlist(strsplit(shortclean, ''))[2]=="V"){
-        return(0)
-      } else {return(1)}
-    } else if (unlist(strsplit(shortclean, ''))[2]=="X") {
-      return(0)
-    } else {return(1)}
-  } else {return(0)}
-}
-
-### CHECK FOR VERB MEDIAL, AND IF TRUE, RETURN 0 FOR THE SHORT CLEAN ORDER ###
-df.long$CleanVLat = mapply(isVLat, shortclean = df.long$CleanOrder, iscomplete = df.long$CleanComplete, istrans = df.long$IsTransitive, USE.NAMES = FALSE)
-
-
-### CHECK FOR VERB MEDIAL, AND IF TRUE, RETURN 0 FOR THE SHORT CLEAN ORDER ###
-df.long$UsableVLat = mapply(isVLat, shortclean = df.long$WithAlmost, iscomplete = df.long$UsableOneMistk, istrans = df.long$IsTransitive, USE.NAMES = FALSE)
-
-
-
-
-
-### GRAB ROWS FROM PARTICIPANTS THAT DID NOT CHEAT ###
-df.long.no.cheat = df.long[df.long$cheated == 0,]
-
-### GRAB ROWS FROM PARTICPANTS THAT WERE NOT EXPOSED TO A WORD ORDER###
-df.long.pass.practice = df.long.no.cheat[df.long.no.cheat$PassesPractice==1,]
-
-### MAKE TABLE OF PARTICIPANTS THAT DID CHEAT ###
-df.long.cheaters = df.long[df.long$cheated == 1,]
-
-### GRAB ROWS THAT ARE TEST TRIALS ###
-df.long.testtrials = df.long.pass.practice[df.long.pass.practice$isTestTrial == 1,]
-
-### OF THOSE, NOW GRAB TRANSITIVE STIMULI ###
-df.long.transitives = df.long.testtrials[df.long.testtrials$IsTransitive == 1,]
-
-### OF THOSE, NOW GRAB COMPLETE RESPONSES ###
-df.long.usables = df.long.transitives[df.long.transitives$UsableOneMistk == 1,]
-df.long.absolute = df.long.transitives[df.long.transitives$CleanComplete == 1,]
-
-
-
-
-
-###GET SOME BASIC %'s HERE ABOUT RESPONSES###
-raw.complete = mean(df.long$RawComplete)
-clean.complete = mean(df.long$CleanComplete)
-usable.complete = mean(df.long$UsableOneMistk)
-trans.complete.clean = mean(df.long.transitives$CleanComplete)
-trans.complete.raw = mean(df.long.transitives$RawComplete)
-trans.complete.usable = mean(df.long.transitives$UsableOneMistk)
-percent.Vlat.Clean = mean(df.long.usables$CleanVLat)
-percent.Vlat.Usable = mean(df.long.usables$UsableVLat)
-percent.passes.practice = mean(df.long$PassesPractice)
-    df.long$cheated = as.numeric(df.long$cheated)
-percent_cheaters = mean(df.long$cheated)
-
-
-#GET OVERALL PERCENTAGES FROM DIFFERENT TABLES#
-summary1 = df.long.usables %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
-summary2 = df.long.transitives %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
-summary3 = df.long %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
-summary4 = df.long.absolute %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
-
-#PROVIDES TIME AVERAGES FOR ALL TRIALS, AND ONLY-TRANSITIVE TRIALS#
-time.summary1 = df.long %>% group_by(participant) %>% summarise(AvgTime = mean(as.numeric(t.time)), how_many=sum(IsTransitive))
-time.summary2 = df.long.transitives %>% group_by(participant) %>% summarise(AvgTime = mean(as.numeric(t.time)), how_many=sum(IsTransitive))
-
-#PROVIDES NUMBERS FOR EACH PARTICIPANT - USED BY 
-indv.summary1 = df.long.transitives %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
-indv.summary2 = df.long.transitives %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
-indv.summary3 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
-indv.summary4 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
-indv.summary5 = df.long %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
-indv.summary6 = df.long %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
-indv.summary7 = df.long.cheaters %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
-indv.summary8 = df.long.cheaters %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
-
-## THIS PRODUCES 'EFFECT.TABLE' WHICH TAKES ONE OF THE BEFORE 'INDV.SUMMARY' TABLES AND
-## DETERMINES WHICH PARTICIPANTS PRODUCED THE EFFECT ##
-## EFFECT.SUMMARY PROVIDES SUMS OF EFFECT.TABLE
-check.effect = function(check.table) {
-    #check.table = indv.summary4
-    participant_nums = sort(as.numeric(unique(check.table$participant)))
-    Effect.Table = data.frame(matrix(nrow=length(participant_nums)))
-    colnames(Effect.Table) = 'participant'
-    Effect.Table$participant = participant_nums
-    Effect.Table$U.SVO.Only = Effect.Table$U.Effect = Effect.Table$U.Anti.Effect = Effect.Table$U.No.Direction = Effect.Table$C.SVO.Only = Effect.Table$C.Effect = Effect.Table$C.Anti.Effect = Effect.Table$C.No.Direction = NA
-    for (i in 1:length(participant_nums)) {
-      temp_tab = check.table[check.table$participant==participant_nums[i],]
-      where.inanimate = which(temp_tab$Animacy %in% 'inanimate')
-      if (sum(temp_tab$CleanVLat)==0 & sum(temp_tab$CleanVLat)==0) {
-        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1
-        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.SVO.Only = 1
-        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1
-        Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.SVO.Only = 1
-      } else {
-        if (sum(temp_tab$CleanVLat)!=0) {
-          if (temp_tab$CleanVLat[where.inanimate] > sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
-            Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.Effect = 1
-          } else if (temp_tab$CleanVLat[where.inanimate] < sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
-            Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.Anti.Effect = 1
-          } else {Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1}
-        } else {
-          Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1
-          Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.SVO.Only = 1
-        }
-        if (sum(temp_tab$UsableVLat)!=0) {
-          if (temp_tab$UsableVLat[where.inanimate] > sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
-            Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.Effect = 1
-          } else if (temp_tab$UsableVLat[where.inanimate] < sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
-            Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.Anti.Effect = 1
-          } else {Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1}
-        } else {
-          Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1
-          Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.SVO.Only = 1
-        }
-      }
-    }
-    Effect.Table[is.na(Effect.Table)] <- 0
-    return(Effect.Table)
-}
-
-
-create.summary = function(input.table){
-    Effect.Summary = data.frame(NULL)
-    Effect.Summary = data.frame(matrix(nrow=1,ncol=9))
-    colnames(Effect.Summary) = c("participants","C.NoDirection","C.AntiEffect","C.Effect","C.AllSVO","U.NoDirection","U.AntiEffect","U.Effect","U.AllSVO")
-    Effect.Summary$participants[1] = nrow(input.table)
-    Effect.Summary$C.NoDirection[1] = sum(input.table$C.No.Direction)
-    Effect.Summary$C.AntiEffect[1] = sum(input.table$C.Anti.Effect)
-    Effect.Summary$C.Effect[1] = sum(input.table$C.Effect)
-    Effect.Summary$C.AllSVO[1] = sum(input.table$C.SVO.Only)
-    Effect.Summary$U.NoDirection[1] = sum(input.table$U.No.Direction)
-    Effect.Summary$U.AntiEffect[1] = sum(input.table$U.Anti.Effect)
-    Effect.Summary$U.Effect[1] = sum(input.table$U.Effect)
-    Effect.Summary$U.AllSVO[1] = sum(input.table$U.SVO.Only)
-    return(Effect.Summary)
-}
-
-Effect.Table1 = check.effect(indv.summary4)
-Summary.Table1 = create.summary(Effect.Table1)
-
-
-
-## PRODUCES CSV FILES WITHIN THE DIRECTORY FOR VIEWING ##
-directory = getwd()
-write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
-write.csv(df.long.transitives, file = paste0(directory, "/dflong_transitives.csv"))
-write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
-write.csv(Summary.Table1, file = paste0(directory, "/ParticipantsSummary.csv"))
-
-
-#DF.WIDE HAS RAW DATA AND SHOWS WHICH PARTICIPANTS WERE EXCLUDED AS WELL
-write.csv(df.wide, file = paste0(directory, "/dfwide_full.csv"))
-
-
-
-
-
-
-
-
-##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
-##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
-##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
-##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# ####
-# ####
-# #### HERE IS OLD CODE FROM MELISSA'S ANALYSIS FOR MANY-DAX
-# ####
-# ####
+# #####################
+# ##SORT AND CLEAN DF.LONG##
+# long.names = names(df.long)
+# long.names = long.names[-which(long.names %in% "id")]
+# df.long = df.long[long.names]
+# df.long = df.long[df.long$browser !="EXCLUDED",]
+# df.long <- df.long[order(df.long$participant),]
 # 
 # 
 # 
-# #Weird behavior! I got those wrong-lenght participants to be assigned a participant no of NA, which is something, anyway.
-# #Lost 6 people to this.
-# nrow(df.wide)
-# df.wide = df.wide[!is.na(df.wide$participant),]
-# nrow(df.wide)
+# ##GET RAW SHORT ORDER WITH MISTAKES##
+# long_split = strsplit(df.long$RawOrder, '')
+# short_order = list()
+# for (i in 1:length(long_split)){
+#   if(df.long$RawOrder[i]!="NONE"){
+#     short_order[[i]] = paste(unique(long_split[[i]]), collapse='')
+#   } else {short_order[[i]] = "NONE"}
+# }
 # 
-# #OOPS from 1/15/15: I didn't have the first trial (set to show the prototype movie) save the right variables, so record them
-# #here
+# df.long$ShortRawOrder = as.character(as.factor(unlist(short_order)))
 # 
-# df.wide$exposurePath_5 =df.wide$exposurePath_6
-# df.wide$exposureManner_5 =df.wide$exposureManner_6
-# df.wide$condition_5 =df.wide$condition_6
+# 
+# 
+# ##LABEL STIMULUS AS TRANSITIVE OR NOT##
+# df.long$IsTransitive = as.numeric(!str_detect(df.long$glyphs, 'none') & !str_detect(df.long$stimulus, 'PracticeImage'))
+# 
+# 
+# ## LABEL WHETHER PARTICIPANT GAVE A COMPLETE RESPONSE FOR THAT STIMULUS RAW RAW RAW RAW ####
+# complete_answer = function(ShortOrder, IsTransitive) {
+#   complete = numeric()
+#   if (ShortOrder != 'NONE') {
+#   if (IsTransitive == 1 & nchar(ShortOrder) >= 3) {
+#     complete = 1
+#   } else if (IsTransitive == 0 & nchar(ShortOrder) == 2) {
+#     complete = 1
+#   } else if (ShortOrder == 'G') {
+#     complete = 1 
+#   } else {complete = 0}
+#   } else {complete = 0}
+#   return(complete)
+# }
+# 
+# df.long$RawComplete = mapply(complete_answer, ShortOrder = df.long$ShortRawOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
+# 
+# 
+# ### PRODUCE A CLEAN WORD ORDER WITH ONLY SOV's ###
+# raw_to_clean = function(raworder) {
+#   rawsplit = unlist(strsplit(raworder, split=''))
+#   cleanorder = character()
+#   if (mean(str_detect(rawsplit, 'N')) > 0) {
+#     cleanorder = "NONE"
+#   } else if (mean(str_detect(rawsplit, 'G')) > 0) {
+#     cleanorder = raworder
+#   } else {
+#     cleanorder = paste0(rawsplit[which(rawsplit %in% "S" | rawsplit %in% "O" | rawsplit %in% "V")], collapse='')
+#   }
+#   return(cleanorder)
+# }  
+# 
+# df.long$CleanOrder = mapply(raw_to_clean, df.long$ShortRawOrder)
+# 
+# 
+# ### GET WHETHER A COMPLETE RESPONSE WAS PRODUCED WITH THIS NEW ORDER ###
+# df.long$CleanComplete = mapply(complete_answer, ShortOrder = df.long$CleanOrder, IsTransitive = df.long$IsTransitive, USE.NAMES = FALSE)
+# 
+# ### PRODUCE A WORD ORDER INCLUDING RESPONSES WITH ONLY 1 MISTAKE###
+# with_one_mistake = function(raworder, cleanorder, ccomplete, transitive) {
+#   ##rawsplit = unlist(strsplit(raworder, split=''))
+#   to_return = ''
+#   if (ccomplete == 1) {
+#     to_return = cleanorder
+#   } else if (str_detect(cleanorder, 'G')) {
+#     to_return = cleanorder
+#   } else if (str_detect(raworder, 'Y')) {
+#     to_return = 'BadResponse'
+#   } else if (transitive == 1 && nchar(raworder) != 3) {
+#       to_return = 'BadResponse'
+#   } else if (transitive == 0 && nchar(raworder) != 2) {
+#       to_return = 'BadResponse'
+#   } else {
+#       to_return = raworder
+#   }
 #   
+#   return(to_return)
+# }  
 # 
-# #Reformat into long form!
-# df.long = wideToLong(subset(df.wide,select=-feedback),within="trial")
+# df.long$WithAlmost = mapply(with_one_mistake, raworder = df.long$ShortRawOrder, cleanorder = df.long$CleanOrder, ccomplete = df.long$CleanComplete, transitive = df.long$IsTransitive)
 # 
-# #create factors
-# df.long = mutate(df.long, participant = as.numeric(participant),
-#           trial = as.numeric(as.character(trial)),
-#           rt = as.numeric(as.character(rt)),
-#           keypress = as.numeric(as.character(keypress))-48, #transform keycodes to numerals!
-#           stimCondition = factor(stimCondition,levels=c("NoChange","BothChange", "PathChange","MannerChange")),
-#           condition = factor(condition, levels=c("Noun","Verb")))
 # 
-# df.long = df.long[order(df.long$participant,df.long$trial),]
-# 
-# #Analyze data!--------------------------------------------------
-# 
-# #For each participant, make a score, which is abs(mean(mannerchange)-mean(pathchange))
-# #(And add some extra descriptive stats for the paper)
-# 
-# Scores = ""
-# 
-# mannerScores = aggregate(df.long[df.long$stimCondition=="MannerChange",]$keypress, by=list(df.long[df.long$stimCondition=="MannerChange",]$participant, df.long[df.long$stimCondition=="MannerChange",]$condition), mean.na.rm)
-# names(mannerScores) = c("participant", "condition", "mannerscore")
-# pathScores = aggregate(df.long[df.long$stimCondition=="PathChange",]$keypress, by=list(df.long[df.long$stimCondition=="PathChange",]$participant, df.long[df.long$stimCondition=="PathChange",]$condition), mean.na.rm)
-# names(pathScores) = c("participant", "condition", "pathscore")
-# sameScores = aggregate(df.long[df.long$stimCondition=="NoChange",]$keypress, by=list(df.long[df.long$stimCondition=="NoChange",]$participant, df.long[df.long$stimCondition=="NoChange",]$condition), mean.na.rm)
-# names(sameScores) = c("participant","condition","samescore")
-# bothScores = aggregate(df.long[df.long$stimCondition=="BothChange",]$keypress, by=list(df.long[df.long$stimCondition=="BothChange",]$participant, df.long[df.long$stimCondition=="BothChange",]$condition), mean.na.rm)
-# names(bothScores) = c("participant","condition","bothscore")
-#       
-# Scores = merge(mannerScores, pathScores, by=c("participant", "condition"))
-# Scores = merge(Scores, sameScores, by=c("participant", "condition"))
-# Scores = merge(Scores, bothScores, by=c("participant", "condition"))
+# ### TRANSLATE WithAlmost INTO A LOGICAL COLUMN. 'BadResponse' IS 0, AND EVERYTING ELSE IS 1 ###
+# df.long$UsableOneMistk = as.numeric(!str_detect(df.long$WithAlmost, "BadResponse"))
 # 
 # 
 # 
+# ### CHECK WHETHER PARTICIPANT WAS EXPOSED TO A WORD ORDER ###
+# ### AND GOT BOTH PRACTICE IMAGE TRIALS CORRECT ###
+# df.long$PassesPractice = 0
+# 
+# for (i in 1:length(worker_ids)) {
+#   if (worker_ids[i] %in% df.long$workerId) {
+#     pract_temp = df.long[df.long$workerId == worker_ids[i] & df.long$isTestTrial == 0,]
+#     pract_score = numeric()
+#     for (j in 1:nrow(pract_temp)) {
+#       if (!str_detect(pract_temp$CleanOrder[j], "NONE")) {
+#         if (pract_temp$stimulus[j] == "PracticeImage") {
+#           pract_score = c(pract_score, str_detect(pract_temp$CleanOrder[j], "G"))
+#         } else {
+#             if (as.logical(pract_temp$CleanComplete[j])) {
+#               pract_score = c(pract_score, 1)
+#             } else if (as.logical((nchar(pract_temp$CleanOrder[j]) >= 1)) & !as.logical(pract_temp$IsTransitive[j])) {
+#               pract_score = c(pract_score, 1)
+#             } else if (as.logical((nchar(pract_temp$CleanOrder[j]) > 1))) {
+#               pract_score = c(pract_score, 1)
+#             } else {pract_score = c(pract_score, 0)}
+#           }
+#         } else {pract_score = c(pract_score, 0)}
+#     }
+#     if (mean(pract_score) == 1) {
+#       df.long$PassesPractice[which(df.long$workerId == worker_ids[i])] = 1
+#     }
+#   }
+# }
+# 
+# 
+# 
+# 
+# ### LABEL ANIMACY OF STIMULI ###
+# #it_events = c("girl-tumbling-none", "boy-rolling-none", "car-rolling-none", "ball-rolling-none") 
+# animates = c("fireman-pushing-boy", "fireman-kicking-girl", "girl-elbowing-oldlady", "girl-kissing-boy", "girl-throwing-oldlady", "boy-lifting-girl",  "oldlady-rubbing-fireman")
+# #inanimates = c("fireman-lifting-car", "fireman-throwing-ball", "oldlady-kissing-ball", "oldlady-elbowing-heart", "girl-rubbing-heart", "boy-kicking-ball", "girl-pushing-car")
+# #all_events = c(it_events, animates, inanimates)
+# 
+# animacy = function (video, animate_events) {
+#   if (mean(str_detect(video, 'none')) > 0) {
+#     tr.anim = 'NoObject'
+#   } else if (mean(str_detect(video, 'PracticeImage')) > 0) {
+#       tr.anim = 'PracticeImage'
+#     } else if (mean(str_detect(video, animate_events)) > 0){
+#       tr.anim = 'animate'
+#   } else {tr.anim = 'inanimate'}
+#   return(tr.anim)
+# }
+# 
+# df.long$Animacy = sapply(df.long$stimulus, FUN=animacy, animate_events = animates, USE.NAMES = FALSE)
+# 
+# 
+# ### CHECK IS RESPONSE IS V-lat or V-med ###
+# isVLat = function (shortclean, iscomplete, istrans) {
+#   if (as.logical(istrans) && as.logical(iscomplete)) { 
+#     if (str_detect(shortclean, 'V')) {
+#       if (unlist(strsplit(shortclean, ''))[2]=="V"){
+#         return(0)
+#       } else {return(1)}
+#     } else if (unlist(strsplit(shortclean, ''))[2]=="X") {
+#       return(0)
+#     } else {return(1)}
+#   } else {return(0)}
+# }
+# 
+# ### CHECK FOR VERB MEDIAL, AND IF TRUE, RETURN 0 FOR THE SHORT CLEAN ORDER ###
+# df.long$CleanVLat = mapply(isVLat, shortclean = df.long$CleanOrder, iscomplete = df.long$CleanComplete, istrans = df.long$IsTransitive, USE.NAMES = FALSE)
+# 
+# 
+# ### CHECK FOR VERB MEDIAL, AND IF TRUE, RETURN 0 FOR THE SHORT CLEAN ORDER ###
+# df.long$UsableVLat = mapply(isVLat, shortclean = df.long$WithAlmost, iscomplete = df.long$UsableOneMistk, istrans = df.long$IsTransitive, USE.NAMES = FALSE)
 # 
 # 
 # 
 # 
 # 
-# #Basic descriptives
+# ### GRAB ROWS FROM PARTICIPANTS THAT DID NOT CHEAT ###
+# df.long.no.cheat = df.long[df.long$cheated == 0,]
 # 
-# mean(Scores$samescore)
-# mean(Scores$mannerscore)
-# mean(Scores$pathscore)
-# mean(Scores$bothscore)
+# ### GRAB ROWS FROM PARTICPANTS THAT WERE NOT EXPOSED TO A WORD ORDER###
+# df.long.pass.practice = df.long.no.cheat[df.long.no.cheat$PassesPractice==1,]
 # 
-# with(Scores, tapply(samescore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-# t.test(Scores[Scores$condition == "Noun",]$samescore, Scores[Scores$condition == "Verb",]$samescore)
+# ### MAKE TABLE OF PARTICIPANTS THAT DID CHEAT ###
+# df.long.cheaters = df.long[df.long$cheated == 1,]
 # 
-# with(Scores, tapply(bothscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-# t.test(Scores[Scores$condition == "Noun",]$bothscore, Scores[Scores$condition == "Verb",]$bothscore)
+# ### GRAB ROWS THAT ARE TEST TRIALS ###
+# df.long.testtrials = df.long.pass.practice[df.long.pass.practice$isTestTrial == 1,]
 # 
-# with(Scores, tapply(mannerscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-# t.test(Scores[Scores$condition == "Noun",]$mannerscore, Scores[Scores$condition == "Verb",]$mannerscore)
+# ### OF THOSE, NOW GRAB TRANSITIVE STIMULI ###
+# df.long.transitives = df.long.testtrials[df.long.testtrials$IsTransitive == 1,]
 # 
-# with(Scores, tapply(pathscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-# t.test(Scores[Scores$condition == "Noun",]$pathscore, Scores[Scores$condition == "Verb",]$pathscore)
-# 
-# #More interesting measures
-# Scores$diffscore = abs(Scores$mannerscore - Scores$pathscore)
-# Scores$ILikeMannerscore = Scores$pathscore - Scores$mannerscore
-# 
-# with(Scores, tapply(diffscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-# with(Scores, tapply(diffscore, list(condition), stderr), drop=TRUE)
-# 
-# with(Scores, tapply(ILikeMannerscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-# with(Scores, tapply(ILikeMannerscore, list(condition),stderr), drop=TRUE)
-# 
-# #And let's do a dead simple t test on that
-# 
-# t.test(Scores[Scores$condition == "Noun",]$diffscore, Scores[Scores$condition == "Verb",]$diffscore)
-# cohensD(Scores[Scores$condition == "Noun",]$diffscore, Scores[Scores$condition == "Verb",]$diffscore)
+# ### OF THOSE, NOW GRAB COMPLETE RESPONSES ###
+# df.long.usables = df.long.transitives[df.long.transitives$UsableOneMistk == 1,]
+# df.long.absolute = df.long.transitives[df.long.transitives$CleanComplete == 1,]
 # 
 # 
-# #Time for some regressions
-# nounScores <- Scores[Scores$condition == 'Noun',]
-# verbScores <- Scores[Scores$condition == 'Verb',]
-# 
-# noun.lm <- lm(mannerscore ~ pathscore, data=nounScores)
-# summary(noun.lm)
-# summary(noun.lm)$r.squared
-# 
-# verb.lm <- lm(mannerscore ~ pathscore, data=verbScores)
-# summary(verb.lm)
-# summary(verb.lm)$r.squared
-# 
-# #A post-hoc analysis: do verb or noun people say yes more often?
-# allScores = aggregate(df.long$keypress, by=list(df.long$participant, df.long$condition), mean.na.rm)
-# names(allScores) = c("participant", "condition", "allscore")
-# 
-# with(allScores, tapply(allscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
-# with(allScores, tapply(allscore, list(condition), stderr), drop=TRUE)
-# 
-# t.test(allScores[allScores$condition == "Noun",]$allscore, allScores[allScores$condition == "Verb",]$allscore)
-# cohensD(allScores[allScores$condition == "Noun",]$allscore, allScores[allScores$condition == "Verb",]$allscore)
-# 
-# #Against the prediction I might have made, Noun categories are slightly SMALLER!  
-# #So this isn't just verb people making smaller categories - they say yes to about the same # of things, but distribute differently
-# 
-# #Graph data------------------------------------------------
-# 
-# #Bar graph of means----------------
-# 
-# ##Summarize the data for graphing
-# data.summary.diffscores <- data.frame(
-#   condition=levels(Scores$condition),
-#   mean=with(Scores, tapply(diffscore, list(condition), mean, na.rm=TRUE), drop=TRUE),
-#   n=with(Scores, tapply(diffscore, list(condition), length)),
-#   se=with(Scores, tapply(ILikeMannerscore, list(condition), stderr), drop=TRUE)
-# )
-# 
-# # Precalculate margin of error for confidence interval
-# data.summary.diffscores$me <- qt(1-0.05/2, df=data.summary.diffscores$n)*data.summary.diffscores$se
-# 
-# # Use ggplot to draw the bar plot!
-# png('manydax-barplot-se.png') # Write to PNG
-# ggplot(data.summary.diffscores, aes(x = condition, y = mean)) +  
-#   geom_bar(position = position_dodge(), stat="identity", fill="brown") + 
-#   geom_errorbar(aes(ymin=mean-se, ymax=mean+se), width=0.25) +
-#   ylim(0,6) +
-#   ylab("Abs(mean(manner) - mean(path))")+
-#   xlab("")+
-#   ggtitle("Rating of manner vs. path changes") + # plot title
-#   theme_bw() + # remove grey background (because Tufte said so)
-#   theme(panel.grid.major = element_blank()) # remove x and y major grid lines (because Tufte said so)
-# dev.off() # Close PNG
-# 
-# #Scatterplot of manner vs. path scores of each partic ---------
 # 
 # 
-# png('manydax-noun-scatterplot-95ci.png')
-# ggplot(nounScores, aes(x=mannerscore, y=pathscore)) +
-#   geom_point(shape=1) +    # Use hollow circles
-#   geom_smooth(method=lm)   # Add linear regression line 
-# #  (by default includes 95% confidence region)
-# dev.off()
 # 
-# png('manydax-verb-scatterplot-95ci.png')
-# ggplot(verbScores, aes(x=mannerscore, y=pathscore)) +
-#   geom_point(shape=1) +    # Use hollow circles
-#   geom_smooth(method=lm)   # Add linear regression line 
-# #  (by default includes 95% confidence region)
-# dev.off()
+# ###GET SOME BASIC %'s HERE ABOUT RESPONSES###
+# raw.complete = mean(df.long$RawComplete)
+# clean.complete = mean(df.long$CleanComplete)
+# usable.complete = mean(df.long$UsableOneMistk)
+# trans.complete.clean = mean(df.long.transitives$CleanComplete)
+# trans.complete.raw = mean(df.long.transitives$RawComplete)
+# trans.complete.usable = mean(df.long.transitives$UsableOneMistk)
+# percent.Vlat.Clean = mean(df.long.usables$CleanVLat)
+# percent.Vlat.Usable = mean(df.long.usables$UsableVLat)
+# percent.passes.practice = mean(df.long$PassesPractice)
+#     df.long$cheated = as.numeric(df.long$cheated)
+# percent_cheaters = mean(df.long$cheated)
 # 
+# 
+# #GET OVERALL PERCENTAGES FROM DIFFERENT TABLES#
+# summary1 = df.long.usables %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
+# summary2 = df.long.transitives %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
+# summary3 = df.long %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
+# summary4 = df.long.absolute %>% group_by(Animacy) %>% summarise(CleanVlat = mean(CleanVLat), UsableVlat = mean(UsableVLat), how_many=sum(IsTransitive))
+# 
+# #PROVIDES TIME AVERAGES FOR ALL TRIALS, AND ONLY-TRANSITIVE TRIALS#
+# time.summary1 = df.long %>% group_by(participant) %>% summarise(AvgTime = mean(as.numeric(t.time)), how_many=sum(IsTransitive))
+# time.summary2 = df.long.transitives %>% group_by(participant) %>% summarise(AvgTime = mean(as.numeric(t.time)), how_many=sum(IsTransitive))
+# 
+# #PROVIDES NUMBERS FOR EACH PARTICIPANT - USED BY 
+# indv.summary1 = df.long.transitives %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
+# indv.summary2 = df.long.transitives %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
+# indv.summary3 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
+# indv.summary4 = df.long.usables %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
+# indv.summary5 = df.long %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
+# indv.summary6 = df.long %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
+# indv.summary7 = df.long.cheaters %>% group_by(participant, Animacy) %>% summarise(CleanVLat = mean(CleanVLat), UsableVLat = mean(UsableVLat), how_many=sum(IsTransitive))
+# indv.summary8 = df.long.cheaters %>% group_by(participant, Animacy) %>% summarise(CleanVLat = sum(CleanVLat), UsableVLat = sum(UsableVLat), how_many=sum(IsTransitive))
+# 
+# ## THIS PRODUCES 'EFFECT.TABLE' WHICH TAKES ONE OF THE BEFORE 'INDV.SUMMARY' TABLES AND
+# ## DETERMINES WHICH PARTICIPANTS PRODUCED THE EFFECT ##
+# ## EFFECT.SUMMARY PROVIDES SUMS OF EFFECT.TABLE
+# check.effect = function(check.table) {
+#     #check.table = indv.summary4
+#     participant_nums = sort(as.numeric(unique(check.table$participant)))
+#     Effect.Table = data.frame(matrix(nrow=length(participant_nums)))
+#     colnames(Effect.Table) = 'participant'
+#     Effect.Table$participant = participant_nums
+#     Effect.Table$U.SVO.Only = Effect.Table$U.Effect = Effect.Table$U.Anti.Effect = Effect.Table$U.No.Direction = Effect.Table$C.SVO.Only = Effect.Table$C.Effect = Effect.Table$C.Anti.Effect = Effect.Table$C.No.Direction = NA
+#     for (i in 1:length(participant_nums)) {
+#       temp_tab = check.table[check.table$participant==participant_nums[i],]
+#       where.inanimate = which(temp_tab$Animacy %in% 'inanimate')
+#       if (sum(temp_tab$CleanVLat)==0 & sum(temp_tab$CleanVLat)==0) {
+#         Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1
+#         Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.SVO.Only = 1
+#         Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1
+#         Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.SVO.Only = 1
+#       } else {
+#         if (sum(temp_tab$CleanVLat)!=0) {
+#           if (temp_tab$CleanVLat[where.inanimate] > sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
+#             Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.Effect = 1
+#           } else if (temp_tab$CleanVLat[where.inanimate] < sum(temp_tab$CleanVLat)-temp_tab$CleanVLat[where.inanimate]) {
+#             Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.Anti.Effect = 1
+#           } else {Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1}
+#         } else {
+#           Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.No.Direction = 1
+#           Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$C.SVO.Only = 1
+#         }
+#         if (sum(temp_tab$UsableVLat)!=0) {
+#           if (temp_tab$UsableVLat[where.inanimate] > sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
+#             Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.Effect = 1
+#           } else if (temp_tab$UsableVLat[where.inanimate] < sum(temp_tab$UsableVLat)-temp_tab$UsableVLat[where.inanimate]) {
+#             Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.Anti.Effect = 1
+#           } else {Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1}
+#         } else {
+#           Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.No.Direction = 1
+#           Effect.Table[which(Effect.Table$participant==participant_nums[i]),]$U.SVO.Only = 1
+#         }
+#       }
+#     }
+#     Effect.Table[is.na(Effect.Table)] <- 0
+#     return(Effect.Table)
+# }
+# 
+# 
+# create.summary = function(input.table){
+#     Effect.Summary = data.frame(NULL)
+#     Effect.Summary = data.frame(matrix(nrow=1,ncol=9))
+#     colnames(Effect.Summary) = c("participants","C.NoDirection","C.AntiEffect","C.Effect","C.AllSVO","U.NoDirection","U.AntiEffect","U.Effect","U.AllSVO")
+#     Effect.Summary$participants[1] = nrow(input.table)
+#     Effect.Summary$C.NoDirection[1] = sum(input.table$C.No.Direction)
+#     Effect.Summary$C.AntiEffect[1] = sum(input.table$C.Anti.Effect)
+#     Effect.Summary$C.Effect[1] = sum(input.table$C.Effect)
+#     Effect.Summary$C.AllSVO[1] = sum(input.table$C.SVO.Only)
+#     Effect.Summary$U.NoDirection[1] = sum(input.table$U.No.Direction)
+#     Effect.Summary$U.AntiEffect[1] = sum(input.table$U.Anti.Effect)
+#     Effect.Summary$U.Effect[1] = sum(input.table$U.Effect)
+#     Effect.Summary$U.AllSVO[1] = sum(input.table$U.SVO.Only)
+#     return(Effect.Summary)
+# }
+# 
+# Effect.Table1 = check.effect(indv.summary4)
+# Summary.Table1 = create.summary(Effect.Table1)
+# 
+# 
+# 
+# ## PRODUCES CSV FILES WITHIN THE DIRECTORY FOR VIEWING ##
+# directory = getwd()
+# write.csv(df.long, file = paste0(directory, "/dflong_full.csv"))
+# write.csv(df.long.transitives, file = paste0(directory, "/dflong_transitives.csv"))
+# write.csv(df.long.usables, file = paste0(directory, "/dflong_usables.csv"))
+# write.csv(Summary.Table1, file = paste0(directory, "/ParticipantsSummary.csv"))
+# 
+# 
+# #DF.WIDE HAS RAW DATA AND SHOWS WHICH PARTICIPANTS WERE EXCLUDED AS WELL
+# write.csv(df.wide, file = paste0(directory, "/dfwide_full.csv"))
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+# ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+# ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+# ##### NEW DATA WORKS WITH CODE UP TO HERE SO FAR #####
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# 
+# # ####
+# # ####
+# # #### HERE IS OLD CODE FROM MELISSA'S ANALYSIS FOR MANY-DAX
+# # ####
+# # ####
+# # 
+# # 
+# # 
+# # #Weird behavior! I got those wrong-lenght participants to be assigned a participant no of NA, which is something, anyway.
+# # #Lost 6 people to this.
+# # nrow(df.wide)
+# # df.wide = df.wide[!is.na(df.wide$participant),]
+# # nrow(df.wide)
+# # 
+# # #OOPS from 1/15/15: I didn't have the first trial (set to show the prototype movie) save the right variables, so record them
+# # #here
+# # 
+# # df.wide$exposurePath_5 =df.wide$exposurePath_6
+# # df.wide$exposureManner_5 =df.wide$exposureManner_6
+# # df.wide$condition_5 =df.wide$condition_6
+# #   
+# # 
+# # #Reformat into long form!
+# # df.long = wideToLong(subset(df.wide,select=-feedback),within="trial")
+# # 
+# # #create factors
+# # df.long = mutate(df.long, participant = as.numeric(participant),
+# #           trial = as.numeric(as.character(trial)),
+# #           rt = as.numeric(as.character(rt)),
+# #           keypress = as.numeric(as.character(keypress))-48, #transform keycodes to numerals!
+# #           stimCondition = factor(stimCondition,levels=c("NoChange","BothChange", "PathChange","MannerChange")),
+# #           condition = factor(condition, levels=c("Noun","Verb")))
+# # 
+# # df.long = df.long[order(df.long$participant,df.long$trial),]
+# # 
+# # #Analyze data!--------------------------------------------------
+# # 
+# # #For each participant, make a score, which is abs(mean(mannerchange)-mean(pathchange))
+# # #(And add some extra descriptive stats for the paper)
+# # 
+# # Scores = ""
+# # 
+# # mannerScores = aggregate(df.long[df.long$stimCondition=="MannerChange",]$keypress, by=list(df.long[df.long$stimCondition=="MannerChange",]$participant, df.long[df.long$stimCondition=="MannerChange",]$condition), mean.na.rm)
+# # names(mannerScores) = c("participant", "condition", "mannerscore")
+# # pathScores = aggregate(df.long[df.long$stimCondition=="PathChange",]$keypress, by=list(df.long[df.long$stimCondition=="PathChange",]$participant, df.long[df.long$stimCondition=="PathChange",]$condition), mean.na.rm)
+# # names(pathScores) = c("participant", "condition", "pathscore")
+# # sameScores = aggregate(df.long[df.long$stimCondition=="NoChange",]$keypress, by=list(df.long[df.long$stimCondition=="NoChange",]$participant, df.long[df.long$stimCondition=="NoChange",]$condition), mean.na.rm)
+# # names(sameScores) = c("participant","condition","samescore")
+# # bothScores = aggregate(df.long[df.long$stimCondition=="BothChange",]$keypress, by=list(df.long[df.long$stimCondition=="BothChange",]$participant, df.long[df.long$stimCondition=="BothChange",]$condition), mean.na.rm)
+# # names(bothScores) = c("participant","condition","bothscore")
+# #       
+# # Scores = merge(mannerScores, pathScores, by=c("participant", "condition"))
+# # Scores = merge(Scores, sameScores, by=c("participant", "condition"))
+# # Scores = merge(Scores, bothScores, by=c("participant", "condition"))
+# # 
+# # 
+# # 
+# # 
+# # 
+# # 
+# # 
+# # 
+# # #Basic descriptives
+# # 
+# # mean(Scores$samescore)
+# # mean(Scores$mannerscore)
+# # mean(Scores$pathscore)
+# # mean(Scores$bothscore)
+# # 
+# # with(Scores, tapply(samescore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# # t.test(Scores[Scores$condition == "Noun",]$samescore, Scores[Scores$condition == "Verb",]$samescore)
+# # 
+# # with(Scores, tapply(bothscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# # t.test(Scores[Scores$condition == "Noun",]$bothscore, Scores[Scores$condition == "Verb",]$bothscore)
+# # 
+# # with(Scores, tapply(mannerscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# # t.test(Scores[Scores$condition == "Noun",]$mannerscore, Scores[Scores$condition == "Verb",]$mannerscore)
+# # 
+# # with(Scores, tapply(pathscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# # t.test(Scores[Scores$condition == "Noun",]$pathscore, Scores[Scores$condition == "Verb",]$pathscore)
+# # 
+# # #More interesting measures
+# # Scores$diffscore = abs(Scores$mannerscore - Scores$pathscore)
+# # Scores$ILikeMannerscore = Scores$pathscore - Scores$mannerscore
+# # 
+# # with(Scores, tapply(diffscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# # with(Scores, tapply(diffscore, list(condition), stderr), drop=TRUE)
+# # 
+# # with(Scores, tapply(ILikeMannerscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# # with(Scores, tapply(ILikeMannerscore, list(condition),stderr), drop=TRUE)
+# # 
+# # #And let's do a dead simple t test on that
+# # 
+# # t.test(Scores[Scores$condition == "Noun",]$diffscore, Scores[Scores$condition == "Verb",]$diffscore)
+# # cohensD(Scores[Scores$condition == "Noun",]$diffscore, Scores[Scores$condition == "Verb",]$diffscore)
+# # 
+# # 
+# # #Time for some regressions
+# # nounScores <- Scores[Scores$condition == 'Noun',]
+# # verbScores <- Scores[Scores$condition == 'Verb',]
+# # 
+# # noun.lm <- lm(mannerscore ~ pathscore, data=nounScores)
+# # summary(noun.lm)
+# # summary(noun.lm)$r.squared
+# # 
+# # verb.lm <- lm(mannerscore ~ pathscore, data=verbScores)
+# # summary(verb.lm)
+# # summary(verb.lm)$r.squared
+# # 
+# # #A post-hoc analysis: do verb or noun people say yes more often?
+# # allScores = aggregate(df.long$keypress, by=list(df.long$participant, df.long$condition), mean.na.rm)
+# # names(allScores) = c("participant", "condition", "allscore")
+# # 
+# # with(allScores, tapply(allscore, list(condition), mean, na.rm=TRUE), drop=TRUE)
+# # with(allScores, tapply(allscore, list(condition), stderr), drop=TRUE)
+# # 
+# # t.test(allScores[allScores$condition == "Noun",]$allscore, allScores[allScores$condition == "Verb",]$allscore)
+# # cohensD(allScores[allScores$condition == "Noun",]$allscore, allScores[allScores$condition == "Verb",]$allscore)
+# # 
+# # #Against the prediction I might have made, Noun categories are slightly SMALLER!  
+# # #So this isn't just verb people making smaller categories - they say yes to about the same # of things, but distribute differently
+# # 
+# # #Graph data------------------------------------------------
+# # 
+# # #Bar graph of means----------------
+# # 
+# # ##Summarize the data for graphing
+# # data.summary.diffscores <- data.frame(
+# #   condition=levels(Scores$condition),
+# #   mean=with(Scores, tapply(diffscore, list(condition), mean, na.rm=TRUE), drop=TRUE),
+# #   n=with(Scores, tapply(diffscore, list(condition), length)),
+# #   se=with(Scores, tapply(ILikeMannerscore, list(condition), stderr), drop=TRUE)
+# # )
+# # 
+# # # Precalculate margin of error for confidence interval
+# # data.summary.diffscores$me <- qt(1-0.05/2, df=data.summary.diffscores$n)*data.summary.diffscores$se
+# # 
+# # # Use ggplot to draw the bar plot!
+# # png('manydax-barplot-se.png') # Write to PNG
+# # ggplot(data.summary.diffscores, aes(x = condition, y = mean)) +  
+# #   geom_bar(position = position_dodge(), stat="identity", fill="brown") + 
+# #   geom_errorbar(aes(ymin=mean-se, ymax=mean+se), width=0.25) +
+# #   ylim(0,6) +
+# #   ylab("Abs(mean(manner) - mean(path))")+
+# #   xlab("")+
+# #   ggtitle("Rating of manner vs. path changes") + # plot title
+# #   theme_bw() + # remove grey background (because Tufte said so)
+# #   theme(panel.grid.major = element_blank()) # remove x and y major grid lines (because Tufte said so)
+# # dev.off() # Close PNG
+# # 
+# # #Scatterplot of manner vs. path scores of each partic ---------
+# # 
+# # 
+# # png('manydax-noun-scatterplot-95ci.png')
+# # ggplot(nounScores, aes(x=mannerscore, y=pathscore)) +
+# #   geom_point(shape=1) +    # Use hollow circles
+# #   geom_smooth(method=lm)   # Add linear regression line 
+# # #  (by default includes 95% confidence region)
+# # dev.off()
+# # 
+# # png('manydax-verb-scatterplot-95ci.png')
+# # ggplot(verbScores, aes(x=mannerscore, y=pathscore)) +
+# #   geom_point(shape=1) +    # Use hollow circles
+# #   geom_smooth(method=lm)   # Add linear regression line 
+# # #  (by default includes 95% confidence region)
+# # dev.off()
+# # 

@@ -299,7 +299,7 @@ ggplot(data=GraphScores, aes(x=ObLabel, y=ChoseVLat, fill=ObLabel)) +
   xlab('') +
   ylab('proportion of SOV-type symbol orders') +
   theme_bw() +
-  theme(legend.position = "none")
+  theme(legend.title=element_blank())
 
 ggsave('glyphgrid.jpg')
   
