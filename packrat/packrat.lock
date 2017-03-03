@@ -6,6 +6,7 @@ Repos: CRAN=http://cran.rstudio.com
 Package: BH
 Source: CRAN
 Version: 1.60.0-1
+Hash: 889445e87a2acd4cc58440957f3b0d1a
 
 Package: DBI
 Source: CRAN
@@ -20,9 +21,9 @@ Hash: 47ae34d89a8dd8fde36c9c0b5c587819
 Package: Hmisc
 Source: CRAN
 Version: 3.17-2
+Hash: c570712ead78889d3fc87d3b7d38bed3
 Requires: Formula, acepack, cluster, foreign, ggplot2, gridExtra,
     gtable, lattice, latticeExtra, nnet, rpart, survival
-Hash: c570712ead78889d3fc87d3b7d38bed3
 
 Package: MASS
 Source: CRAN
@@ -32,8 +33,8 @@ Hash: 0650d5701aa7e369e77c9e2c8e1dc913
 Package: Matrix
 Source: CRAN
 Version: 1.2-4
-Requires: lattice
 Hash: f49b76abbcba34def4541d95947c70c9
+Requires: lattice
 
 Package: R6
 Source: CRAN
@@ -48,8 +49,8 @@ Hash: c0d56cd15034f395874c870141870c25
 Package: RSQLite
 Source: CRAN
 Version: 1.0.0
-Requires: DBI
 Hash: 3df52a54766f420d257debad962146c0
+Requires: DBI
 
 Package: Rcpp
 Source: CRAN
@@ -59,13 +60,14 @@ Hash: 11ace6a9a186c17a42e0fa2c49af1223
 Package: RcppEigen
 Source: CRAN
 Version: 0.3.2.8.1
+Hash: 991deed2912329b968273954eab9253c
 Requires: Matrix, Rcpp
 
 Package: TH.data
 Source: CRAN
 Version: 1.0-7
-Requires: MASS, survival
 Hash: 0c57e23c3a07fc579222d0e7f8b63556
+Requires: MASS, survival
 
 Package: acepack
 Source: CRAN
@@ -115,8 +117,8 @@ Hash: fd55d5a024f160fc001a5ece1e27782d
 Package: dplyr
 Source: CRAN
 Version: 0.4.3
+Hash: d7005d9f57021e610fa38635d7a0b8e0
 Requires: BH, DBI, R6, Rcpp, assertthat, lazyeval, magrittr
-Hash: 152513d5965cb77cf3894e709dc1507e
 
 Package: foreign
 Source: CRAN
@@ -126,14 +128,14 @@ Hash: 99a453ffeef7ff27060aed83cde5bae3
 Package: ggplot2
 Source: CRAN
 Version: 2.1.0
-Requires: MASS, digest, gtable, plyr, reshape2, scales
 Hash: 50e297b0191179c39c7dcae0eff72b51
+Requires: MASS, digest, gtable, plyr, reshape2, scales
 
 Package: gridExtra
 Source: CRAN
 Version: 2.2.1
-Requires: gtable
 Hash: 8f54b57d4b0598ed5b27e0eafe86a670
+Requires: gtable
 
 Package: gtable
 Source: CRAN
@@ -158,8 +160,8 @@ Hash: d7158cf4e63e8c12cb227738076b37d8
 Package: latticeExtra
 Source: CRAN
 Version: 0.6-28
-Requires: RColorBrewer, lattice
 Hash: efdf3a10a129129f7b8f4ae5a0d7ec3d
+Requires: RColorBrewer, lattice
 
 Package: lazyeval
 Source: CRAN
@@ -169,8 +171,8 @@ Hash: 9679f1ac7f6bc07bc79755f34cd15e1f
 Package: lme4
 Source: CRAN
 Version: 1.1-11
+Hash: 5502f013f7d1167f8fdb74599b6e2188
 Requires: MASS, Matrix, Rcpp, RcppEigen, lattice, minqa, nlme, nloptr
-Hash: ac81a5dd63d8389137577e98a1432280
 
 Package: lsr
 Source: CRAN
@@ -185,20 +187,20 @@ Hash: bdc4d48c3135e8f3b399536ddf160df4
 Package: minqa
 Source: CRAN
 Version: 1.2.4
-Requires: Rcpp
 Hash: e4ecafeeecff79c4edda481feff84a67
+Requires: Rcpp
 
 Package: multcomp
 Source: CRAN
 Version: 1.4-4
-Requires: TH.data, codetools, mvtnorm, sandwich, survival
 Hash: 7ba042908c10c5b2b26edc316d3b5df2
+Requires: TH.data, codetools, mvtnorm, sandwich, survival
 
 Package: munsell
 Source: CRAN
 Version: 0.4.3
-Requires: colorspace
 Hash: f96d896947fcaf9b6d0074002e9f4f9d
+Requires: colorspace
 
 Package: mvtnorm
 Source: CRAN
@@ -208,8 +210,8 @@ Hash: 55a3581188e15f13f5ba19c18e151ac2
 Package: nlme
 Source: CRAN
 Version: 3.1-126
-Requires: lattice
 Hash: 743c16ad6b5dad082ff7c03159d4eb5e
+Requires: lattice
 
 Package: nloptr
 Source: CRAN
@@ -229,14 +231,14 @@ Hash: 29eacc43b096c5b1a82c8d54a49b030b
 Package: plyr
 Source: CRAN
 Version: 1.8.3
-Requires: Rcpp
 Hash: e38fe93fa50135fac98421abb43bbfea
+Requires: Rcpp
 
 Package: reshape2
 Source: CRAN
 Version: 1.4.1
-Requires: Rcpp, plyr, stringr
 Hash: 55963009094746c3aef64bfbf9eb4731
+Requires: Rcpp, plyr, stringr
 
 Package: rjson
 Source: CRAN
@@ -251,14 +253,14 @@ Hash: 1eeecd328c5297c43e9d139944bb0775
 Package: sandwich
 Source: CRAN
 Version: 2.3-4
-Requires: zoo
 Hash: eb356b4a90fa5887a45917b42587bf6c
+Requires: zoo
 
 Package: scales
 Source: CRAN
 Version: 0.4.0
-Requires: RColorBrewer, Rcpp, dichromat, labeling, munsell, plyr
 Hash: b74e3f81bab2d88325d8798d5e03e0cc
+Requires: RColorBrewer, Rcpp, dichromat, labeling, munsell, plyr
 
 Package: stringi
 Source: CRAN
@@ -268,8 +270,8 @@ Hash: cf342bc407bd5daec77ed1009d5244e1
 Package: stringr
 Source: CRAN
 Version: 1.0.0
-Requires: magrittr, stringi
 Hash: 2676dd5f88890910962b733b0f9540e1
+Requires: magrittr, stringi
 
 Package: survival
 Source: CRAN
@@ -279,11 +281,11 @@ Hash: 31d55260e9a6a6ecbc001e2dfafaad43
 Package: tidyr
 Source: CRAN
 Version: 0.4.1
-Requires: Rcpp, dplyr, lazyeval, magrittr, stringi
 Hash: f7651db13e8cff93626958d4331a21e7
+Requires: Rcpp, dplyr, lazyeval, magrittr, stringi
 
 Package: zoo
 Source: CRAN
 Version: 1.7-12
-Requires: lattice
 Hash: 8ce4a89536cba4fa6023190959de5658
+Requires: lattice
